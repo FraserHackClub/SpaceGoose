@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://b4iluk0e448fm" path="res://assets/goose.png" id="1_ch42l"]
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p46we"]
-size = Vector2(128, 192)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x2ugp"]
+radius = 64.0
+height = 192.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
@@ -16,4 +17,4 @@ texture = ExtResource("1_ch42l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(151, -174)
-shape = SubResource("RectangleShape2D_p46we")
+shape = SubResource("CapsuleShape2D_x2ugp")
