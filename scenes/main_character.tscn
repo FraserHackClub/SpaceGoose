@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://k85h5866618m"]
+
+[ext_resource type="Texture2D" uid="uid://b4iluk0e448fm" path="res://assets/goose.png" id="1_ch42l"]
+[ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wf8ng"]
+size = Vector2(127, 193)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_tcf3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(151, -174)
+texture = ExtResource("1_ch42l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(151.5, -174.5)
+shape = SubResource("RectangleShape2D_wf8ng")
