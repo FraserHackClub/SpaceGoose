@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=7 format=3 uid="uid://dkiddq4jcf3fc"]
 
-[ext_resource type="Texture2D" uid="uid://gmqq16qc205i" path="res://assets/background/bg-tile-1.png" id="1_qogmv"]
+[ext_resource type="Texture2D" uid="uid://bh1y4pnlj4vr" path="res://assets/background/earth/sky-light-clouds.png" id="1_hqkrv"]
+[ext_resource type="Texture2D" uid="uid://dy00cb2evg7at" path="res://assets/background/earth/sky-light-noclouds.png" id="2_7i180"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
 [ext_resource type="PackedScene" uid="uid://k85h5866618m" path="res://scenes/main_character.tscn" id="3_x2g06"]
 
@@ -630,14 +631,23 @@ sources/0 = SubResource("TileSetAtlasSource_jqm7l")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
-anchors_preset = 15
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 256.0
+grow_horizontal = 2
+size_flags_vertical = 4
+texture = ExtResource("1_hqkrv")
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -393.0
 grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-texture = ExtResource("1_qogmv")
-stretch_mode = 1
+grow_vertical = 0
+texture = ExtResource("2_7i180")
 
 [node name="TileMap" type="TileMap" parent="."]
 texture_filter = 1
