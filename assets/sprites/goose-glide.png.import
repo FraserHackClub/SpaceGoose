@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5wg7b4b42j70"
-path="res://.godot/imported/goose-old.png-164039317ceb853a5dfb3deb364108ff.ctex"
+uid="uid://58r3lnv8kaqw"
+path="res://.godot/imported/goose-glide.png-b73913a79d22135fa0f3d38799e452ae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/goose-old.png"
-dest_files=["res://.godot/imported/goose-old.png-164039317ceb853a5dfb3deb364108ff.ctex"]
+source_file="res://assets/sprites/goose-glide.png"
+dest_files=["res://.godot/imported/goose-glide.png-b73913a79d22135fa0f3d38799e452ae.ctex"]
 
 [params]
 
