@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://b14wpevjpm0bk"]
+
+[ext_resource type="Texture2D" uid="uid://bs3eanyycabrx" path="res://assets/sprites/bread.png" id="1_4li3e"]
+[ext_resource type="Script" path="res://scenes/bread.gd" id="2_fputl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mk4e"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmt4f"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg64a"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_645yc"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_robk3"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fa62o"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd8uf"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wj448"]
+atlas = ExtResource("1_4li3e")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ojasm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4mk4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmt4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg64a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_645yc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_robk3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fa62o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd8uf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wj448")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y31rh"]
+size = Vector2(48, 44)
+
+[node name="CharacterBody2D2" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_ojasm")
+frame_progress = 0.463506
+script = ExtResource("2_fputl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_y31rh")

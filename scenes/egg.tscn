@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://dekjhpo0k5564"]
+
+[ext_resource type="Texture2D" uid="uid://c3i7x8iv1vi5c" path="res://assets/sprites/egg.png" id="1_8j8wy"]
+[ext_resource type="Script" path="res://scenes/egg.gd" id="2_3myh1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2iqr"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6bn1"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ll4vo"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1gsbn"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7v6l"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqn3n"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c4s7"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wae7q"]
+atlas = ExtResource("1_8j8wy")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cbens"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2iqr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6bn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ll4vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gsbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7v6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqn3n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0c4s7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wae7q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rkkr0"]
+radius = 20.0
+height = 52.0
+
+[node name="egg" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_cbens")
+frame_progress = 0.204361
+script = ExtResource("2_3myh1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_rkkr0")
