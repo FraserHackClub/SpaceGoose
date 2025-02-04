@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=22 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
 [ext_resource type="Texture2D" uid="uid://58r3lnv8kaqw" path="res://assets/sprites/goose-glide.png" id="3_cuax4"]
 [ext_resource type="Texture2D" uid="uid://bdmnsvd028kv7" path="res://assets/sprites/goose-jump.png" id="4_qpk6o"]
+[ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propalsion.png" id="5_l1r7p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7ac7k"]
 atlas = ExtResource("2_bypi8")
@@ -136,3 +137,9 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(151, -174)
 shape = SubResource("RectangleShape2D_p46we")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(148, -50)
+scale = Vector2(3.40625, 2.125)
+texture = ExtResource("5_l1r7p")
