@@ -144,7 +144,6 @@ script = ExtResource("1_tcf3c")
 texture_filter = 1
 position = Vector2(151, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
-animation = &"duck"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

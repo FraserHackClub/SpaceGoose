@@ -10,6 +10,7 @@ var jumpcount = 0
 
 
 func _ready():
+	sprite_2d.animation = "default"
 	$Sprite2D2.hide()
 	
 func _process(delta):
