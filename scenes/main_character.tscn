@@ -1,9 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=24 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
 [ext_resource type="Texture2D" uid="uid://58r3lnv8kaqw" path="res://assets/sprites/goose-glide.png" id="3_cuax4"]
-[ext_resource type="Texture2D" path="res://assets/sprites/goose-ducked-new.png" id="3_exmfo"]
+[ext_resource type="Texture2D" uid="uid://sbuj10hshgu1" path="res://assets/sprites/goose-ducked.png" id="4_5vfar"]
 [ext_resource type="Texture2D" uid="uid://bdmnsvd028kv7" path="res://assets/sprites/goose-jump.png" id="4_qpk6o"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 
@@ -108,7 +108,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_exmfo")
+"texture": ExtResource("4_5vfar")
 }],
 "loop": true,
 "name": &"duck",
@@ -134,6 +134,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p46we"]
 size = Vector2(128, 192)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1e7ql"]
+size = Vector2(1.04996, 20.9197)
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
 
@@ -146,6 +149,7 @@ autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(151, -174)
+scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
@@ -153,3 +157,9 @@ texture_filter = 1
 position = Vector2(148, -50)
 scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
+
+[node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
+position = Vector2(151.229, -138.364)
+rotation = -3.14159
+scale = Vector2(121.474, 5.79698)
+shape = SubResource("RectangleShape2D_1e7ql")

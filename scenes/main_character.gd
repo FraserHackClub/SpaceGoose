@@ -4,10 +4,26 @@ extends CharacterBody2D
 const SPEED = 400.0
 const JUMP_VELOCITY = -900.0
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
+@onready var hitbox_normal = $CollisionShape2D
+@onready var hitbox_crouch = $CollisionShape2D_Duck
 var jumpcount = 0
+
 
 func _ready():
 	$Sprite2D2.hide()
+	
+func _process(delta):
+	if Input.is_action_pressed("down"):
+		# When crouching, disable the normal hitbox and enable the crouch hitbox.
+		hitbox_normal.disabled = true
+		hitbox_crouch.disabled = false
+
+	else:
+		# When not crouching, enable the normal hitbox and disable the crouch hitbox.
+		hitbox_normal.disabled = false
+		hitbox_crouch.disabled = true
+
+
 
 func _physics_process(delta: float) -> void:
 	sprite_2d.animation = "default"
@@ -29,6 +45,9 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_pressed("down"):
 		sprite_2d.animation = "duck"
+		# When crouching, disable the normal hitbox and enable the crouch hitbox.
+
+		
 		
 	if velocity.y > 1:
 		sprite_2d.animation = "glide"
