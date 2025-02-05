@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=23 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
 [ext_resource type="Texture2D" uid="uid://58r3lnv8kaqw" path="res://assets/sprites/goose-glide.png" id="3_cuax4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/goose-ducked-new.png" id="3_exmfo"]
 [ext_resource type="Texture2D" uid="uid://bdmnsvd028kv7" path="res://assets/sprites/goose-jump.png" id="4_qpk6o"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 
@@ -107,6 +108,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("3_exmfo")
+}],
+"loop": true,
+"name": &"duck",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fdolq")
 }],
 "loop": true,
@@ -132,6 +141,7 @@ script = ExtResource("1_tcf3c")
 texture_filter = 1
 position = Vector2(151, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
+animation = &"duck"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
