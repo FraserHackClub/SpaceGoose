@@ -1,61 +1,61 @@
 extends CharacterBody2D
 
-
 const SPEED = 400.0
 const JUMP_VELOCITY = -900.0
+
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionShape2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
-var jumpcount = 0
 
+var jumpcount = 0
 
 func _ready():
 	$Sprite2D2.hide()
-	
-func _process(delta):
-	if Input.is_action_pressed("down"):
-		# When crouching, disable the normal hitbox and enable the crouch hitbox.
-		hitbox_normal.disabled = true
-		hitbox_crouch.disabled = false
-
-	else:
-		# When not crouching, enable the normal hitbox and disable the crouch hitbox.
-		hitbox_normal.disabled = false
-		hitbox_crouch.disabled = true
-
-
 
 func _physics_process(delta: float) -> void:
-	sprite_2d.animation = "default"
-	# Add the gravity.
+	var desired_anim = "default"
+	
+	# Determine if we're crouching.
+	if Input.is_action_pressed("down"):
+		hitbox_normal.disabled = true
+		hitbox_crouch.disabled = false
+		desired_anim = "duck"
+		if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
+			desired_anim = "sneak"
+	else:
+		hitbox_normal.disabled = false
+		hitbox_crouch.disabled = true
+		desired_anim = "default"
+	
+	# Add gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	if is_on_floor():
+	else:
 		jumpcount = 0
-	# Handle jump.
+
+	# Handle jumping.
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY
 		jumpcount += 1
-	
+
 	if Input.is_action_just_pressed("jump") and is_on_wall():
 		velocity.y = JUMP_VELOCITY
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
-		$Sprite2D2.hide()	
-		
-	if Input.is_action_pressed("down"):
-		sprite_2d.animation = "duck"
-		# When crouching, disable the normal hitbox and enable the crouch hitbox.
+		$Sprite2D2.hide()
 
-		
-		
+	# Optionally override the animation based on vertical movement.
+	# (This block should only override if you really want these states to take precedence.)
 	if velocity.y > 1:
-		sprite_2d.animation = "glide"
+		desired_anim = "glide"
 	elif velocity.y < -1:
-		sprite_2d.animation = "jump"
+		desired_anim = "jump"
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	# Only change the animation if it isn't already playing.
+	if sprite_2d.animation != desired_anim:
+		sprite_2d.animation = desired_anim
+
+	# Handle horizontal movement.
 	var direction := Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED
@@ -63,9 +63,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, 12)
 
 	move_and_slide()
-	
+
+	# Flip sprite based on direction.
 	if direction < 0:
 		sprite_2d.flip_h = true
 	elif direction > 0:
 		sprite_2d.flip_h = false
-	
