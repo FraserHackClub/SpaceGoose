@@ -10,8 +10,23 @@ const DUCKING_MULTIPLIER = 0.75
 
 var jumpcount = 0
 
+
 func _ready():
+	sprite_2d.animation = "default"
 	$Sprite2D2.hide()
+	
+func _process(delta):
+	if Input.is_action_pressed("down"):
+		# When crouching, disable the normal hitbox and enable the crouch hitbox.
+		hitbox_normal.disabled = true
+		hitbox_crouch.disabled = false
+
+	else:
+		# When not crouching, enable the normal hitbox and disable the crouch hitbox.
+		hitbox_normal.disabled = false
+		hitbox_crouch.disabled = true
+
+
 
 func _physics_process(delta: float) -> void:
 	var desired_anim = "default"
