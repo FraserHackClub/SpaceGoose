@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=25 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
@@ -137,6 +137,9 @@ size = Vector2(128, 192)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1e7ql"]
 size = Vector2(1.04996, 20.9197)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmcsb"]
+size = Vector2(52, 121)
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
 
@@ -162,3 +165,11 @@ position = Vector2(151.229, -138.364)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(149, -138.5)
+shape = SubResource("RectangleShape2D_pmcsb")
