@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=12 format=3 uid="uid://dkiddq4jcf3fc"]
 
+[ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="1_85ulk"]
+[ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="1_fc77v"]
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
+[ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="2_u1ndw"]
 [ext_resource type="Texture2D" uid="uid://ta3yl1tocl3u" path="res://assets/background/earth/sky.png" id="2_uw1xp"]
 [ext_resource type="PackedScene" uid="uid://k85h5866618m" path="res://scenes/main_character.tscn" id="3_x2g06"]
 [ext_resource type="PackedScene" uid="uid://b14wpevjpm0bk" path="res://scenes/bread.tscn" id="5_n0rs2"]
@@ -632,6 +635,45 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jqm7l")
 
 [node name="Node" type="Node"]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="EggCounter" type="HBoxContainer" parent="HUD"]
+offset_right = 95.0
+offset_bottom = 64.0
+theme_override_constants/separation = 10
+
+[node name="EggIcon" type="TextureRect" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_fc77v")
+
+[node name="EggCountLabel" type="Label" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_u1ndw")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="BreadCounter" type="HBoxContainer" parent="HUD"]
+offset_top = 64.0
+offset_right = 95.0
+offset_bottom = 128.0
+theme_override_constants/separation = 10
+
+[node name="BreadIcon" type="TextureRect" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_85ulk")
+
+[node name="BreadCountLabel" type="Label" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_u1ndw")
+theme_override_font_sizes/font_size = 32
+text = "0"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1

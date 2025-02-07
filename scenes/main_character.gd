@@ -6,13 +6,42 @@ const JUMP_VELOCITY = -900.0
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionShape2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
+@onready var inventory_labels = {
+	"egg": $"../HUD/EggCounter/EggCountLabel",
+	"bread": $"../HUD/BreadCounter/BreadCountLabel",
+}
+
 var jumpcount = 0
+
+var inventory = {
+	"egg": 0,
+	"bread": 0,
+}
 
 
 func _ready():
 	sprite_2d.animation = "default"
+	update_inventory_labels()
 	$Sprite2D2.hide()
+	$PickupArea.connect("body_entered", _on_area_body_entered)
+
+func _on_area_body_entered(body):
+	# Powerups
+	if body.is_in_group("item"): # Assuming items are in the "item" group
+		collect_item(body)
+
+func collect_item(item: Object):
+	if item.is_in_group("egg"):
+		inventory["egg"] += 1
+	if item.is_in_group("bread"):
+		inventory["bread"] += 1
+	update_inventory_labels()
+
+func update_inventory_labels():
+	for item in inventory.keys():
+		inventory_labels[item].text = str(inventory[item])
 	
+
 func _process(delta):
 	if Input.is_action_pressed("down"):
 		# When crouching, disable the normal hitbox and enable the crouch hitbox.
