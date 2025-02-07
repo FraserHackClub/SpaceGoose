@@ -15,18 +15,6 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	var desired_anim = "default"
 	
-	# Determine if we're crouching.
-	if Input.is_action_pressed("down"):
-		hitbox_normal.disabled = true
-		hitbox_crouch.disabled = false
-		desired_anim = "duck"
-		if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
-			desired_anim = "sneak"
-	else:
-		hitbox_normal.disabled = false
-		hitbox_crouch.disabled = true
-		desired_anim = "default"
-	
 	# Add gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -50,6 +38,18 @@ func _physics_process(delta: float) -> void:
 		desired_anim = "glide"
 	elif velocity.y < -1:
 		desired_anim = "jump"
+	
+		# Determine if we're crouching.
+	if Input.is_action_pressed("down"):
+		hitbox_normal.disabled = true
+		hitbox_crouch.disabled = false
+		desired_anim = "duck"
+		if (velocity.x > 1 or velocity.x < -1) and (velocity.y == 0):
+			desired_anim = "sneak"
+	else:
+		hitbox_normal.disabled = false
+		hitbox_crouch.disabled = true
+		desired_anim = "default"
 
 	# Only change the animation if it isn't already playing.
 	if sprite_2d.animation != desired_anim:
