@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="SpaceGoose"
 
+[global_group]
+
+item=""
+
 [input]
 
 left={
