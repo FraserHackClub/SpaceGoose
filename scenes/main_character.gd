@@ -12,6 +12,11 @@ const DUCKING_MULTIPLIER = 0.75
 	"bread": $"../HUD/BreadCounter/BreadCountLabel",
 }
 
+@onready var inventory_labels = {
+	"egg": $"../HUD/EggCounter/EggCountLabel",
+	"bread": $"../HUD/BreadCounter/BreadCountLabel",
+}
+
 var jumpcount = 0
 
 var inventory = {
