@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 400.0
 const JUMP_VELOCITY = -900.0
+const DUCKING_MULTIPLIER = 0.75
 
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionShape2D
@@ -17,17 +18,17 @@ func _physics_process(delta: float) -> void:
 	
 	# Add gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1)
 	else:
 		jumpcount = 0
 
 	# Handle jumping.
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		jumpcount += 1
 
 	if Input.is_action_just_pressed("jump") and is_on_wall():
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
@@ -58,7 +59,7 @@ func _physics_process(delta: float) -> void:
 	# Handle horizontal movement.
 	var direction := Input.get_axis("left", "right")
 	if direction:
-		velocity.x = direction * SPEED
+		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 
