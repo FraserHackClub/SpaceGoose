@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=10 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://k85h5866618m" path="res://scenes/main_character.tscn" id="3_x2g06"]
 [ext_resource type="PackedScene" uid="uid://b14wpevjpm0bk" path="res://scenes/bread.tscn" id="5_n0rs2"]
 [ext_resource type="PackedScene" uid="uid://dekjhpo0k5564" path="res://scenes/egg.tscn" id="6_qafud"]
+[ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqm7l"]
 texture = ExtResource("2_op8q6")
@@ -668,3 +669,7 @@ position = Vector2(729, 528)
 
 [node name="egg" parent="." instance=ExtResource("6_qafud")]
 position = Vector2(1091, 528)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(576, 324)
+script = ExtResource("7_ldxp8")
