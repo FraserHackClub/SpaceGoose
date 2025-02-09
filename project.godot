@@ -19,6 +19,15 @@ config/icon="res://icon.svg"
 
 project/assembly_name="SpaceGoose"
 
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
+[global_group]
+
+item=""
+
 [input]
 
 left={

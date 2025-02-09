@@ -86,7 +86,6 @@ func _physics_process(delta: float) -> void:
 	# Handle horizontal movement.
 	var direction := Input.get_axis("left", "right")
 	if direction:
-		
 		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
