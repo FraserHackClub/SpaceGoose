@@ -69,8 +69,6 @@ func _physics_process(delta: float) -> void:
 			desired_anim = "walk"
 		
 		if velocity.y > 1:
-		
-			
 			desired_anim = "glide"
 		elif velocity.y < -1:
 			desired_anim = "jump"
