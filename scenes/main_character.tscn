@@ -1,13 +1,13 @@
 [gd_scene load_steps=57 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
-[ext_resource type="Texture2D" uid="uid://cnwppt21fic84" path="res://assets/sprites/goose-crouch-flap.png" id="2_b6xk7"]
+[ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
-[ext_resource type="Texture2D" uid="uid://sbuj10hshgu1" path="res://assets/sprites/goose-ducked.png" id="4_5vfar"]
-[ext_resource type="Texture2D" uid="uid://bqenqvj5x4sfi" path="res://assets/sprites/DUCKYGLIDE.png" id="4_kv4qr"]
+[ext_resource type="Texture2D" uid="uid://uq11x13sq5yx" path="res://assets/sprites/goose-crouch-idle.png" id="4_5vfar"]
+[ext_resource type="Texture2D" uid="uid://c33i37hgvopb6" path="res://assets/sprites/goose-glide.png" id="4_kv4qr"]
 [ext_resource type="Texture2D" uid="uid://ce5ywa307lr43" path="res://assets/sprites/goose-walk-idle.png" id="4_rbl7j"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
-[ext_resource type="Texture2D" uid="uid://dnu5yerh4jfa3" path="res://assets/sprites/DUCKYFLAP.png" id="7_jbs0o"]
+[ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]

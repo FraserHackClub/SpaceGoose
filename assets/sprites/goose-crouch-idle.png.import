@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chqfo3q2ruyfd"
-path="res://.godot/imported/DuckingGoose.png-3da6d8d966648ae310de57172176a543.ctex"
+uid="uid://uq11x13sq5yx"
+path="res://.godot/imported/goose-crouch-idle.png-109d566a4d11938e7d562bd966b79c41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/DuckingGoose.png"
-dest_files=["res://.godot/imported/DuckingGoose.png-3da6d8d966648ae310de57172176a543.ctex"]
+source_file="res://assets/sprites/goose-crouch-idle.png"
+dest_files=["res://.godot/imported/goose-crouch-idle.png-109d566a4d11938e7d562bd966b79c41.ctex"]
 
 [params]
 

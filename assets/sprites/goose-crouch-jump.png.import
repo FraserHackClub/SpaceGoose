@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sbuj10hshgu1"
-path="res://.godot/imported/goose-ducked.png-1cf97de5fdbd365a3b0a0bcb1fe2331a.ctex"
+uid="uid://dsiq6r8umdpd0"
+path="res://.godot/imported/goose-crouch-jump.png-125832ec0084164bdd7f34cbfded838b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/goose-ducked.png"
-dest_files=["res://.godot/imported/goose-ducked.png-1cf97de5fdbd365a3b0a0bcb1fe2331a.ctex"]
+source_file="res://assets/sprites/goose-crouch-jump.png"
+dest_files=["res://.godot/imported/goose-crouch-jump.png-125832ec0084164bdd7f34cbfded838b.ctex"]
 
 [params]
 
