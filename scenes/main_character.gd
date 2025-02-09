@@ -50,22 +50,34 @@ func _physics_process(delta: float) -> void:
 
 	# Optionally override the animation based on vertical movement.
 	# (This block should only override if you really want these states to take precedence.)
-	if velocity.y > 1:
-		desired_anim = "glide"
-	elif velocity.y < -1:
-		desired_anim = "jump"
 	
 		# Determine if we're crouching.
+		
+		
 	if Input.is_action_pressed("down"):
 		hitbox_normal.disabled = true
 		hitbox_crouch.disabled = false
-		desired_anim = "duck"
+		desired_anim = "crouch_idle"
 		if (velocity.x > 1 or velocity.x < -1) and (velocity.y == 0):
 			desired_anim = "sneak"
+		if (velocity.y < -1):
+			desired_anim = "crouch_jump"
+		if (velocity.y > 1):
+			desired_anim = "crouch_glide"
 	else:
+		if (velocity.x > 1 or velocity.x < -1) and (velocity.y == 0):
+			desired_anim = "walk"
+		
+		if velocity.y > 1:
+		
+			
+			desired_anim = "glide"
+		elif velocity.y < -1:
+			desired_anim = "jump"
+		elif velocity.x == 0 and velocity.y == 0:
+			desired_anim = "default"
 		hitbox_normal.disabled = false
 		hitbox_crouch.disabled = true
-		desired_anim = "default"
 
 	# Only change the animation if it isn't already playing.
 	if sprite_2d.animation != desired_anim:
