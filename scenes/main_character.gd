@@ -4,39 +4,78 @@ const SPEED = 400.0
 const JUMP_VELOCITY = -900.0
 const DUCKING_MULTIPLIER = 0.75
 
+const WIN = 1
+const LOSE = 2
+
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionShape2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
 
+@onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+@onready var hazards_tilemap: TileMap = get_node_or_null("/root/Node/Hazards")
+@onready var finish_plate = null
+@onready var win_area = null
+@onready var finish_sprite = null
+
 var jumpcount = 0
+var game_state = 0
 
 
 func _ready():
 	sprite_2d.animation = "default"
 	$Sprite2D2.hide()
 	
-func _process(delta):
-	if Input.is_action_pressed("down"):
-		# When crouching, disable the normal hitbox and enable the crouch hitbox.
-		hitbox_normal.disabled = true
-		hitbox_crouch.disabled = false
+	finish_plate = get_node_or_null("/root/Node/finish")
+	print(finish_plate)
+	if finish_plate != null:
+		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
+		win_area = finish_plate.get_node_or_null("Area2D")
+		if win_area != null:
+			win_area.connect("body_entered", _on_win_area_body_entered)
 
-	else:
-		# When not crouching, enable the normal hitbox and disable the crouch hitbox.
-		hitbox_normal.disabled = false
-		hitbox_crouch.disabled = true
 
+func _on_hazards_body_entered(body):
+	if body == self:  # Check if it's the player!
+		game_over(LOSE)
+
+func _on_win_area_body_entered(body):
+	if body == self:
+		game_over(WIN)
+
+func game_over(state: int):
+	game_state = state
+	if game_state == WIN:
+		finish_sprite.animation = "success"
+	
+	var game_over_screen = game_over_screen_scene.instantiate()
+	get_tree().get_root().add_child(game_over_screen)
+	game_over_screen.set_game_over_state(state)
+	#get_tree().paused = true
+	
 
 
 func _physics_process(delta: float) -> void:
-	var desired_anim = "default"
-	
 	# Add gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1)
 	else:
 		jumpcount = 0
+	
+	if game_state in [0]:
+		_handle_movement(delta)
+		move_and_slide()
+		if hazards_tilemap:
+			var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(position))
+			if hazards_tilemap.get_cell_tile_data(0, tile_position):
+				game_over(LOSE)
+	
+	var desired_anim = _handle_animation()
+	# Only change the animation if it isn't already playing.
+	if sprite_2d.animation != desired_anim:
+		sprite_2d.animation = desired_anim
+	
 
+func _handle_movement(delta:float) -> void:
 	# Handle jumping.
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
@@ -47,13 +86,24 @@ func _physics_process(delta: float) -> void:
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
-
-	# Optionally override the animation based on vertical movement.
-	# (This block should only override if you really want these states to take precedence.)
 	
-		# Determine if we're crouching.
-		
-		
+	# Handle horizontal movement.
+	var direction := Input.get_axis("left", "right")
+	if direction:
+		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+	else:
+		velocity.x = move_toward(velocity.x, 0, 12)
+
+	# Flip sprite based on direction.
+	if direction < 0:
+		sprite_2d.flip_h = true
+	elif direction > 0:
+		sprite_2d.flip_h = false
+
+
+func _handle_animation() -> String:
+	var desired_anim = "default"
+	
 	if Input.is_action_pressed("down"):
 		hitbox_normal.disabled = true
 		hitbox_crouch.disabled = false
@@ -76,22 +126,5 @@ func _physics_process(delta: float) -> void:
 			desired_anim = "default"
 		hitbox_normal.disabled = false
 		hitbox_crouch.disabled = true
-
-	# Only change the animation if it isn't already playing.
-	if sprite_2d.animation != desired_anim:
-		sprite_2d.animation = desired_anim
-
-	# Handle horizontal movement.
-	var direction := Input.get_axis("left", "right")
-	if direction:
-		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
-	else:
-		velocity.x = move_toward(velocity.x, 0, 12)
-
-	move_and_slide()
-
-	# Flip sprite based on direction.
-	if direction < 0:
-		sprite_2d.flip_h = true
-	elif direction > 0:
-		sprite_2d.flip_h = false
+	
+	return desired_anim
