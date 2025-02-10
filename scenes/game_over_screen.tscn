@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://vr8nl7daua6g"]
+
+[ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
+[ext_resource type="StyleBox" uid="uid://cblldlnjb513t" path="res://assets/game_over_screen_stylebox.tres" id="2_igsrk"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_l5kpt")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(576, 324)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -162.0
+offset_right = 288.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_igsrk")
