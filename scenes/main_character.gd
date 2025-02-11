@@ -20,22 +20,19 @@ const LOSE = 2
 var jumpcount = 0
 var game_state = 0
 
-
 func _ready():
 	sprite_2d.animation = "default"
 	$Sprite2D2.hide()
-	
+
 	finish_plate = get_node_or_null("/root/Node/finish")
-	print(finish_plate)
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
 		win_area = finish_plate.get_node_or_null("Area2D")
 		if win_area != null:
 			win_area.connect("body_entered", _on_win_area_body_entered)
 
-
 func _on_hazards_body_entered(body):
-	if body == self:  # Check if it's the player!
+	if body == self:
 		game_over(LOSE)
 
 func _on_win_area_body_entered(body):
@@ -50,33 +47,32 @@ func game_over(state: int):
 	var game_over_screen = game_over_screen_scene.instantiate()
 	get_tree().get_root().add_child(game_over_screen)
 	game_over_screen.set_game_over_state(state)
-	#get_tree().paused = true
-	
-
+	# get_tree().paused = true  # optional pause
 
 func _physics_process(delta: float) -> void:
-	# Add gravity.
+	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1)
 	else:
 		jumpcount = 0
 	
-	if game_state in [0]:
+	if game_state == 0:
 		_handle_movement(delta)
 		move_and_slide()
+
+		# (No collision check for duck here; duck handles it.)
+		# Hazard tile check
 		if hazards_tilemap:
 			var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(position))
 			if hazards_tilemap.get_cell_tile_data(0, tile_position):
 				game_over(LOSE)
-	
+
 	var desired_anim = _handle_animation()
-	# Only change the animation if it isn't already playing.
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
-	
 
-func _handle_movement(delta:float) -> void:
-	# Handle jumping.
+func _handle_movement(delta: float) -> void:
+	# Jump
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		jumpcount += 1
@@ -86,20 +82,19 @@ func _handle_movement(delta:float) -> void:
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
-	
-	# Handle horizontal movement.
+
+
 	var direction := Input.get_axis("left", "right")
-	if direction:
+	if direction != 0:
 		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 
-	# Flip sprite based on direction.
+	# Flip sprite
 	if direction < 0:
 		sprite_2d.flip_h = true
 	elif direction > 0:
 		sprite_2d.flip_h = false
-
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
@@ -108,23 +103,22 @@ func _handle_animation() -> String:
 		hitbox_normal.disabled = true
 		hitbox_crouch.disabled = false
 		desired_anim = "crouch_idle"
-		if (velocity.x > 1 or velocity.x < -1) and (velocity.y == 0):
+		if abs(velocity.x) > 1 and velocity.y == 0:
 			desired_anim = "sneak"
-		if (velocity.y < -1):
+		if velocity.y < -1:
 			desired_anim = "crouch_jump"
-		if (velocity.y > 1):
+		if velocity.y > 1:
 			desired_anim = "crouch_glide"
 	else:
-		if (velocity.x > 1 or velocity.x < -1) and (velocity.y == 0):
+		hitbox_normal.disabled = false
+		hitbox_crouch.disabled = true
+		if abs(velocity.x) > 1 and velocity.y == 0:
 			desired_anim = "walk"
-		
-		if velocity.y > 1:
+		elif velocity.y > 1:
 			desired_anim = "glide"
 		elif velocity.y < -1:
 			desired_anim = "jump"
 		elif velocity.x == 0 and velocity.y == 0:
 			desired_anim = "default"
-		hitbox_normal.disabled = false
-		hitbox_crouch.disabled = true
-	
+
 	return desired_anim

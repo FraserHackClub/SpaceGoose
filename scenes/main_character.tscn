@@ -368,10 +368,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p46we"]
-size = Vector2(128, 192)
+size = Vector2(128, 195.168)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1e7ql"]
-size = Vector2(1.04996, 20.9197)
+size = Vector2(1.04996, 20.8729)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
@@ -385,7 +385,7 @@ autoplay = "default"
 frame_progress = 0.576093
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(151, -174)
+position = Vector2(151, -172.419)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
@@ -396,7 +396,7 @@ scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
-position = Vector2(151.229, -138.364)
+position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
