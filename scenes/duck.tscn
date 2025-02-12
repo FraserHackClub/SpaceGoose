@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://y20l3ff4mvhr"]
 
 [ext_resource type="Texture2D" uid="uid://b7vyj1cumvccp" path="res://assets/sprites/duck-walk.png" id="1_3iaxc"]
-[ext_resource type="Script" path="res://duck.gd" id="1_tqw0h"]
+[ext_resource type="Script" path="res://scenes/duck.gd" id="1_tqw0h"]
 [ext_resource type="Texture2D" uid="uid://ckla5s2rplpg7" path="res://assets/sprites/duck-attack.png" id="1_yi6dm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
