@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=20 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dekjhpo0k5564" path="res://scenes/egg.tscn" id="6_qafud"]
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
 [ext_resource type="PackedScene" uid="uid://bxrvkokllcflm" path="res://scenes/finish.tscn" id="7_sa7wo"]
+[ext_resource type="Script" path="res://scenes/spawnBread.gd" id="7_yfyqq"]
 [ext_resource type="PackedScene" uid="uid://y20l3ff4mvhr" path="res://scenes/duck.tscn" id="10_eyjyf"]
 [ext_resource type="PackedScene" uid="uid://bflp3u1sqwula" path="res://scenes/moving_platform.tscn" id="11_jkwc6"]
 
@@ -864,6 +865,7 @@ _data = {
 }
 
 [node name="Node" type="Node"]
+script = ExtResource("7_yfyqq")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -904,9 +906,6 @@ position = Vector2(-86, 638)
 
 [node name="bread" parent="." instance=ExtResource("5_n0rs2")]
 position = Vector2(387, 530)
-
-[node name="bread2" parent="." instance=ExtResource("5_n0rs2")]
-position = Vector2(2277, 530)
 
 [node name="egg" parent="." instance=ExtResource("6_qafud")]
 position = Vector2(1650, 526)
