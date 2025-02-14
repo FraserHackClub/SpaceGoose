@@ -17,6 +17,9 @@ const LOSE = 2
 @onready var win_area = null
 @onready var finish_sprite = null
 
+
+@onready var goose = get_node_or_null("/root/Node/goose")
+
 var jumpcount = 0
 var game_state = 0
 
@@ -43,12 +46,23 @@ func _on_win_area_body_entered(body):
 func game_over(state: int):
 	game_state = state
 	if game_state == WIN:
-		finish_sprite.animation = "success"
-	
+		if finish_sprite:
+			var target_y = finish_sprite.position.y - 1000  
+			var tween = get_tree().create_tween()
+			tween.tween_property(finish_sprite, "position:y", target_y, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+			tween.tween_callback(func(): finish_sprite.hide())
+		else:
+			print("Finish sprite not found!")
+
+		if goose:
+			goose.hide()
+		else:
+			print("Goose node not found!")
+
 	var game_over_screen = game_over_screen_scene.instantiate()
 	get_tree().get_root().add_child(game_over_screen)
 	game_over_screen.set_game_over_state(state)
-	# get_tree().paused = true  # optional pause
+
 
 func _physics_process(delta: float) -> void:
 	# Gravity
@@ -61,8 +75,8 @@ func _physics_process(delta: float) -> void:
 		_handle_movement(delta)
 		move_and_slide()
 
-		# (No collision check for duck here; duck handles it.)
-		# Hazard tile check
+
+
 		if hazards_tilemap:
 			var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(position))
 			if hazards_tilemap.get_cell_tile_data(0, tile_position):
@@ -83,7 +97,6 @@ func _handle_movement(delta: float) -> void:
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
-
 
 	var direction := Input.get_axis("left", "right")
 	if direction != 0:
