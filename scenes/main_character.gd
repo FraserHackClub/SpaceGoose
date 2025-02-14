@@ -8,7 +8,7 @@ const WIN = 1
 const LOSE = 2
 
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
-@onready var hitbox_normal = $CollisionShape2D
+@onready var hitbox_normal = $CollisionPolygon2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
 
 @onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
@@ -22,6 +22,7 @@ var game_state = 0
 
 func _ready():
 	sprite_2d.animation = "default"
+	$SquareCollisionShape2D.disabled = true
 	$Sprite2D2.hide()
 
 	finish_plate = get_node_or_null("/root/Node/finish")

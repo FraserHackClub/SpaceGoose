@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://y20l3ff4mvhr"]
 
 [ext_resource type="Texture2D" uid="uid://b7vyj1cumvccp" path="res://assets/sprites/duck-walk.png" id="1_3iaxc"]
-[ext_resource type="Script" path="res://duck.gd" id="1_tqw0h"]
+[ext_resource type="Script" path="res://scenes/duck.gd" id="1_tqw0h"]
 [ext_resource type="Texture2D" uid="uid://ckla5s2rplpg7" path="res://assets/sprites/duck-attack.png" id="1_yi6dm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
@@ -126,7 +126,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e1sg"]
-size = Vector2(94.5, 91.5)
+size = Vector2(92, 91.5)
 
 [node name="Duck" type="CharacterBody2D"]
 script = ExtResource("1_tqw0h")
@@ -143,7 +143,7 @@ autoplay = "default"
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D_side" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.75, 19)
+position = Vector2(-2, 19)
 shape = SubResource("RectangleShape2D_8e1sg")
 
 [connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]

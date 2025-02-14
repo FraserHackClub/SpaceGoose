@@ -382,9 +382,10 @@ position = Vector2(151, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
 animation = &"walk"
 autoplay = "default"
-frame_progress = 0.576093
+frame = 11
+frame_progress = 0.329782
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(151, -172.419)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
@@ -400,3 +401,7 @@ position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(1, 0)
+polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
