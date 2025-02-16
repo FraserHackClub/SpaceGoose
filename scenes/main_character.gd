@@ -45,14 +45,20 @@ func _on_win_area_body_entered(body):
 
 func game_over(state: int):
 	game_state = state
+
 	if game_state == WIN:
+
 		if finish_sprite:
-			var target_y = finish_sprite.position.y - 1000  
+			finish_sprite.animation = "blastoff"
+			
+			var start_y = finish_sprite.position.y
+			var final_target = start_y - 1000  
 			var tween = get_tree().create_tween()
-			tween.tween_property(finish_sprite, "position:y", target_y, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
+			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
 		else:
 			print("Finish sprite not found!")
+		
 
 		if goose:
 			goose.hide()
@@ -62,6 +68,7 @@ func game_over(state: int):
 	var game_over_screen = game_over_screen_scene.instantiate()
 	get_tree().get_root().add_child(game_over_screen)
 	game_over_screen.set_game_over_state(state)
+
 
 
 func _physics_process(delta: float) -> void:

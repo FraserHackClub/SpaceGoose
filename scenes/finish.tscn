@@ -1,6 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxrvkokllcflm"]
+[gd_scene load_steps=8 format=3 uid="uid://bxrvkokllcflm"]
 
 [ext_resource type="Texture2D" uid="uid://dgki7v6q2s6uw" path="res://assets/sprites/rockiet.png" id="1_l3byj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vf5s"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_534vo"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03mku"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(0, 256, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o60vt"]
 atlas = ExtResource("1_l3byj")
@@ -10,10 +22,24 @@ region = Rect2(0, 0, 256, 256)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6vf5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_534vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03mku")
+}],
+"loop": true,
+"name": &"blastoff",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_o60vt")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 1.0
 }]
 
@@ -26,7 +52,9 @@ size = Vector2(187, 254)
 texture_filter = 1
 position = Vector2(1, -7)
 sprite_frames = SubResource("SpriteFrames_y35jx")
-frame_progress = 0.932868
+animation = &"blastoff"
+autoplay = "blastoff"
+frame_progress = 0.212662
 
 [node name="Area2D" type="Area2D" parent="."]
 
