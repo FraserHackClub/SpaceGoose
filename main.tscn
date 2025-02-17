@@ -903,6 +903,45 @@ _data = {
 [node name="Node" type="Node"]
 script = ExtResource("7_yfyqq")
 
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="EggCounter" type="HBoxContainer" parent="HUD"]
+offset_right = 95.0
+offset_bottom = 64.0
+theme_override_constants/separation = 10
+
+[node name="EggIcon" type="TextureRect" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_0cnrv")
+
+[node name="EggCountLabel" type="Label" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3u3i4")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="BreadCounter" type="HBoxContainer" parent="HUD"]
+offset_top = 64.0
+offset_right = 95.0
+offset_bottom = 128.0
+theme_override_constants/separation = 10
+
+[node name="BreadIcon" type="TextureRect" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_mry41")
+
+[node name="BreadCountLabel" type="Label" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3u3i4")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
 [node name="TextureRect2" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -941,7 +980,7 @@ layer_0/tile_data = PackedInt32Array(2031726, 0, 8, 2097262, 0, 9, 2162798, 0, 1
 [node name="goose" parent="." instance=ExtResource("3_x2g06")]
 position = Vector2(-86, 638)
 
-[node name="bread" parent="." groups=["bread", "item"] instance=ExtResource("5_n0rs2")]
+[node name="bread" parent="." instance=ExtResource("5_n0rs2")]
 position = Vector2(387, 526)
 
 [node name="egg" parent="." groups=["egg", "item"] instance=ExtResource("6_qafud")]

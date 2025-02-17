@@ -17,16 +17,26 @@ const LOSE = 2
 @onready var win_area = null
 @onready var finish_sprite = null
 
+@onready var inventory_labels = {
+	"egg": $"../HUD/EggCounter/EggCountLabel",
+	"bread": $"../HUD/BreadCounter/BreadCountLabel",
+}
 
 @onready var goose = get_node_or_null("/root/Node/goose")
 
 var jumpcount = 0
 var game_state = 0
 
+var inventory = {
+	"egg": 0,
+	"bread": 0,
+}
+
 func _ready():
 	sprite_2d.animation = "default"
 	$SquareCollisionShape2D.disabled = true
 	$Sprite2D2.hide()
+	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
 
 	finish_plate = get_node_or_null("/root/Node/finish")
 	if finish_plate != null:
@@ -34,6 +44,24 @@ func _ready():
 		win_area = finish_plate.get_node_or_null("Area2D")
 		if win_area != null:
 			win_area.connect("body_entered", _on_win_area_body_entered)
+
+func _on_area_body_entered(body):
+	# Powerups
+	if body.is_in_group("item"): # Assuming items are in the "item" group
+		collect_item(body)
+
+func collect_item(item: Object):
+	if item.is_in_group("egg"):
+		inventory["egg"] += 1
+	if item.is_in_group("bread"):
+		inventory["bread"] += 1
+	
+	item.queue_free()
+	update_inventory_labels()
+
+func update_inventory_labels():
+	for item in inventory.keys():
+		inventory_labels[item].text = str(inventory[item])
 
 func _on_hazards_body_entered(body):
 	if body == self:
