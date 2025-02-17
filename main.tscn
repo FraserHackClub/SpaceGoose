@@ -1,10 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=23 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
+[ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_0cnrv"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
 [ext_resource type="Texture2D" uid="uid://ta3yl1tocl3u" path="res://assets/background/earth/sky.png" id="2_uw1xp"]
+[ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="3_3u3i4"]
 [ext_resource type="PackedScene" uid="uid://k85h5866618m" path="res://scenes/main_character.tscn" id="3_x2g06"]
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="4_fcpxq"]
+[ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_mry41"]
 [ext_resource type="PackedScene" uid="uid://b14wpevjpm0bk" path="res://scenes/bread.tscn" id="5_n0rs2"]
 [ext_resource type="PackedScene" uid="uid://dekjhpo0k5564" path="res://scenes/egg.tscn" id="6_qafud"]
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
@@ -38,9 +41,13 @@ texture = ExtResource("2_op8q6")
 17:0/0 = 0
 17:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:0/0 = 0
+18:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:0/0 = 0
+19:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:0/0 = 0
+20:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 21:0/0 = 0
+21:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:0/0 = 0
 24:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:0/0 = 0
@@ -86,9 +93,13 @@ texture = ExtResource("2_op8q6")
 17:1/0 = 0
 17:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:1/0 = 0
+18:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:1/0 = 0
+19:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:1/0 = 0
+20:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 21:1/0 = 0
+21:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:1/0 = 0
 24:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 25:1/0 = 0
@@ -128,9 +139,13 @@ texture = ExtResource("2_op8q6")
 17:2/0 = 0
 17:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:2/0 = 0
+18:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:2/0 = 0
+19:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:2/0 = 0
+20:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 21:2/0 = 0
+21:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:2/0 = 0
 25:2/0 = 0
 26:2/0 = 0
@@ -176,9 +191,13 @@ texture = ExtResource("2_op8q6")
 17:3/0 = 0
 17:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 18:3/0 = 0
+18:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 19:3/0 = 0
+19:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 20:3/0 = 0
+20:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 21:3/0 = 0
+21:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 24:3/0 = 0
 25:3/0 = 0
 26:3/0 = 0
@@ -718,7 +737,8 @@ texture = ExtResource("2_op8q6")
 10:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_0fplu"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_jqm7l")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3nrn3"]
@@ -883,6 +903,45 @@ _data = {
 [node name="Node" type="Node"]
 script = ExtResource("7_yfyqq")
 
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="EggCounter" type="HBoxContainer" parent="HUD"]
+offset_right = 95.0
+offset_bottom = 64.0
+theme_override_constants/separation = 10
+
+[node name="EggIcon" type="TextureRect" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_0cnrv")
+
+[node name="EggCountLabel" type="Label" parent="HUD/EggCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3u3i4")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="BreadCounter" type="HBoxContainer" parent="HUD"]
+offset_top = 64.0
+offset_right = 95.0
+offset_bottom = 128.0
+theme_override_constants/separation = 10
+
+[node name="BreadIcon" type="TextureRect" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_mry41")
+
+[node name="BreadCountLabel" type="Label" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3u3i4")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
 [node name="TextureRect2" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -922,13 +981,17 @@ layer_0/tile_data = PackedInt32Array(2031726, 0, 8, 2097262, 0, 9, 2162798, 0, 1
 position = Vector2(-86, 638)
 
 [node name="bread" parent="." instance=ExtResource("5_n0rs2")]
-position = Vector2(387, 530)
+position = Vector2(387, 526)
 
-[node name="egg" parent="." instance=ExtResource("6_qafud")]
+[node name="egg" parent="." groups=["egg", "item"] instance=ExtResource("6_qafud")]
 position = Vector2(1650, 526)
+collision_layer = 2
+collision_mask = 2
 
-[node name="egg2" parent="." instance=ExtResource("6_qafud")]
+[node name="egg2" parent="." groups=["egg", "item"] instance=ExtResource("6_qafud")]
 position = Vector2(4651, 512)
+collision_layer = 2
+collision_mask = 2
 
 [node name="finish" parent="." instance=ExtResource("7_sa7wo")]
 position = Vector2(4862, 392)

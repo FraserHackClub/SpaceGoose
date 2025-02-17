@@ -28,7 +28,7 @@ func get_random_spawn_position() -> Vector2:
 	var used_rect: Rect2 = tilemap.get_used_rect()
 	var cell_x: int = randi() % int(used_rect.size.x) + int(used_rect.position.x)
 	var cell_y: int = randi() % int(used_rect.size.y) + int(used_rect.position.y)
-	var cell: Vector2 = Vector2(cell_x, cell_y)
+	var cell: Vector2 = Vector2(max(cell_x, 40.0), -20.0)
 	return map_to_world(cell) + cell_size * 0.5
 
 func map_to_world(cell: Vector2) -> Vector2:
