@@ -1,22 +1,37 @@
 [gd_scene load_steps=3 format=3 uid="uid://vr8nl7daua6g"]
 
 [ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
-[ext_resource type="StyleBox" uid="uid://cblldlnjb513t" path="res://assets/game_over_screen_stylebox.tres" id="2_igsrk"]
+[ext_resource type="Texture2D" uid="uid://duqp3v6sa4lnf" path="res://assets/sprites/die.png" id="2_xflxv"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="DeathScreen" type="CanvasLayer"]
+scale = Vector2(7.51562, 6.64062)
+transform = Transform2D(7.51562, 0, 0, 6.64062, 0, 0)
 script = ExtResource("1_l5kpt")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(576, 324)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -288.0
-offset_top = -162.0
-offset_right = 288.0
-offset_bottom = 162.0
+custom_minimum_size = Vector2(128, 128)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1123.66
+offset_top = -376.019
+offset_right = 1101.34
+offset_bottom = 357.981
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_igsrk")
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.329504
+anchor_top = 0.266718
+anchor_right = 0.380437
+anchor_bottom = 0.354996
+offset_left = 6.0
+offset_top = -9.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xflxv")
+metadata/_edit_use_anchors_ = true

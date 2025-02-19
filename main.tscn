@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=24 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
 [ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_0cnrv"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
 [ext_resource type="PackedScene" uid="uid://bxrvkokllcflm" path="res://scenes/finish.tscn" id="7_sa7wo"]
 [ext_resource type="Script" path="res://scenes/spawnBread.gd" id="7_yfyqq"]
+[ext_resource type="PackedScene" uid="uid://vr8nl7daua6g" path="res://scenes/game_over_screen.tscn" id="9_mmc80"]
 [ext_resource type="PackedScene" uid="uid://y20l3ff4mvhr" path="res://scenes/duck.tscn" id="10_eyjyf"]
 [ext_resource type="PackedScene" uid="uid://bflp3u1sqwula" path="res://scenes/moving_platform.tscn" id="11_jkwc6"]
 
@@ -941,6 +942,8 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_3u3i4")
 theme_override_font_sizes/font_size = 32
 text = "0"
+
+[node name="screen" parent="." instance=ExtResource("9_mmc80")]
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 anchors_preset = 15
