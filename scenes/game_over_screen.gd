@@ -20,6 +20,11 @@ func _ready():
 	# Set a fixed, smaller scale.
 	self.scale = Vector2(0.4, 0.3)
 
+
+
+
+
+
 func set_game_over_state(state: int) -> void:
 	if state == LOSE:
 		# Load the death screen image.
@@ -39,5 +44,16 @@ func set_game_over_state(state: int) -> void:
 			var off = BASE_OFFSET + Vector2(randf_range(-20, 20), randf_range(-20, 20))
 			shake_tween.tween_property(texture_rect, "position", off, 0.1).set_trans(Tween.TRANS_LINEAR)
 			shake_tween.tween_property(texture_rect, "position", BASE_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
+
 	else:
 		hide()
+		
+func reset() -> void:
+	hide()
+	texture_rect.position = BASE_OFFSET		# Reset the position
+	# Optionally, stop any active tweens if stored
+		
+		
+func _on_restart_button_pressed() -> void:
+	hide()  # ✅ Hide the death screen
+	Global.restart_game()  # ✅ Calls the global restart function

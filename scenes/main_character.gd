@@ -104,6 +104,9 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
+	if game_state != 0:
+		return		# Prevent multiple game_over triggers
+
 	game_state = state
 	if game_state == WIN:
 		if finish_sprite:
@@ -124,6 +127,7 @@ func game_over(state: int):
 	var game_over_screen = game_over_screen_scene.instantiate()
 	get_tree().get_root().add_child(game_over_screen)
 	game_over_screen.set_game_over_state(state)
+
 
 func _physics_process(delta: float) -> void:
 	# Gravity

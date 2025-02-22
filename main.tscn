@@ -964,13 +964,25 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_uw1xp")
 
+[node name="TextureRect2" type="TextureRect" parent="TextureRect2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -731.0
+offset_right = -1.0
+offset_bottom = -690.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_uw1xp")
+
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -257.0
+offset_top = -1244.0
 offset_right = 3932.0
-offset_bottom = 256.0
+offset_bottom = -731.0
 grow_horizontal = 2
 size_flags_vertical = 4
 texture = ExtResource("1_mrbfn")
