@@ -22,6 +22,11 @@ const LOSE = 2
 @onready var win_area = null
 @onready var finish_sprite = null
 
+@onready var inventory_labels = {
+	"egg": $"../HUD/EggCounter/EggCountLabel",
+	"bread": $"../HUD/BreadCounter/BreadCountLabel",
+}
+
 @onready var goose = get_node_or_null("/root/Node/goose")
 
 var jumpcount = 0
@@ -30,12 +35,18 @@ var game_state = 0
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
+var inventory = {
+	"egg": 0,
+	"bread": 0,
+}
 
 func _ready():
 	sprite_2d.animation = "default"
 	square_hitbox.disabled = false	# Ensure the square hitbox is enabled for detection
 	$Sprite2D2.hide()
 	
+	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
+
 	finish_plate = get_node_or_null("/root/Node/finish")
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
@@ -65,6 +76,24 @@ func _on_OverheadDetector_body_exited(body):
 	if overhead_count == 0:
 		forced_crouch = false
 	#print("OverheadDetector: Body EXITED -> ", body.name, " | overhead_count:", overhead_count)
+
+func _on_area_body_entered(body):
+	# Powerups
+	if body.is_in_group("item"): # Assuming items are in the "item" group
+		collect_item(body)
+
+func collect_item(item: Object):
+	if item.is_in_group("egg"):
+		inventory["egg"] += 1
+	if item.is_in_group("bread"):
+		inventory["bread"] += 1
+	
+	item.queue_free()
+	update_inventory_labels()
+
+func update_inventory_labels():
+	for item in inventory.keys():
+		inventory_labels[item].text = str(inventory[item])
 
 func _on_hazards_body_entered(body):
 	if body == self:
