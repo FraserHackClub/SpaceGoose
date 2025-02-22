@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=58 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -368,10 +368,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p46we"]
-size = Vector2(128, 192)
+size = Vector2(49.08, 69.1169)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1e7ql"]
 size = Vector2(1.04996, 20.8729)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ndes"]
+size = Vector2(29, 70)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
@@ -386,7 +389,7 @@ frame = 11
 frame_progress = 0.329782
 
 [node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(151, -172.419)
+position = Vector2(156, -126)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
@@ -403,5 +406,14 @@ scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(1, 0)
+position = Vector2(2, -1)
 polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
+
+[node name="OverheadDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OverheadDetector"]
+position = Vector2(163.5, -234)
+shape = SubResource("RectangleShape2D_5ndes")
+
+[connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
+[connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
