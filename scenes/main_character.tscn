@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=59 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -375,6 +375,7 @@ size = Vector2(1.04996, 20.8729)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ndes"]
 size = Vector2(29, 70)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
 size = Vector2(64, 64)
 
@@ -417,8 +418,6 @@ polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -1
 position = Vector2(163.5, -234)
 shape = SubResource("RectangleShape2D_5ndes")
 
-[connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
-[connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
 [node name="ItemPickupArea" type="Area2D" parent="."]
 collision_layer = 3
 collision_mask = 3
@@ -426,3 +425,6 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickupArea"]
 position = Vector2(149, -110)
 shape = SubResource("RectangleShape2D_o2pwf")
+
+[connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
+[connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
