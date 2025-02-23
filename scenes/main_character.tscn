@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=59 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -368,10 +368,16 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p46we"]
-size = Vector2(128, 192)
+size = Vector2(49.08, 69.1169)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1e7ql"]
-size = Vector2(1.04996, 20.9197)
+size = Vector2(1.04996, 20.8729)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ndes"]
+size = Vector2(29, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
+size = Vector2(64, 64)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_tcf3c")
@@ -382,10 +388,11 @@ position = Vector2(151, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
 animation = &"walk"
 autoplay = "default"
-frame_progress = 0.576093
+frame = 11
+frame_progress = 0.329782
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(151, -174)
+[node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(156, -126)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
@@ -396,7 +403,28 @@ scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
-position = Vector2(151.229, -138.364)
+position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(2, -1)
+polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
+
+[node name="OverheadDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OverheadDetector"]
+position = Vector2(163.5, -234)
+shape = SubResource("RectangleShape2D_5ndes")
+
+[node name="ItemPickupArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickupArea"]
+position = Vector2(149, -110)
+shape = SubResource("RectangleShape2D_o2pwf")
+
+[connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
+[connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

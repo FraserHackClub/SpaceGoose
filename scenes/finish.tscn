@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxrvkokllcflm"]
+
+[ext_resource type="Texture2D" uid="uid://dgki7v6q2s6uw" path="res://assets/sprites/rockiet.png" id="1_l3byj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vf5s"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_534vo"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03mku"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o60vt"]
+atlas = ExtResource("1_l3byj")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y35jx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vf5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_534vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03mku")
+}],
+"loop": true,
+"name": &"blastoff",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o60vt")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0f3h"]
+size = Vector2(187, 254)
+
+[node name="finish" type="CharacterBody2D" groups=["win_zone"]]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, -7)
+sprite_frames = SubResource("SpriteFrames_y35jx")
+animation = &"blastoff"
+autoplay = "blastoff"
+frame_progress = 0.212662
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1, -6)
+shape = SubResource("RectangleShape2D_d0f3h")
