@@ -50,7 +50,7 @@ func set_game_over_state(state: int) -> void:
 		
 func reset() -> void:
 	hide()
-	texture_rect.position = BASE_OFFSET		# Reset the position
+	texture_rect.position = BASE_OFFSET # Reset the position
 	# Optionally, stop any active tweens if stored
 		
 		
