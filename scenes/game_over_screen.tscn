@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://vr8nl7daua6g"]
+[gd_scene load_steps=8 format=3 uid="uid://vr8nl7daua6g"]
 
 [ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
 [ext_resource type="Texture2D" uid="uid://cikaowdqhho48" path="res://assets/sprites/die.png" id="2_xflxv"]
@@ -9,6 +9,12 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtdq2"]
 bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="InputEventAction" id="InputEventAction_yv48l"]
+action = &"restart"
+
+[sub_resource type="Shortcut" id="Shortcut_7n5pa"]
+events = [SubResource("InputEventAction_yv48l")]
 
 [node name="DeathScreen" type="CanvasLayer"]
 scale = Vector2(7.51562, 6.64062)
@@ -43,6 +49,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wtdq2")
 
 [node name="TextureRect" type="TextureRect" parent="Panel"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333448
@@ -55,6 +62,7 @@ texture = ExtResource("2_xflxv")
 metadata/_edit_use_anchors_ = true
 
 [node name="RestartButton" type="Button" parent="Panel"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.583
@@ -68,6 +76,7 @@ offset_bottom = -21.048
 theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0.129558, 0.129558, 0.129558, 1)
 theme_override_icons/icon = ExtResource("3_p2e6t")
+shortcut = SubResource("Shortcut_7n5pa")
 icon_alignment = 1
 expand_icon = true
 

@@ -105,7 +105,7 @@ func _on_win_area_body_entered(body):
 
 func game_over(state: int):
 	if game_state != 0:
-		return		# Prevent multiple game_over triggers
+		return  # Prevent multiple game_over triggers
 
 	game_state = state
 	if game_state == WIN:
@@ -183,6 +183,9 @@ func _handle_movement(delta: float) -> void:
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
+	
+	if Input.is_action_just_pressed("restart"):
+		Global.restart_game()
 	
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true
