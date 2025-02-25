@@ -80,5 +80,5 @@ shortcut = SubResource("Shortcut_7n5pa")
 icon_alignment = 1
 expand_icon = true
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
