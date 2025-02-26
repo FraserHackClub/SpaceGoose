@@ -1026,10 +1026,10 @@ offset = Vector2(576, 324)
 script = ExtResource("7_ldxp8")
 
 [node name="duck2" parent="." instance=ExtResource("10_eyjyf")]
-position = Vector2(4554, 479)
+position = Vector2(4554, 480)
 
 [node name="duck" parent="." instance=ExtResource("10_eyjyf")]
-position = Vector2(1568, 493)
+position = Vector2(1568, 496)
 
 [node name="MovingPlatform" parent="." instance=ExtResource("11_jkwc6")]
 position = Vector2(2970, 569)
