@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://scenes/duck.gd" id="1_tqw0h"]
 [ext_resource type="Texture2D" uid="uid://ckla5s2rplpg7" path="res://assets/sprites/duck-attack.png" id="1_yi6dm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
-size = Vector2(92, 106)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e1sg"]
+size = Vector2(92, 90.75)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ed4n3"]
 atlas = ExtResource("1_yi6dm")
@@ -125,15 +125,15 @@ animations = [{
 "speed": 18.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e1sg"]
-size = Vector2(92, 91.5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
+size = Vector2(79, 17)
 
 [node name="Duck" type="CharacterBody2D"]
 script = ExtResource("1_tqw0h")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 11)
-shape = SubResource("RectangleShape2D_mn2o7")
+[node name="CollisionShape2D_side" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 19.375)
+shape = SubResource("RectangleShape2D_8e1sg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 2)
@@ -142,8 +142,8 @@ autoplay = "default"
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D_side" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-2, 19)
-shape = SubResource("RectangleShape2D_8e1sg")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4, -35)
+shape = SubResource("RectangleShape2D_mn2o7")
 
 [connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]
