@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 @export var speed: float = 300
-@export var fall_speed: float = 400
-@export var fall_delete_delay: float = 1.5
+@export var fall_speed: float = 600
+@export var fall_delete_delay: float = 1
 
 var direction: Vector2 = Vector2.LEFT
 var is_falling: bool = false
@@ -45,12 +45,6 @@ func _on_top_area_entered(body: Node) -> void:
 
 func start_falling() -> void:
 	is_falling = true
-	# Disable the duck's main CollisionShape2D so it no longer interferes.
-	var main_collision = get_node_or_null("CollisionShape2D")
-	if main_collision:
-		main_collision.disabled = true
-	else:
-		print("Error: Main CollisionShape2D not found!")
 	collision_layer = 0
 	collision_mask = 0
 
