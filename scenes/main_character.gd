@@ -15,6 +15,8 @@ const LOSE = 2
 
 # OverheadDetector is an Area2D node added as a child to the player.
 @onready var overhead_detector: Area2D = $OverheadDetector
+@onready var sfx_jump: AudioStreamPlayer = $sfx_jump
+@onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
 @onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
 @onready var hazards_tilemap: TileMap = get_node_or_null("/root/Node/Hazards")
@@ -170,9 +172,14 @@ func _handle_movement(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		jumpcount += 1
+		if jumpcount <2:
+			sfx_jump.play()
+		else:
+			sfx_swoosh.play()
 	
 	if Input.is_action_just_pressed("jump") and is_on_wall():
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+		sfx_swoosh.play()
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
