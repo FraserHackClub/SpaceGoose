@@ -3,17 +3,18 @@
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="1_askgt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q4a50"]
-size = Vector2(183, 18)
+size = Vector2(184, 24)
 
 [node name="MovingPlatform" type="AnimatableBody2D"]
 
 [node name="Terrain(16x16)" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(2, 2)
-scale = Vector2(1.98913, 3.33333)
+scale = Vector2(2, 4)
 texture = ExtResource("1_askgt")
 region_enabled = true
 region_rect = Rect2(546, 34, 92, 6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 2)
+position = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_q4a50")
