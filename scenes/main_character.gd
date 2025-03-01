@@ -23,8 +23,8 @@ const LOSE = 2
 @onready var finish_sprite = null
 
 @onready var inventory_labels = {
-	"egg": $"../HUD/EggCounter/EggCountLabel",
-	"bread": $"../HUD/BreadCounter/BreadCountLabel",
+	"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
+	"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 }
 
 @onready var goose = get_node_or_null("/root/Node/goose")

@@ -1,18 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=20 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
-[ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_0cnrv"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="2_op8q6"]
 [ext_resource type="Texture2D" uid="uid://ta3yl1tocl3u" path="res://assets/background/earth/sky.png" id="2_uw1xp"]
-[ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="3_3u3i4"]
 [ext_resource type="PackedScene" uid="uid://k85h5866618m" path="res://scenes/main_character.tscn" id="3_x2g06"]
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="4_fcpxq"]
-[ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_mry41"]
 [ext_resource type="PackedScene" uid="uid://b14wpevjpm0bk" path="res://scenes/bread.tscn" id="5_n0rs2"]
 [ext_resource type="PackedScene" uid="uid://dekjhpo0k5564" path="res://scenes/egg.tscn" id="6_qafud"]
-[ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
 [ext_resource type="PackedScene" uid="uid://bxrvkokllcflm" path="res://scenes/finish.tscn" id="7_sa7wo"]
 [ext_resource type="Script" path="res://scenes/spawnBread.gd" id="7_yfyqq"]
+[ext_resource type="PackedScene" uid="uid://kqrvys6ca76t" path="res://scenes/camera_2d.tscn" id="10_8dqi4"]
 [ext_resource type="PackedScene" uid="uid://y20l3ff4mvhr" path="res://scenes/duck.tscn" id="10_eyjyf"]
 [ext_resource type="PackedScene" uid="uid://bflp3u1sqwula" path="res://scenes/moving_platform.tscn" id="11_jkwc6"]
 
@@ -903,7 +900,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(2970, 569), Vector2(3651, 568)]
+"values": [Vector2(2970, 569), Vector2(3810, 568)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pg0re"]
@@ -914,45 +911,6 @@ _data = {
 
 [node name="Node" type="Node"]
 script = ExtResource("7_yfyqq")
-
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="EggCounter" type="HBoxContainer" parent="HUD"]
-offset_right = 95.0
-offset_bottom = 64.0
-theme_override_constants/separation = 10
-
-[node name="EggIcon" type="TextureRect" parent="HUD/EggCounter"]
-texture_filter = 1
-layout_mode = 2
-texture = ExtResource("2_0cnrv")
-
-[node name="EggCountLabel" type="Label" parent="HUD/EggCounter"]
-texture_filter = 1
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_3u3i4")
-theme_override_font_sizes/font_size = 32
-text = "0"
-
-[node name="BreadCounter" type="HBoxContainer" parent="HUD"]
-offset_top = 64.0
-offset_right = 95.0
-offset_bottom = 128.0
-theme_override_constants/separation = 10
-
-[node name="BreadIcon" type="TextureRect" parent="HUD/BreadCounter"]
-texture_filter = 1
-layout_mode = 2
-texture = ExtResource("4_mry41")
-
-[node name="BreadCountLabel" type="Label" parent="HUD/BreadCounter"]
-texture_filter = 1
-layout_mode = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("3_3u3i4")
-theme_override_font_sizes/font_size = 32
-text = "0"
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -1020,10 +978,7 @@ collision_mask = 2
 [node name="finish" parent="." instance=ExtResource("7_sa7wo")]
 position = Vector2(4862, 392)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2, 25)
-offset = Vector2(576, 324)
-script = ExtResource("7_ldxp8")
+[node name="Camera2D" parent="." instance=ExtResource("10_8dqi4")]
 
 [node name="duck2" parent="." instance=ExtResource("10_eyjyf")]
 position = Vector2(4554, 480)

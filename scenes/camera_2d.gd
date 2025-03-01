@@ -6,6 +6,7 @@ extends Camera2D
 @export var smooth_speed = 0.1
 const LEVEL_END = 5056.0
 const VIEWPORT_WIDTH = 1152.0
+const VIEWPORT_HEIGHT = 648.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
