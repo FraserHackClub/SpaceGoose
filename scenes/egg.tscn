@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dekjhpo0k5564"]
+[gd_scene load_steps=14 format=3 uid="uid://dekjhpo0k5564"]
 
 [ext_resource type="Texture2D" uid="uid://c3i7x8iv1vi5c" path="res://assets/sprites/egg.png" id="1_8j8wy"]
+[ext_resource type="Script" path="res://eggScript.gd" id="1_8pxli"]
 [ext_resource type="Script" path="res://scenes/egg.gd" id="2_3myh1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o2iqr"]
@@ -72,6 +73,7 @@ radius = 20.0
 height = 52.0
 
 [node name="egg" type="CharacterBody2D"]
+script = ExtResource("1_8pxli")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
