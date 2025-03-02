@@ -52,7 +52,8 @@ func _ready():
 	
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
 
-	finish_plate = get_node_or_null("/root/Node/finish")
+	finish_plate = get_node_or_null("../finish")
+	print(finish_plate)
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
 		win_area = finish_plate.get_node_or_null("Area2D")
@@ -106,6 +107,7 @@ func _on_hazards_body_entered(body):
 		game_over(LOSE)
 
 func _on_win_area_body_entered(body):
+	print(body)
 	if body == self:
 		game_over(WIN)
 
@@ -118,7 +120,7 @@ func game_over(state: int):
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
 			var start_y = finish_sprite.position.y
-			var final_target = start_y - 1000  
+			var final_target = start_y - 1000
 			var tween = get_tree().create_tween()
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
@@ -138,7 +140,7 @@ func game_over(state: int):
 func _physics_process(delta: float) -> void:
 	# Gravity
 	if not is_on_floor():
-		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1)
+		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1.0)
 	else:
 		jumpcount = 0
 	
@@ -166,20 +168,21 @@ func _physics_process(delta: float) -> void:
 func _handle_movement(delta: float) -> void:
 	# Jump
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 		jumpcount += 1
 		sfx_jump.play()
 	
 	if Input.is_action_just_pressed("jump") and is_on_wall():
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		sfx_swoosh.play()
+		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
 	
 	var direction := Input.get_axis("left", "right")
 	if direction != 0:
-		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 	

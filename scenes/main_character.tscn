@@ -406,6 +406,7 @@ scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)

@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_pgd1c"]
 
 [node name="Camera2D" type="Camera2D"]
-position = Vector2(2, 25)
 offset = Vector2(576, 324)
 script = ExtResource("1_fs0qw")
 
