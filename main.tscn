@@ -965,11 +965,15 @@ position = Vector2(-86, 638)
 [node name="bread" parent="." instance=ExtResource("5_n0rs2")]
 position = Vector2(387, 526)
 
-[node name="egg" parent="." instance=ExtResource("6_qafud")]
+[node name="egg" parent="." groups=["egg", "item"] instance=ExtResource("6_qafud")]
 position = Vector2(1650, 526)
+collision_layer = 2
+collision_mask = 2
 
-[node name="egg2" parent="." instance=ExtResource("6_qafud")]
+[node name="egg2" parent="." groups=["egg", "item"] instance=ExtResource("6_qafud")]
 position = Vector2(4651, 512)
+collision_layer = 2
+collision_mask = 2
 
 [node name="finish" parent="." instance=ExtResource("7_sa7wo")]
 position = Vector2(4862, 392)
