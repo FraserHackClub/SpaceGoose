@@ -21,6 +21,11 @@ const LOSE = 2
 @onready var finish_plate = null
 @onready var win_area = null
 @onready var finish_sprite = null
+@onready var sfx_collect: AudioStreamPlayer = $sfx_collect
+@onready var sfx_jump: AudioStreamPlayer = $sfx_jump
+@onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
+
+
 
 @onready var inventory_labels = {
 	"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
@@ -83,6 +88,7 @@ func _on_area_body_entered(body):
 		collect_item(body)
 
 func collect_item(item: Object):
+	sfx_collect.play()
 	if item.is_in_group("egg"):
 		inventory["egg"] += 1
 	if item.is_in_group("bread"):
@@ -162,9 +168,11 @@ func _handle_movement(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		jumpcount += 1
+		sfx_jump.play()
 	
 	if Input.is_action_just_pressed("jump") and is_on_wall():
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+		sfx_swoosh.play()
 		$Sprite2D2.show()
 		await get_tree().create_timer(0.2).timeout
 		$Sprite2D2.hide()
