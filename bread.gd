@@ -2,9 +2,9 @@ extends CharacterBody2D
 
 @export var gravity: float = 500.0         
 @export var ground_y: float = 650          
-@export var spawn_protection_duration: float = 0.5
+@export var spawn_protection_duration: float = 0.5 
 @export var fly_up_speed: float = -800  
-@export var disappear_delay: float = 0.35
+@export var disappear_delay: float = 0.15 
 
 var time_since_spawn: float = 0.0
 var collected: bool = false  
@@ -41,7 +41,6 @@ func collect_bread() -> void:
 		return  
 
 	collected = true  
-	sfx_collect.play()
 	set_deferred("collision_layer", 0)  
 	set_deferred("collision_mask", 0)  
 
@@ -49,5 +48,3 @@ func collect_bread() -> void:
 
 	await get_tree().create_timer(disappear_delay).timeout  
 	queue_free()
-	
-@onready var sfx_collect: AudioStreamPlayer = $sfx_collect

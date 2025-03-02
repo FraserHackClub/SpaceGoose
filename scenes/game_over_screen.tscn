@@ -84,5 +84,5 @@ expand_icon = true
 [node name="sfx_gameover" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_dm7t2")
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]

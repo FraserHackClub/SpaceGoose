@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://b14wpevjpm0bk"]
+[gd_scene load_steps=14 format=3 uid="uid://b14wpevjpm0bk"]
 
 [ext_resource type="Texture2D" uid="uid://bs3eanyycabrx" path="res://assets/sprites/bread.png" id="1_4li3e"]
 [ext_resource type="Script" path="res://bread.gd" id="1_6gahb"]
 [ext_resource type="Script" path="res://scenes/bread.gd" id="2_fputl"]
-[ext_resource type="AudioStream" uid="uid://crp56bkywmfbi" path="res://assets/audio/effects/collect.ogg" id="4_isj01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4mk4e"]
 atlas = ExtResource("1_4li3e")
@@ -86,6 +85,3 @@ script = ExtResource("2_fputl")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_y31rh")
-
-[node name="sfx_collect" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_isj01")
