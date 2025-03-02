@@ -6,6 +6,8 @@ const BASE_OFFSET = Vector2(600, 675)
 
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
+@onready var sfx_die: AudioStreamPlayer = $sfx_die
+
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -27,6 +29,7 @@ func _ready():
 
 func set_game_over_state(state: int) -> void:
 	if state == LOSE:
+		sfx_die.play()
 		# Load the death screen image.
 		var death_texture: Texture2D = load("res://assets/sprites/die.png") as Texture2D
 		if death_texture:
