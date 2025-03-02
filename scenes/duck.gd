@@ -47,6 +47,7 @@ func start_falling() -> void:
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0
+	sfx_duckfall.play()
 
 	# Start a timer to remove the duck after a delay.
 	var timer = Timer.new()
@@ -58,3 +59,5 @@ func start_falling() -> void:
 
 func _on_fall_timeout() -> void:
 	queue_free()
+
+@onready var sfx_duckfall: AudioStreamPlayer = $sfx_duckfall
