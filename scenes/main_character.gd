@@ -171,18 +171,18 @@ func _physics_process(delta: float) -> void:
 
 func _handle_movement(delta: float) -> void:
 	# Jump
-	if Input.is_action_just_pressed("jump") and jumpcount < 2:
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
-		jumpcount += 1
-		sfx_jump.play()
-	
-	if Input.is_action_just_pressed("jump") and is_on_wall():
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
-		sfx_swoosh.play()
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
-		$Sprite2D2.show()
-		await get_tree().create_timer(0.2).timeout
-		$Sprite2D2.hide()
+	if Input.is_action_just_pressed("jump"):
+		if is_on_wall():
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+			sfx_swoosh.play()
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
+			$Sprite2D2.show()
+			await get_tree().create_timer(0.2).timeout
+			$Sprite2D2.hide()
+		elif jumpcount < 2:
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
+			jumpcount += 1
+			sfx_jump.play()
 	
 	var direction := Input.get_axis("left", "right")
 	if direction != 0:
