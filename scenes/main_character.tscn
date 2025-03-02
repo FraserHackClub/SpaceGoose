@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 [ext_resource type="AudioStream" uid="uid://b4d35k86ul0py" path="res://assets/audio/effects/goose_jump.ogg" id="10_wksfq"]
+[ext_resource type="AudioStream" uid="uid://ctqr3fk7tnv7y" path="res://assets/audio/effects/goose_swoosh.ogg" id="11_m7x0a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -432,7 +433,7 @@ shape = SubResource("RectangleShape2D_o2pwf")
 stream = ExtResource("10_wksfq")
 
 [node name="sfx_swoosh" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_wksfq")
+stream = ExtResource("11_m7x0a")
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
