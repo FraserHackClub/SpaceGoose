@@ -17,7 +17,7 @@ const LOSE = 2
 @onready var overhead_detector: Area2D = $OverheadDetector
 
 @onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
-@onready var hazards_tilemap: TileMap = get_node_or_null("/root/Node/Hazards")
+@onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
 @onready var finish_plate = null
 @onready var win_area = null
 @onready var finish_sprite: AnimatedSprite2D
@@ -58,7 +58,6 @@ func _ready():
 
 func _level_ready():
 	finish_plate = get_node_or_null("../finish")
-	print(finish_plate)
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
 		win_area = finish_plate.get_node_or_null("Area2D")
