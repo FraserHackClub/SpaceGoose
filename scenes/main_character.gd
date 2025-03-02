@@ -20,7 +20,7 @@ const LOSE = 2
 @onready var hazards_tilemap: TileMap = get_node_or_null("/root/Node/Hazards")
 @onready var finish_plate = null
 @onready var win_area = null
-@onready var finish_sprite = null
+@onready var finish_sprite: AnimatedSprite2D
 @onready var sfx_collect: AudioStreamPlayer = $sfx_collect
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
@@ -124,7 +124,8 @@ func game_over(state: int):
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
 			var start_y = finish_sprite.position.y
-			var final_target = start_y - 1000
+			var final_target = -600
+
 			var tween = get_tree().create_tween()
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
