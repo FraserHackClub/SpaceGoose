@@ -27,12 +27,9 @@ const LOSE = 2
 
 
 
-@onready var inventory_labels = {
-	"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
-	"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
-}
+@export var inventory_labels: Dictionary
 
-@onready var goose = get_node_or_null("/root/Node/goose")
+@onready var goose = get_node_or_null(".")
 
 var jumpcount = 0
 var game_state = 0
@@ -51,7 +48,15 @@ func _ready():
 	$Sprite2D2.hide()
 	
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
+	
+	# Connect OverheadDetector signals using the new Callable syntax.
+	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
+	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
+	
+	#print("Ready: Overhead detector connected.")
+	get_tree().current_scene.level_ready.connect(_level_ready)
 
+func _level_ready():
 	finish_plate = get_node_or_null("../finish")
 	print(finish_plate)
 	if finish_plate != null:
@@ -60,11 +65,11 @@ func _ready():
 		if win_area != null:
 			win_area.connect("body_entered", Callable(self, "_on_win_area_body_entered"))
 	
-	# Connect OverheadDetector signals using the new Callable syntax.
-	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
-	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
+	inventory_labels = {
+		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
+		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
+	}
 	
-	#print("Ready: Overhead detector connected.")
 
 func _on_OverheadDetector_body_entered(body):
 	# Ignore if the body detected is the player itself.
@@ -107,7 +112,6 @@ func _on_hazards_body_entered(body):
 		game_over(LOSE)
 
 func _on_win_area_body_entered(body):
-	print(body)
 	if body == self:
 		game_over(WIN)
 

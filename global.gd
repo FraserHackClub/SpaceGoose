@@ -32,4 +32,3 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	if type is String:
 		entity.add_to_group(type)
 	parent_scene.add_child(entity)
-	print(entity)

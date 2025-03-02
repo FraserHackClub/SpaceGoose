@@ -381,7 +381,7 @@ size = Vector2(29, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
 size = Vector2(64, 64)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="goose" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_tcf3c")
 
