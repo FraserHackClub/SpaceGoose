@@ -6,6 +6,7 @@ const BASE_OFFSET = Vector2(600, 675)
 
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
+@onready var sfx_gameover: AudioStreamPlayer = $sfx_gameover
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -33,6 +34,7 @@ func set_game_over_state(state: int) -> void:
 			texture_rect.texture = death_texture
 			texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			texture_rect.modulate = Color(1, 1, 1, 1)
+			sfx_gameover.play()
 		else:
 			print("Error: Could not load die.png!")
 		show()  # Show the death screen.
