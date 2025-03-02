@@ -8,8 +8,3 @@ func load_level(level_path):
 func _ready() -> void:
 	load_level("res://scenes/worlds/world_1-1.tscn")
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
