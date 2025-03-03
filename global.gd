@@ -32,3 +32,16 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	if type is String:
 		entity.add_to_group(type)
 	parent_scene.add_child(entity)
+	
+func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
+	if array.size() < amount:
+		return null
+	elif array.size() == amount:
+		return array
+	
+	var result_array = []
+	
+	for _i in range(amount):
+		result_array.append(array.pop_at(rng.randi_range(0, array.size() - 1)))
+	
+	return result_array

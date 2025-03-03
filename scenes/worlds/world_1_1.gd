@@ -5,6 +5,7 @@ const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
 const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
+var rng = RandomNumberGenerator.new()
 
 signal level_ready
 
@@ -12,12 +13,24 @@ signal level_ready
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	rng.randomize()
 	var possible_bread_spawn_locations = [
-		
+		Vector2(780, 528),
+		Vector2(1600, 336),
+		Vector2(1600, 528),
+		Vector2(2500, 528),
+		Vector2(2800, 528),
+		Vector2(2975, 528),
+		Vector2(5028, 208),
+		Vector2(4705, 208),
+		Vector2(4512, 208),
+		Vector2(4448, 272),
+		Vector2(4384, 336)
 	]
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 5)
 	var egg_spawn_locations = [Vector2(1650, 526), Vector2(4640, 526)]
 	var duck_spawn_locations = [Vector2(1570, 496), Vector2(4550, 496)]
-	Global.spawn_items(bread_scene, current_scene,  [Vector2(600, 500), Vector2(500, 500)])
+	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 439), "win_zone")
