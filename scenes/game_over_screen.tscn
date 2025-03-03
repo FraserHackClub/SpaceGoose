@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://vr8nl7daua6g"]
+[gd_scene load_steps=9 format=3 uid="uid://vr8nl7daua6g"]
 
 [ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
 [ext_resource type="Texture2D" uid="uid://cikaowdqhho48" path="res://assets/sprites/die.png" id="2_xflxv"]
 [ext_resource type="Texture2D" uid="uid://c8yky7wn50qvb" path="res://assets/sprites/restart.png" id="3_p2e6t"]
+[ext_resource type="AudioStream" uid="uid://byqg72aqusalv" path="res://assets/audio/effects/goose_die.ogg" id="4_d0hr4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dq7uv"]
 bg_color = Color(0, 0, 0, 1)
@@ -80,5 +81,8 @@ shortcut = SubResource("Shortcut_7n5pa")
 icon_alignment = 1
 expand_icon = true
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
+[node name="sfx_die" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_d0hr4")
+
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]

@@ -17,17 +17,19 @@ const LOSE = 2
 @onready var overhead_detector: Area2D = $OverheadDetector
 
 @onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
-@onready var hazards_tilemap: TileMap = get_node_or_null("/root/Node/Hazards")
+@onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
 @onready var finish_plate = null
 @onready var win_area = null
-@onready var finish_sprite = null
+@onready var finish_sprite: AnimatedSprite2D
+@onready var sfx_collect: AudioStreamPlayer = $sfx_collect
+@onready var sfx_jump: AudioStreamPlayer = $sfx_jump
+@onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
-@onready var inventory_labels = {
-	"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
-	"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
-}
 
-@onready var goose = get_node_or_null("/root/Node/goose")
+
+@export var inventory_labels: Dictionary
+
+@onready var goose = get_node_or_null(".")
 
 var jumpcount = 0
 var game_state = 0
@@ -46,19 +48,27 @@ func _ready():
 	$Sprite2D2.hide()
 	
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
-
-	finish_plate = get_node_or_null("/root/Node/finish")
-	if finish_plate != null:
-		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
-		win_area = finish_plate.get_node_or_null("Area2D")
-		if win_area != null:
-			win_area.connect("body_entered", Callable(self, "_on_win_area_body_entered"))
 	
 	# Connect OverheadDetector signals using the new Callable syntax.
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
 	#print("Ready: Overhead detector connected.")
+	get_tree().current_scene.level_ready.connect(_level_ready)
+
+func _level_ready():
+	finish_plate = get_node_or_null("../finish")
+	if finish_plate != null:
+		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
+		win_area = finish_plate.get_node_or_null("Area2D")
+		if win_area != null:
+			win_area.connect("body_entered", Callable(self, "_on_win_area_body_entered"))
+	
+	inventory_labels = {
+		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
+		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
+	}
+	
 
 func _on_OverheadDetector_body_entered(body):
 	# Ignore if the body detected is the player itself.
@@ -83,6 +93,7 @@ func _on_area_body_entered(body):
 		collect_item(body)
 
 func collect_item(item: Object):
+	sfx_collect.play()
 	if item.is_in_group("egg"):
 		inventory["egg"] += 1
 	if item.is_in_group("bread"):
@@ -119,7 +130,8 @@ func game_over(state: int):
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
 			var start_y = finish_sprite.position.y
-			var final_target = start_y - 1000  
+			var final_target = -600
+
 			var tween = get_tree().create_tween()
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
@@ -137,18 +149,10 @@ func game_over(state: int):
 
 
 func _physics_process(delta: float) -> void:
-	var gravity_force = get_gravity().y 
-
-
-	if velocity.y > 0:  
-		if Input.is_action_pressed("down"):  
-			velocity.y += gravity_force * delta  
-		else:  
-			velocity.y += gravity_force * 0.5 * delta  
-	else:  
-		velocity.y += gravity_force * delta 
-
-	if is_on_floor():
+	# Gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1.0)
+	else:
 		jumpcount = 0
 	
 	if game_state == 0:
@@ -167,19 +171,22 @@ func _physics_process(delta: float) -> void:
 		sprite_2d.animation = desired_anim
 func _handle_movement(delta: float) -> void:
 	# Jump
-	if Input.is_action_just_pressed("jump") and jumpcount < 2:
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
-		jumpcount += 1
-	
-	if Input.is_action_just_pressed("jump") and is_on_wall():
-		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
-		$Sprite2D2.show()
-		await get_tree().create_timer(0.2).timeout
-		$Sprite2D2.hide()
+	if Input.is_action_just_pressed("jump"):
+		if is_on_wall():
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+			sfx_swoosh.play()
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
+			$Sprite2D2.show()
+			await get_tree().create_timer(0.2).timeout
+			$Sprite2D2.hide()
+		elif jumpcount < 2:
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
+			jumpcount += 1
+			sfx_jump.play()
 	
 	var direction := Input.get_axis("left", "right")
 	if direction != 0:
-		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+		velocity.x = direction * SPEED * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
+[ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
+[ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -379,7 +381,7 @@ size = Vector2(29, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
 size = Vector2(64, 64)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="goose" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_tcf3c")
 
@@ -404,6 +406,7 @@ scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
@@ -426,6 +429,15 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickupArea"]
 position = Vector2(149, -110)
 shape = SubResource("RectangleShape2D_o2pwf")
+
+[node name="sfx_jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_6bbu8")
+
+[node name="sfx_swoosh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_6bbu8")
+
+[node name="sfx_collect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_3ynm2")
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
