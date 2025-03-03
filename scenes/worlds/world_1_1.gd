@@ -5,6 +5,9 @@ const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
 const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
+
+const LEVEL_LENGTH = 5056.0
+
 var rng = RandomNumberGenerator.new()
 
 signal level_ready
@@ -35,6 +38,6 @@ func _ready() -> void:
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 439), "win_zone")
 	Global.spawn_entity(player_scene, current_scene, Vector2(0, 638))
-	Global.spawn_camera(current_scene)
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	
 	emit_signal("level_ready")
