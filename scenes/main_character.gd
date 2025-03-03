@@ -98,8 +98,15 @@ func collect_item(item: Object):
 		inventory["egg"] += 1
 	if item.is_in_group("bread"):
 		inventory["bread"] += 1
-	
-	item.queue_free()
+
+	# Instead of immediately deleting the item, call its respective collect function
+	if item.has_method("collect_bread"):
+		item.collect_bread()
+	elif item.has_method("collect_egg"):
+		item.collect_egg()
+	else:
+		item.queue_free()  # Default behavior for other items
+
 	update_inventory_labels()
 
 func update_inventory_labels():
@@ -153,7 +160,6 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		
 	if hazards_tilemap:
-		# Shift the player's position 20 pixels to the left
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset
 		var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(adjusted_position))
@@ -163,12 +169,6 @@ func _physics_process(delta: float) -> void:
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
-	
-	# Debug prints for each physics frame:
-	#print("Physics Process -> forced_crouch:", forced_crouch, 
-		  #" | overhead_count:", overhead_count, 
-		  #" | Input 'down':", Input.is_action_pressed("down"))
-
 func _handle_movement(delta: float) -> void:
 	# Jump
 	if Input.is_action_just_pressed("jump"):
