@@ -1005,7 +1005,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(2970, 569), Vector2(3810, 568)]
+"values": [Vector2(2970, 570), Vector2(3810, 570)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pg0re"]
@@ -1060,6 +1060,8 @@ layer_0/tile_data = PackedInt32Array(1900608, 65536, 0, 1966144, 65536, 1, 20316
 
 [node name="MovingPlatform" parent="." instance=ExtResource("11_mgg6x")]
 position = Vector2(2970, 569)
+collision_layer = 15
+collision_mask = 15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MovingPlatform"]
 libraries = {
