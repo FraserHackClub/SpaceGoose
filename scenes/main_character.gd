@@ -129,7 +129,6 @@ func game_over(state: int):
 	if game_state == WIN:
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
-			var start_y = finish_sprite.position.y
 			var final_target = -600
 
 			var tween = get_tree().create_tween()
@@ -169,11 +168,11 @@ func _physics_process(delta: float) -> void:
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
-func _handle_movement(delta: float) -> void:
+func _handle_movement(_delta: float) -> void:
 	# Jump
 	if Input.is_action_just_pressed("jump"):
 		if is_on_wall():
-			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
+			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			sfx_swoosh.play()
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			$Sprite2D2.show()
