@@ -25,7 +25,7 @@ const LOSE = 2
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
-
+@export var time = 60.0
 
 @export var inventory_labels: Dictionary
 
@@ -41,6 +41,8 @@ var inventory = {
 	"egg": 0,
 	"bread": 0,
 }
+
+var timer_label: Node
 
 func _ready():
 	sprite_2d.animation = "default"
@@ -68,6 +70,8 @@ func _level_ready():
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
+	
+	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	
 
 func _on_OverheadDetector_body_entered(body):
@@ -156,9 +160,10 @@ func _physics_process(delta: float) -> void:
 		jumpcount = 0
 	
 	if game_state == 0:
+		_handle_timer(delta)
 		_handle_movement(delta)
 		move_and_slide()
-		
+	
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset
@@ -195,6 +200,15 @@ func _handle_movement(delta: float) -> void:
 		sprite_2d.flip_h = true
 	elif direction > 0:
 		sprite_2d.flip_h = false
+
+func _handle_timer(delta: float):
+	time -= delta
+	time = max(time, 0.0)
+	if timer_label:
+		timer_label.text = str(int(time))
+	
+	if time <= 0:
+			game_over(LOSE)
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
