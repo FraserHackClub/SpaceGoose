@@ -1,12 +1,11 @@
 extends CharacterBody2D
 
 const SPEED = 400.0
-const JUMP_VELOCITY = -900.0
+var JUMP_VELOCITY = -900.0  # Changed from const to var
 const DUCKING_MULTIPLIER = 0.75
 
 const WIN = 1
 const LOSE = 2
-
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionPolygon2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
@@ -25,8 +24,6 @@ const LOSE = 2
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
-
-
 @export var inventory_labels: Dictionary
 
 @onready var goose = get_node_or_null(".")
@@ -44,17 +41,16 @@ var inventory = {
 
 func _ready():
 	sprite_2d.animation = "default"
-	square_hitbox.disabled = false	# Ensure the square hitbox is enabled for detection
+	square_hitbox.disabled = false
 	$Sprite2D2.hide()
 	
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
 	
-	# Connect OverheadDetector signals using the new Callable syntax.
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	#print("Ready: Overhead detector connected.")
 	get_tree().current_scene.level_ready.connect(_level_ready)
+	_set_jump_velocity()
 
 func _level_ready():
 	finish_plate = get_node_or_null("../finish")
@@ -68,28 +64,35 @@ func _level_ready():
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
+	_set_jump_velocity()
 	
+func _set_jump_velocity():
+	var scene = get_tree().current_scene
+	if scene:
+		var scene_path = scene.scene_file_path
+		var current_level = scene_path.get_file().get_basename() if scene_path else ""
+		
+		match current_level:
+			"world_1-2":  # Moon level
+				JUMP_VELOCITY = -1300  # Higher jump on moon makes the fall slower
+			_:  # Default levels
+				JUMP_VELOCITY = -900.0
 
 func _on_OverheadDetector_body_entered(body):
-	# Ignore if the body detected is the player itself.
 	if body == self:
 		return
 	overhead_count += 1
 	forced_crouch = true
-	#print("OverheadDetector: Body ENTERED -> ", body.name, " | overhead_count:", overhead_count)
 
 func _on_OverheadDetector_body_exited(body):
-	# Ignore if the body detected is the player itself.
 	if body == self:
 		return
 	overhead_count = max(overhead_count - 1, 0)
 	if overhead_count == 0:
 		forced_crouch = false
-	#print("OverheadDetector: Body EXITED -> ", body.name, " | overhead_count:", overhead_count)
 
 func _on_area_body_entered(body):
-	# Powerups
-	if body.is_in_group("item"): # Assuming items are in the "item" group
+	if body.is_in_group("item"):
 		collect_item(body)
 
 func collect_item(item: Object):
@@ -99,7 +102,6 @@ func collect_item(item: Object):
 	if item.is_in_group("bread"):
 		inventory["bread"] += 1
 
-	# Instead of immediately deleting the item, call its respective collect function
 	if item.has_method("collect_bread"):
 		item.collect_bread()
 	elif item.has_method("collect_egg"):
@@ -147,11 +149,24 @@ func game_over(state: int):
 	get_tree().get_root().add_child(game_over_screen)
 	game_over_screen.set_game_over_state(state)
 
-
 func _physics_process(delta: float) -> void:
-	# Gravity
+	# Gravity with a falling multiplier that causes a lower (more negative) JUMP_VELOCITY to produce a slower fall.
+	# We compute the base multiplier inversely:
+	# For example:
+	#   - With JUMP_VELOCITY = -900, base multiplier = 900/900 = 1.0.
+	#   - With JUMP_VELOCITY = -1300, base multiplier = 900/1300 ≈ 0.692, making gravity less potent and the fall slower.
 	if not is_on_floor():
-		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1.0)
+		var gravity_force = get_gravity()
+		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
+		
+		if velocity.y > 0:
+			var falling_multiplier = base_fall_multiplier
+			if Input.is_action_pressed("down"):
+				falling_multiplier *= 1.5
+			velocity += gravity_force * delta * falling_multiplier
+		else:
+			# When rising, use normal gravity.
+			velocity += gravity_force * delta
 	else:
 		jumpcount = 0
 	
@@ -169,13 +184,12 @@ func _physics_process(delta: float) -> void:
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
+
 func _handle_movement(delta: float) -> void:
-	# Jump
 	if Input.is_action_just_pressed("jump"):
 		if is_on_wall():
-			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
-			sfx_swoosh.play()
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
+			sfx_swoosh.play()
 			$Sprite2D2.show()
 			await get_tree().create_timer(0.2).timeout
 			$Sprite2D2.hide()
@@ -190,7 +204,6 @@ func _handle_movement(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 	
-	# Flip sprite
 	if direction < 0:
 		sprite_2d.flip_h = true
 	elif direction > 0:
@@ -224,5 +237,4 @@ func _handle_animation() -> String:
 		elif velocity.x == 0 and velocity.y == 0:
 			desired_anim = "default"
 	
-	#print("_handle_animation() -> desired_anim:", desired_anim)
 	return desired_anim
