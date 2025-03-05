@@ -1,6 +1,7 @@
 extends Node
 
 const Camera2d: PackedScene = preload("res://scenes/camera_2d.tscn")
+const MainCharacter: PackedScene = preload("res://scenes/main_character.tscn")
 
 # Restart game and load main scene
 #func restart_game():
@@ -24,6 +25,12 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	camera.position = Vector2(0, 0)
 	camera.LEVEL_LENGTH = level_length
 	parent_scene.add_child(camera)
+
+func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float):
+	var player = player_scene.instantiate()
+	player.position = pos
+	player.time = time
+	parent_scene.add_child(player)
 
 func spawn_entities(scene: PackedScene, parent_scene: Node, pos_list: Array, type):
 	for pos in pos_list:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://kqrvys6ca76t"]
+[gd_scene load_steps=6 format=3 uid="uid://kqrvys6ca76t"]
 
 [ext_resource type="Script" path="res://scenes/camera_2d.gd" id="1_fs0qw"]
 [ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_cqogg"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="3_40275"]
 [ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_pgd1c"]
+[ext_resource type="Texture2D" uid="uid://doipiex75ckw6" path="res://assets/icons/clock.png" id="5_x6f0p"]
 
 [node name="Camera2D" type="Camera2D"]
 offset = Vector2(576, 324)
@@ -47,3 +48,24 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_40275")
 theme_override_font_sizes/font_size = 32
 text = "0"
+
+[node name="Timer" type="HBoxContainer" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 64.0
+grow_horizontal = 0
+
+[node name="TimerLabel" type="Label" parent="HUD/Timer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_40275")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="TimerIcon" type="TextureRect" parent="HUD/Timer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_x6f0p")
