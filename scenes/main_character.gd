@@ -157,12 +157,20 @@ func _physics_process(delta: float) -> void:
 		  #" | overhead_count:", overhead_count, 
 		  #" | Input 'down':", Input.is_action_pressed("down"))
 
+
+func _process(delta: float) -> void:
+	if is_instance_valid(goose):
+		print("Player Y: ", goose.position.y)
+
+
+
+
 func _handle_movement(delta: float) -> void:
 	# Jump
 	if Input.is_action_just_pressed("jump") and jumpcount < 2:
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		jumpcount += 1
-	
+
 	if Input.is_action_just_pressed("jump") and is_on_wall():
 		velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1)
 		$Sprite2D2.show()
