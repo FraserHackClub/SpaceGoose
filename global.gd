@@ -45,7 +45,7 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	
 func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
 	if array.size() < amount:
-		return null
+		return []
 	elif array.size() == amount:
 		return array
 	
