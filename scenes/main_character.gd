@@ -24,6 +24,8 @@ const LOSE = 2
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
+@export var time = 60.0
+
 @export var inventory_labels: Dictionary
 
 @onready var goose = get_node_or_null(".")
@@ -38,6 +40,8 @@ var inventory = {
 	"egg": 0,
 	"bread": 0,
 }
+
+var timer_label: Node
 
 func _ready():
 	sprite_2d.animation = "default"
@@ -65,6 +69,8 @@ func _level_ready():
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
 	_set_jump_velocity()
+	
+	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	
 func _set_jump_velocity():
 	var scene = get_tree().current_scene
@@ -131,7 +137,6 @@ func game_over(state: int):
 	if game_state == WIN:
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
-			var start_y = finish_sprite.position.y
 			var final_target = -600
 
 			var tween = get_tree().create_tween()
@@ -171,9 +176,10 @@ func _physics_process(delta: float) -> void:
 		jumpcount = 0
 	
 	if game_state == 0:
+		_handle_timer(delta)
 		_handle_movement(delta)
 		move_and_slide()
-		
+	
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset
@@ -184,8 +190,8 @@ func _physics_process(delta: float) -> void:
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
-
-func _handle_movement(delta: float) -> void:
+func _handle_movement(_delta: float) -> void:
+	# Jump
 	if Input.is_action_just_pressed("jump"):
 		if is_on_wall():
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
@@ -208,6 +214,15 @@ func _handle_movement(delta: float) -> void:
 		sprite_2d.flip_h = true
 	elif direction > 0:
 		sprite_2d.flip_h = false
+
+func _handle_timer(delta: float):
+	time -= delta
+	time = max(time, 0.0)
+	if timer_label:
+		timer_label.text = str(int(time))
+	
+	if time <= 0:
+			game_over(LOSE)
 
 func _handle_animation() -> String:
 	var desired_anim = "default"

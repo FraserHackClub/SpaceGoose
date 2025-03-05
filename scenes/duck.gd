@@ -11,7 +11,7 @@ func _ready():
 	# Connect the duck's top Area2D signal (for the top collision shape)
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_falling:
 		velocity = Vector2(0, fall_speed)
 		move_and_slide()
