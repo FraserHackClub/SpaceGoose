@@ -2,7 +2,7 @@ extends CanvasLayer
 
 const WIN = 1
 const LOSE = 2
-const BASE_OFFSET = Vector2(600, 675)
+const BASE_OFFSET = Vector2(840, 675)
 
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
@@ -20,7 +20,7 @@ func _ready():
 	# Set the TextureRect’s base position.
 	texture_rect.position = BASE_OFFSET
 	# Set a fixed, smaller scale.
-	self.scale = Vector2(0.4, 0.3)
+	self.scale = Vector2(0.35, 0.3)
 
 
 
