@@ -13,7 +13,24 @@ signal level_ready
 @onready var current_scene = get_tree().current_scene
 
 func _ready() -> void:
-	var possible_bread_spawn_locations = []
+	var possible_bread_spawn_locations = [
+		Vector2(530, 400),
+		Vector2(1480, 512),
+		Vector2(2150,400),
+		Vector2(2760, 400),
+		Vector2(3272, 180),
+		Vector2(4090, 294),
+		Vector2(4484, 510),
+		Vector2(4877, 291),
+		Vector2(5540, 400),
+		Vector2(5910, 176),
+		Vector2(6474, 320),
+		Vector2(7314,394),
+		Vector2(8614, 456),
+		Vector2(9254, 380),
+		Vector2(9892, 460),
+		Vector2(10658, 486)
+	]
 	
 	rng.randomize()
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)

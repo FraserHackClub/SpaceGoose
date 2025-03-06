@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 400.0
+const SPEED = 400
 var JUMP_VELOCITY = -900.0  # Changed from const to var
 const DUCKING_MULTIPLIER = 0.75
 
@@ -80,7 +80,7 @@ func _set_jump_velocity():
 		
 		match current_level:
 			"world_1-2":  # Moon level
-				JUMP_VELOCITY = -1300  # Higher jump on moon makes the fall slower
+				JUMP_VELOCITY = -1400  # Higher jump on moon makes the fall slower
 			_:  # Default levels
 				JUMP_VELOCITY = -900.0
 
