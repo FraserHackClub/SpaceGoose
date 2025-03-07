@@ -3,6 +3,8 @@ extends Node2D
 const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
+const duck_scene: PackedScene = preload("res://scenes/duck.tscn")
+const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 var rng = RandomNumberGenerator.new()
 
 const LEVEL_LENGTH = 11500
@@ -34,9 +36,13 @@ func _ready() -> void:
 	
 	rng.randomize()
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
+	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
+	var egg_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME)
+	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
+	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	
 	emit_signal("level_ready")
