@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=62 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ce5ywa307lr43" path="res://assets/sprites/goose-walk-idle.png" id="4_rbl7j"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
+[ext_resource type="Texture2D" uid="uid://cqsqn0fhei30h" path="res://assets/sprites/helmet.png" id="9_4r58p"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
 [ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
@@ -438,6 +439,11 @@ stream = ExtResource("10_6bbu8")
 
 [node name="sfx_collect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_3ynm2")
+
+[node name="Helmet" type="Sprite2D" parent="."]
+position = Vector2(177, -239)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("9_4r58p")
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

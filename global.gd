@@ -44,12 +44,25 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	parent_scene.add_child(entity)
 	
 func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
-	if array.size() <= amount:
+	if array.size() < amount:
+		return null
+	elif array.size() == amount:
 		return array
 	
 	var result_array = []
 	
 	for _i in range(amount):
 		result_array.append(array.pop_at(rng.randi_range(0, array.size() - 1)))
+		
+		return result_array
+		
+func update_helmet_visibility() -> void:
+	var scene = get_tree().current_scene
+	if scene:
+		var level_name = scene.name
+		if scene.has_node("goose"):
+			var goose = scene.get_node("goose")
+			if goose.has_node("Helmet"):
+				var helmet = goose.get_node("Helmet")
+				helmet.visible = (level_name == "1-2")
 	
-	return result_array

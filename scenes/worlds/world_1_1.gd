@@ -41,4 +41,5 @@ func _ready() -> void:
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	
+	Global.update_helmet_visibility()
 	emit_signal("level_ready")
