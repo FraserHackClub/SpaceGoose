@@ -43,18 +43,24 @@ var inventory = {
 
 var timer_label: Node
 
+
+
+
 func _ready():
 	sprite_2d.animation = "default"
 	square_hitbox.disabled = false
 	$Sprite2D2.hide()
 	
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
-	
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	get_tree().current_scene.level_ready.connect(_level_ready)
 	_set_jump_velocity()
+	
+
+	
+	# Defer level setup so that the scene is fully ready.
+	call_deferred("_level_ready")
 
 func _level_ready():
 	finish_plate = get_node_or_null("../finish")
@@ -69,15 +75,18 @@ func _level_ready():
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
 	_set_jump_velocity()
-	
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	
+
+
+
+
+
 func _set_jump_velocity():
 	var scene = get_tree().current_scene
 	if scene:
 		var scene_path = scene.scene_file_path
 		var current_level = scene_path.get_file().get_basename() if scene_path else ""
-		
 		match current_level:
 			"world_1-2":  # Moon level
 				JUMP_VELOCITY = -1400  # Higher jump on moon makes the fall slower
@@ -138,7 +147,6 @@ func game_over(state: int):
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
 			var final_target = -600
-
 			var tween = get_tree().create_tween()
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
@@ -155,22 +163,15 @@ func game_over(state: int):
 	game_over_screen.set_game_over_state(state)
 
 func _physics_process(delta: float) -> void:
-	# Gravity with a falling multiplier that causes a lower (more negative) JUMP_VELOCITY to produce a slower fall.
-	# We compute the base multiplier inversely:
-	# For example:
-	#   - With JUMP_VELOCITY = -900, base multiplier = 900/900 = 1.0.
-	#   - With JUMP_VELOCITY = -1300, base multiplier = 900/1300 ≈ 0.692, making gravity less potent and the fall slower.
 	if not is_on_floor():
 		var gravity_force = get_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
-		
 		if velocity.y > 0:
 			var falling_multiplier = base_fall_multiplier
 			if Input.is_action_pressed("down"):
 				falling_multiplier *= 1.5
 			velocity += gravity_force * delta * falling_multiplier
 		else:
-			# When rising, use normal gravity.
 			velocity += gravity_force * delta
 	else:
 		jumpcount = 0
@@ -186,12 +187,12 @@ func _physics_process(delta: float) -> void:
 		var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(adjusted_position))
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):
 			game_over(LOSE)
-
+	
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
+
 func _handle_movement(_delta: float) -> void:
-	# Jump
 	if Input.is_action_just_pressed("jump"):
 		if is_on_wall():
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
@@ -222,7 +223,7 @@ func _handle_timer(delta: float):
 		timer_label.text = str(int(time))
 	
 	if time <= 0:
-			game_over(LOSE)
+		game_over(LOSE)
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
