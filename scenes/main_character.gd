@@ -9,6 +9,7 @@ const LOSE = 2
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionPolygon2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
+@onready var helmet: Sprite2D = $Helmet
 # The hitbox we want to consider for terrain collision:
 @onready var square_hitbox = $SquareCollisionShape2D   # <<< This is the specified hitbox
 
@@ -24,6 +25,7 @@ const LOSE = 2
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 
+
 @export var time = 60.0
 
 @export var inventory_labels: Dictionary
@@ -32,6 +34,7 @@ const LOSE = 2
 
 var jumpcount = 0
 var game_state = 0
+
 
 # Overhead detection variables
 var overhead_count := 0
@@ -50,7 +53,7 @@ func _ready():
 	sprite_2d.animation = "default"
 	square_hitbox.disabled = false
 	$Sprite2D2.hide()
-	
+	sprite_2d.connect("frame_changed", Callable(self, "_on_goose_frame_changed"))
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
@@ -77,6 +80,16 @@ func _level_ready():
 	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	
+#=
+			
+
+
+
+func _on_goose_frame_changed() -> void:
+	if sprite_2d.animation != "default":
+		return
+	var positions = [ -242, -237, -230, -226, -230, -237, -242, -237, -230, -226, -230, -237 ]
+	helmet.position.y = positions[sprite_2d.frame % positions.size()]
 
 
 
@@ -213,7 +226,10 @@ func _handle_movement(_delta: float) -> void:
 	
 	if direction < 0:
 		sprite_2d.flip_h = true
+		helmet.position.x = 126
+		
 	elif direction > 0:
+		helmet.position.x = 180
 		sprite_2d.flip_h = false
 
 func _handle_timer(delta: float):
@@ -224,16 +240,17 @@ func _handle_timer(delta: float):
 	
 	if time <= 0:
 		game_over(LOSE)
-
 func _handle_animation() -> String:
 	var desired_anim = "default"
 	
 	if Input.is_action_just_pressed("restart"):
 		Global.restart_game()
 	
+
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true
 		hitbox_crouch.disabled = false
+		helmet.position.y = -170   
 		desired_anim = "crouch_idle"
 		if abs(velocity.x) > 1 and velocity.y == 0:
 			desired_anim = "sneak"
@@ -244,13 +261,20 @@ func _handle_animation() -> String:
 	else:
 		hitbox_normal.disabled = false
 		hitbox_crouch.disabled = true
-		if abs(velocity.x) > 1 and velocity.y == 0:
-			desired_anim = "walk"
-		elif velocity.y > 1:
-			desired_anim = "glide"
-		elif velocity.y < -1:
-			desired_anim = "jump"
-		elif velocity.x == 0 and velocity.y == 0:
+
+		if abs(velocity.x) > 0 or abs(velocity.y) > 0:
+			helmet.position.y = -242 
+			if abs(velocity.x) > 1 and velocity.y == 0:
+				desired_anim = "walk"
+			elif velocity.y > 1:
+				desired_anim = "glide"
+			elif velocity.y < -1:
+				desired_anim = "jump"
+			else:
+				desired_anim = "default"
+		else:
+
 			desired_anim = "default"
+		
 	
 	return desired_anim

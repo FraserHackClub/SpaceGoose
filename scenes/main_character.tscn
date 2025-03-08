@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ce5ywa307lr43" path="res://assets/sprites/goose-walk-idle.png" id="4_rbl7j"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
-[ext_resource type="Texture2D" uid="uid://cqsqn0fhei30h" path="res://assets/sprites/helmet.png" id="9_4r58p"]
+[ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="9_4r58p"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
 [ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
@@ -260,7 +260,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -388,12 +388,11 @@ script = ExtResource("1_tcf3c")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(151, -174)
+position = Vector2(149, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
-animation = &"walk"
 autoplay = "default"
-frame = 11
-frame_progress = 0.329782
+frame = 6
+frame_progress = 0.1818
 
 [node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(156, -126)
@@ -441,8 +440,7 @@ stream = ExtResource("10_6bbu8")
 stream = ExtResource("11_3ynm2")
 
 [node name="Helmet" type="Sprite2D" parent="."]
-position = Vector2(177, -239)
-scale = Vector2(1.2, 1.2)
+position = Vector2(180, -242)
 texture = ExtResource("9_4r58p")
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
