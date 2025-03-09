@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0icqb2lv6drm"]
+
+[ext_resource type="Script" path="res://dripstone.gd" id="1_akwyh"]
+[ext_resource type="Texture2D" uid="uid://b22olw8acdfqn" path="res://assets/sprites/dripstone.png" id="1_b8qdf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ukbur"]
+size = Vector2(61, 872.5)
+
+[node name="Dripstone" type="CharacterBody2D"]
+script = ExtResource("1_akwyh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6, 0)
+texture = ExtResource("1_b8qdf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-38, -60, -16, 48, 6, 49, 34, -60)
+
+[node name="TriggerArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
+position = Vector2(0, 436.75)
+shape = SubResource("RectangleShape2D_ukbur")
+
+[node name="Timer" type="Timer" parent="."]
