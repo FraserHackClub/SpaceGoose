@@ -39,7 +39,7 @@ func _ready() -> void:
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
 	var egg_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
-	var dripstone_spawn_locations = [Vector2(7484, 62), Vector2(7674, 62), Vector2(7784, 62), Vector2(7912, 62), Vector2(8040,62), Vector2(8168,62), Vector2(8296,62), Vector2(7576, 62)]
+	var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME)

@@ -14,6 +14,8 @@ position = Vector2(6, 0)
 texture = ExtResource("1_b8qdf")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 7.82334)
+scale = Vector2(1, 0.904243)
 polygon = PackedVector2Array(-38, -60, -16, 48, 6, 49, 34, -60)
 
 [node name="TriggerArea" type="Area2D" parent="."]
