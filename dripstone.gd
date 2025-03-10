@@ -39,18 +39,19 @@ func _physics_process(delta: float) -> void:
 	if falling:
 		velocity.y += gravity * fall_speed_multiplier * delta
 		move_and_slide()
+		
+		# Always check for collisions while falling.
+		for i in range(get_slide_collision_count()):
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			if collider.name == "goose" and not game_over_triggered:
+				collider.game_over(collider.LOSE)
+				game_over_triggered = true
+				
+		# After checking collisions, mark as landed if on the floor.
 		if is_on_floor():
 			falling = false
 			landed = true
 	else:
 		velocity = Vector2.ZERO
 		move_and_slide()
-	
-	# Only check for collisions if the dripstone hasn't landed.
-	if not game_over_triggered and not landed:
-		for i in range(get_slide_collision_count()):
-			var collision = get_slide_collision(i)
-			var collider = collision.get_collider()
-			if collider.name == "goose":
-				collider.game_over(collider.LOSE)
-				game_over_triggered = true

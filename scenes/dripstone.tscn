@@ -16,12 +16,12 @@ texture = ExtResource("1_b8qdf")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, 7.82334)
 scale = Vector2(1, 0.904243)
-polygon = PackedVector2Array(-38, -60, -16, 48, 6, 49, 34, -60)
+polygon = PackedVector2Array(-38, -60, -15, 57.702, 6, 58.8079, 34, -60)
 
 [node name="TriggerArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea"]
-position = Vector2(0, 436.75)
+position = Vector2(0, 442)
 shape = SubResource("RectangleShape2D_ukbur")
 
 [node name="Timer" type="Timer" parent="."]
