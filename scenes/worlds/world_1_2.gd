@@ -6,6 +6,7 @@ const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
 const duck_scene: PackedScene = preload("res://scenes/duck.tscn")
 const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 const dripstone_scene: PackedScene = preload("res://scenes/dripstone.tscn")
+const basket_scene: PackedScene = preload("res://scenes/basket.tscn")
 var rng = RandomNumberGenerator.new()
 
 const LEVEL_LENGTH = 11500
@@ -39,8 +40,10 @@ func _ready() -> void:
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
 	var egg_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
+	var basket_spawn_locations = [Vector2(810,430), Vector2(7444, 416), Vector2(7864, -65)];
 	var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
+	Global.spawn_items(basket_scene,current_scene,basket_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
