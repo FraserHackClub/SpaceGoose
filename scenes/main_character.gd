@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 400
+const SPEED = 300
 var JUMP_VELOCITY = -900.0  # Changed from const to var
 const DUCKING_MULTIPLIER = 0.75
 

@@ -1,9 +1,8 @@
 extends CharacterBody2D
 
 @export_range(0.5, 5.0, 0.1)
-var fall_delay_min: float = 0.2
-@export_range(0.5, 5.0, 0.1)
-var fall_delay_max: float = 0.8
+var fall_delay_min: float = 0.4
+var fall_delay_max: float = 1.0
 var contact_monitor = false
 var contacts_reported = 0
 
