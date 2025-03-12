@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxrvkokllcflm"]
+[gd_scene load_steps=9 format=3 uid="uid://bxrvkokllcflm"]
 
 [ext_resource type="Texture2D" uid="uid://dgki7v6q2s6uw" path="res://assets/sprites/rockiet.png" id="1_l3byj"]
+[ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="2_y22hl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6vf5s"]
 atlas = ExtResource("1_l3byj")
@@ -60,3 +61,6 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_d0f3h")
+
+[node name="Blastoff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_y22hl")

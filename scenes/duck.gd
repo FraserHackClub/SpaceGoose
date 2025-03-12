@@ -7,7 +7,7 @@ extends CharacterBody2D
 var direction: Vector2 = Vector2.LEFT
 var is_falling: bool = false
 
-@onready var sfx_duckfall: AudioStreamPlayer = $sfx_duckfall
+@onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("default")

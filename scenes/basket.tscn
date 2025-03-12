@@ -143,5 +143,5 @@ frame_progress = 0.607558
 position = Vector2(0, 1.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
-position = Vector2(0, -1.5)
+position = Vector2(-11.5, -25.5)
 shape = SubResource("RectangleShape2D_vbnq7")

@@ -24,6 +24,7 @@ const LOSE = 2
 @onready var sfx_collect: AudioStreamPlayer = $sfx_collect
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
+@onready var sfx_blastoff: AudioStreamPlayer = $Blastoff
 
 
 @export var time = 60.0
@@ -168,6 +169,8 @@ func game_over(state: int):
 		
 		if goose:
 			goose.hide()
+			sfx_blastoff.play()
+			
 		else:
 			print("Goose node not found!")
 	

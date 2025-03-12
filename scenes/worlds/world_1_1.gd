@@ -31,7 +31,7 @@ func _ready() -> void:
 		Vector2(4448, 272),
 		Vector2(4384, 336)
 	]
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 5)
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var egg_spawn_locations = [Vector2(1650, 526), Vector2(4640, 526)]
 	var duck_spawn_locations = [Vector2(1570, 496), Vector2(4550, 496)]
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
