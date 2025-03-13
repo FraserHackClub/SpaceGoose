@@ -19,20 +19,28 @@ func _ready() -> void:
 	# Then check for special scenes with a slight delay to ensure scene is fully loaded
 	call_deferred("_check_scene")
 	
-	# Connect to scene tree signals to handle scene changes
-	if get_tree() != null:
-		get_tree().connect("node_added", Callable(self, "_on_node_added"))
+	# Connect to Global's level_changed signal
+	Global.connect("level_changed", Callable(self, "_on_level_changed"))
 
-func _on_node_added(node: Node) -> void:
-	# Add proper null checks
-	if node == null or get_tree() == null or get_tree().current_scene == null:
-		return
-		
-	# When new nodes are added to the tree, check if we need to update our animation
-	if node == get_tree().current_scene:
-		call_deferred("_check_scene")
+func _on_level_changed(level_index: int) -> void:
+	# When the level changes, update our animation based on the level index
+	call_deferred("_update_animation_for_level", level_index)
+
+func _update_animation_for_level(level_index: int) -> void:
+	if level_index == 1:  # Second level (index 1)
+		print("Space level detected (index 1), playing spaceDuck animation")
+		animated_sprite.play("spaceDuck")
+	else:
+		print("Regular level detected (index " + str(level_index) + "), playing default animation")
+		animated_sprite.play("default")
 
 func _check_scene() -> void:
+	# First check if we can use the Global's current level index
+	if Global.current_level_index >= 0:
+		_update_animation_for_level(Global.current_level_index)
+		return
+		
+	# Fallback to scene detection if Global doesn't have a valid level index
 	# Add null checks
 	if get_tree() == null or get_tree().current_scene == null:
 		return
@@ -61,10 +69,10 @@ func _check_scene() -> void:
 	
 	# Apply the correct animation
 	if is_space_level:
-		print("Space level detected, playing spaceDuck animation")
+		print("Space level detected through scene detection, playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
-		print("Regular level detected, playing default animation")
+		print("Regular level detected through scene detection, playing default animation")
 		animated_sprite.play("default")
 
 func _physics_process(_delta: float) -> void:

@@ -182,6 +182,9 @@ func game_over(state: int):
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
+		# Store the current level index in the game over screen
+		if game_over_screen.has_method("set_level_index"):
+			game_over_screen.set_level_index(Global.current_level_index)
 
 func change_to_next_level():
 	# Check current level before switching
@@ -268,12 +271,15 @@ func _handle_timer(delta: float):
 	
 	if time <= 0:
 		game_over(LOSE)
+
 func _handle_animation() -> String:
 	var desired_anim = "default"
 	
 	if Input.is_action_just_pressed("restart"):
-		Global.restart_game()
-	
+		# Only handle restart if we're not in a game over state
+		if game_state == 0:
+			Global.restart_game()
+		return desired_anim
 
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true
@@ -301,11 +307,10 @@ func _handle_animation() -> String:
 			else:
 				desired_anim = "default"
 		else:
-
 			desired_anim = "default"
-		
 	
 	return desired_anim
+
 func toggle_helmet() -> void:
 	if helmet:
 		helmet.visible = !helmet.visible

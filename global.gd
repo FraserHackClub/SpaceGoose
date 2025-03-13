@@ -39,12 +39,28 @@ func switch_level(level_index):
 		push_error("Main scene not found!")
 		return false
 
-# Restart game and load main scene
+# Restart game and load current level
 func restart_game():
-	get_tree().reload_current_scene()
-	# If the death screen is persistent, reset its state
-	if has_node("GameOverScreen"):
-		get_node("GameOverScreen").reset()
+	# Store the current level index
+	var current_index = current_level_index
+	print("Restarting level with index: ", current_index)
+	
+	# First, remove any game over screens that might be present
+	remove_game_over_screens()
+	
+	# If we're in a level, use switch_level to properly reload it
+	if has_level(current_index):
+		switch_level(current_index)
+	else:
+		# Fallback to reloading the current scene if we're not in a tracked level
+		get_tree().reload_current_scene()
+
+# Helper function to remove any game over screens
+func remove_game_over_screens():
+	var root = get_tree().get_root()
+	for child in root.get_children():
+		if child.get_name() == "GameOverScreen" or child.is_in_group("game_over_screen"):
+			child.queue_free()
 
 func spawn_enemies(scene: PackedScene, parent_scene: Node, pos_list):
 	spawn_entities(scene, parent_scene, pos_list, "enemy")
