@@ -46,7 +46,7 @@ var inventory = {
 }
 
 var timer_label: Node
-
+var level_changing = false
 
 
 
@@ -97,15 +97,16 @@ func _on_goose_frame_changed() -> void:
 
 
 func _set_jump_velocity():
-	var scene = get_tree().current_scene
-	if scene:
-		var scene_path = scene.scene_file_path
-		var current_level = scene_path.get_file().get_basename() if scene_path else ""
-		match current_level:
-			"world_1-2":  # Moon level
-				JUMP_VELOCITY = -1400  # Higher jump on moon makes the fall slower
-			_:  # Default levels
-				JUMP_VELOCITY = -900.0
+	var current_level_index = Global.current_level_index
+	
+	match current_level_index:
+		1:
+			JUMP_VELOCITY = -1400
+		_:
+			JUMP_VELOCITY = -900.0
+	
+	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
+
 
 func _on_OverheadDetector_body_entered(body):
 	if body == self:
@@ -153,7 +154,7 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
-	if game_state != 0:
+	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
 	game_state = state
@@ -170,15 +171,39 @@ func game_over(state: int):
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
-			
+			# Wait for the blastoff sound to play before changing level
+			level_changing = true
+			await get_tree().create_timer(11.0).timeout
+			change_to_next_level()
 		else:
 			print("Goose node not found!")
+	else:
+		# For LOSE state, show game over screen as before
+		var game_over_screen = game_over_screen_scene.instantiate()
+		get_tree().get_root().add_child(game_over_screen)
+		game_over_screen.set_game_over_state(state)
+
+func change_to_next_level():
+	# Check current level before switching
+	var current_level_index = Global.current_level_index
+	var next_level_index = current_level_index + 1
 	
-	var game_over_screen = game_over_screen_scene.instantiate()
-	get_tree().get_root().add_child(game_over_screen)
-	game_over_screen.set_game_over_state(state)
+	print("Changing from level index", current_level_index, "to", next_level_index)
+	
+	# Check if there's a next level to go to
+	if Global.has_level(next_level_index):
+		Global.change_level(next_level_index)
+	else:
+		print("No more levels! Game complete!")
+		# Show a game completion screen or return to main menu
+		var game_over_screen = game_over_screen_scene.instantiate()
+		get_tree().get_root().add_child(game_over_screen)
+		game_over_screen.set_game_over_state(WIN)
 
 func _physics_process(delta: float) -> void:
+	if level_changing:
+		return
+		
 	if not is_on_floor():
 		var gravity_force = get_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
@@ -281,3 +306,9 @@ func _handle_animation() -> String:
 		
 	
 	return desired_anim
+func toggle_helmet() -> void:
+	if helmet:
+		helmet.visible = !helmet.visible
+		print("Helmet visibility toggled to: ", helmet.visible)
+	else:
+		print("Helmet node not found")
