@@ -159,8 +159,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
-	if is_instance_valid(goose):
-		print("Player Y: ", goose.position.y)
+	pass
+	#if is_instance_valid(goose):
+		#print("Player Y: ", goose.position.y)
 
 
 

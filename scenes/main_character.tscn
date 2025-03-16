@@ -1,6 +1,7 @@
-[gd_scene load_steps=59 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
+[ext_resource type="PackedScene" uid="uid://bdeou4rt4b4ki" path="res://scenes/player_gun.tscn" id="2_1i6l0"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
 [ext_resource type="Texture2D" uid="uid://uq11x13sq5yx" path="res://assets/sprites/goose-crouch-idle.png" id="4_5vfar"]
@@ -9,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
+[ext_resource type="PackedScene" uid="uid://bar376pcs68fc" path="res://scenes/Bullet.tscn" id="11_cs6h8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -384,7 +386,7 @@ script = ExtResource("1_tcf3c")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(151, -174)
+position = Vector2(3, -63.4)
 sprite_frames = SubResource("SpriteFrames_835on")
 animation = &"walk"
 autoplay = "default"
@@ -392,30 +394,30 @@ frame = 11
 frame_progress = 0.329782
 
 [node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(156, -126)
+position = Vector2(7.99998, -15.4)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(148, -50)
+position = Vector2(1.52588e-05, 60.6)
 scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
-position = Vector2(151.229, -138.5)
+position = Vector2(3.229, -27.9)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(2, -1)
+position = Vector2(-146, 109.6)
 polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
 
 [node name="OverheadDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OverheadDetector"]
-position = Vector2(163.5, -234)
+position = Vector2(25, -124)
 shape = SubResource("RectangleShape2D_5ndes")
 
 [node name="ItemPickupArea" type="Area2D" parent="."]
@@ -423,8 +425,14 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickupArea"]
-position = Vector2(149, -110)
+position = Vector2(-1, -13)
 shape = SubResource("RectangleShape2D_o2pwf")
+
+[node name="Player_Gun" parent="." instance=ExtResource("2_1i6l0")]
+position = Vector2(-1.00005, -27)
+scale = Vector2(0.607002, 0.607002)
+
+[node name="Bullet" parent="." instance=ExtResource("11_cs6h8")]
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]
