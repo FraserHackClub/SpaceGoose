@@ -9,10 +9,14 @@ extends CharacterBody2D
 var time_since_spawn: float = 0.0
 var collected: bool = false  
 
+func _ready() -> void:
+	# Add this bread instance to the "bread" group for easier detection by the goose.
+	add_to_group("bread")
+
 func _physics_process(delta: float) -> void:
 	if collected:
 		velocity.y = fly_up_speed  
-		move_and_slide()
+		move_and_slide()  # Fixed typo here.
 		return  
 
 	time_since_spawn += delta
@@ -28,6 +32,8 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 
+	# During the spawn protection period, if this bread collides with another CharacterBody2D (like the goose),
+	# trigger collection.
 	if time_since_spawn < spawn_protection_duration:
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)

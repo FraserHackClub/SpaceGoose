@@ -13,7 +13,7 @@ var rng = RandomNumberGenerator.new()
 
 signal level_ready
 
-@onready var current_scene = get_tree().current_scene
+@onready var current_scene = self
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,5 +40,6 @@ func _ready() -> void:
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 439), "win_zone")
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
-	
+	#Global.update_helmet_visibility()
 	emit_signal("level_ready")
+	

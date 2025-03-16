@@ -1014,7 +1014,7 @@ _data = {
 "move": SubResource("Animation_x0058")
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 script = ExtResource("1_aet5s")
 
 [node name="TextureRect2" type="TextureRect" parent="."]

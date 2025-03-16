@@ -1,15 +1,15 @@
 extends CharacterBody2D
 
-const SPEED = 400.0
-const JUMP_VELOCITY = -900.0
+const SPEED = 300
+var JUMP_VELOCITY = -900.0  # Changed from const to var
 const DUCKING_MULTIPLIER = 0.75
 
 const WIN = 1
 const LOSE = 2
-
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var hitbox_normal = $CollisionPolygon2D
 @onready var hitbox_crouch = $CollisionShape2D_Duck
+@onready var helmet: Sprite2D = $Helmet
 # The hitbox we want to consider for terrain collision:
 @onready var square_hitbox = $SquareCollisionShape2D   # <<< This is the specified hitbox
 
@@ -24,6 +24,8 @@ const LOSE = 2
 @onready var sfx_collect: AudioStreamPlayer = $sfx_collect
 @onready var sfx_jump: AudioStreamPlayer = $sfx_jump
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
+@onready var sfx_blastoff: AudioStreamPlayer = $Blastoff
+
 
 @export var time = 60.0
 
@@ -34,6 +36,7 @@ const LOSE = 2
 var jumpcount = 0
 var game_state = 0
 
+
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
@@ -43,20 +46,25 @@ var inventory = {
 }
 
 var timer_label: Node
+var level_changing = false
+
+
 
 func _ready():
 	sprite_2d.animation = "default"
-	square_hitbox.disabled = false	# Ensure the square hitbox is enabled for detection
+	square_hitbox.disabled = false
 	$Sprite2D2.hide()
-	
+	sprite_2d.connect("frame_changed", Callable(self, "_on_goose_frame_changed"))
 	$ItemPickupArea.connect("body_entered", _on_area_body_entered)
-	
-	# Connect OverheadDetector signals using the new Callable syntax.
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	#print("Ready: Overhead detector connected.")
-	get_tree().current_scene.level_ready.connect(_level_ready)
+	_set_jump_velocity()
+	
+
+	
+	# Defer level setup so that the scene is fully ready.
+	call_deferred("_level_ready")
 
 func _level_ready():
 	finish_plate = get_node_or_null("../finish")
@@ -70,30 +78,51 @@ func _level_ready():
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
-	
+	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	
+#=
+			
+
+
+
+func _on_goose_frame_changed() -> void:
+	if sprite_2d.animation != "default":
+		return
+	var positions = [ -242, -237, -230, -226, -230, -237, -242, -237, -230, -226, -230, -237 ]
+	helmet.position.y = positions[sprite_2d.frame % positions.size()]
+
+
+
+
+
+func _set_jump_velocity():
+	var current_level_index = Global.current_level_index
+	
+	match current_level_index:
+		1:
+			JUMP_VELOCITY = -1400
+		_:
+			JUMP_VELOCITY = -900.0
+	
+	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
+
 
 func _on_OverheadDetector_body_entered(body):
-	# Ignore if the body detected is the player itself.
 	if body == self:
 		return
 	overhead_count += 1
 	forced_crouch = true
-	#print("OverheadDetector: Body ENTERED -> ", body.name, " | overhead_count:", overhead_count)
 
 func _on_OverheadDetector_body_exited(body):
-	# Ignore if the body detected is the player itself.
 	if body == self:
 		return
 	overhead_count = max(overhead_count - 1, 0)
 	if overhead_count == 0:
 		forced_crouch = false
-	#print("OverheadDetector: Body EXITED -> ", body.name, " | overhead_count:", overhead_count)
 
 func _on_area_body_entered(body):
-	# Powerups
-	if body.is_in_group("item"): # Assuming items are in the "item" group
+	if body.is_in_group("item"):
 		collect_item(body)
 
 func collect_item(item: Object):
@@ -103,7 +132,6 @@ func collect_item(item: Object):
 	if item.is_in_group("bread"):
 		inventory["bread"] += 1
 
-	# Instead of immediately deleting the item, call its respective collect function
 	if item.has_method("collect_bread"):
 		item.collect_bread()
 	elif item.has_method("collect_egg"):
@@ -126,7 +154,7 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
-	if game_state != 0:
+	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
 	game_state = state
@@ -134,7 +162,6 @@ func game_over(state: int):
 		if finish_sprite:
 			finish_sprite.animation = "blastoff"
 			var final_target = -600
-
 			var tween = get_tree().create_tween()
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
@@ -143,18 +170,53 @@ func game_over(state: int):
 		
 		if goose:
 			goose.hide()
+			sfx_blastoff.play()
+			# Wait for the blastoff sound to play before changing level
+			level_changing = true
+			await get_tree().create_timer(11.0).timeout
+			change_to_next_level()
 		else:
 			print("Goose node not found!")
-	
-	var game_over_screen = game_over_screen_scene.instantiate()
-	get_tree().get_root().add_child(game_over_screen)
-	game_over_screen.set_game_over_state(state)
+	else:
+		# For LOSE state, show game over screen as before
+		var game_over_screen = game_over_screen_scene.instantiate()
+		get_tree().get_root().add_child(game_over_screen)
+		game_over_screen.set_game_over_state(state)
+		# Store the current level index in the game over screen
+		if game_over_screen.has_method("set_level_index"):
+			game_over_screen.set_level_index(Global.current_level_index)
 
+func change_to_next_level():
+	# Check current level before switching
+	var current_level_index = Global.current_level_index
+	var next_level_index = current_level_index + 1
+	
+	print("Changing from level index", current_level_index, "to", next_level_index)
+	
+	# Check if there's a next level to go to
+	if Global.has_level(next_level_index):
+		Global.change_level(next_level_index)
+	else:
+		print("No more levels! Game complete!")
+		# Show a game completion screen or return to main menu
+		var game_over_screen = game_over_screen_scene.instantiate()
+		get_tree().get_root().add_child(game_over_screen)
+		game_over_screen.set_game_over_state(WIN)
 
 func _physics_process(delta: float) -> void:
-	# Gravity
+	if level_changing:
+		return
+		
 	if not is_on_floor():
-		velocity += get_gravity() * delta * (1.5 if Input.is_action_pressed("down") else 1.0)
+		var gravity_force = get_gravity()
+		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
+		if velocity.y > 0:
+			var falling_multiplier = base_fall_multiplier
+			if Input.is_action_pressed("down"):
+				falling_multiplier *= 1.5
+			velocity += gravity_force * delta * falling_multiplier
+		else:
+			velocity += gravity_force * delta
 	else:
 		jumpcount = 0
 	
@@ -169,17 +231,16 @@ func _physics_process(delta: float) -> void:
 		var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(adjusted_position))
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):
 			game_over(LOSE)
-
+	
 	var desired_anim = _handle_animation()
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
+
 func _handle_movement(_delta: float) -> void:
-	# Jump
 	if Input.is_action_just_pressed("jump"):
 		if is_on_wall():
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			sfx_swoosh.play()
-			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			$Sprite2D2.show()
 			await get_tree().create_timer(0.2).timeout
 			$Sprite2D2.hide()
@@ -194,10 +255,12 @@ func _handle_movement(_delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, 12)
 	
-	# Flip sprite
 	if direction < 0:
 		sprite_2d.flip_h = true
+		helmet.position.x = 126
+		
 	elif direction > 0:
+		helmet.position.x = 180
 		sprite_2d.flip_h = false
 
 func _handle_timer(delta: float):
@@ -207,17 +270,21 @@ func _handle_timer(delta: float):
 		timer_label.text = str(int(time))
 	
 	if time <= 0:
-			game_over(LOSE)
+		game_over(LOSE)
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
 	
 	if Input.is_action_just_pressed("restart"):
-		Global.restart_game()
-	
+		# Only handle restart if we're not in a game over state
+		if game_state == 0:
+			Global.restart_game()
+		return desired_anim
+
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true
 		hitbox_crouch.disabled = false
+		helmet.position.y = -170   
 		desired_anim = "crouch_idle"
 		if abs(velocity.x) > 1 and velocity.y == 0:
 			desired_anim = "sneak"
@@ -228,14 +295,25 @@ func _handle_animation() -> String:
 	else:
 		hitbox_normal.disabled = false
 		hitbox_crouch.disabled = true
-		if abs(velocity.x) > 1 and velocity.y == 0:
-			desired_anim = "walk"
-		elif velocity.y > 1:
-			desired_anim = "glide"
-		elif velocity.y < -1:
-			desired_anim = "jump"
-		elif velocity.x == 0 and velocity.y == 0:
+
+		if abs(velocity.x) > 0 or abs(velocity.y) > 0:
+			helmet.position.y = -242 
+			if abs(velocity.x) > 1 and velocity.y == 0:
+				desired_anim = "walk"
+			elif velocity.y > 1:
+				desired_anim = "glide"
+			elif velocity.y < -1:
+				desired_anim = "jump"
+			else:
+				desired_anim = "default"
+		else:
 			desired_anim = "default"
 	
-	#print("_handle_animation() -> desired_anim:", desired_anim)
 	return desired_anim
+
+func toggle_helmet() -> void:
+	if helmet:
+		helmet.visible = !helmet.visible
+		print("Helmet visibility toggled to: ", helmet.visible)
+	else:
+		print("Helmet node not found")

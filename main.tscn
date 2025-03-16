@@ -2,5 +2,7 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_sylx8"]
 
-[node name="Node" type="Node"]
+[node name="Main" type="Node"]
 script = ExtResource("1_sylx8")
+
+[node name="LevelContainer" type="Node" parent="."]
