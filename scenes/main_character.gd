@@ -220,6 +220,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		jumpcount = 0
 	
+	if goose.position.y >= 800:
+		game_over(LOSE)
+	
 	if game_state == 0:
 		_handle_timer(delta)
 		_handle_movement(delta)
