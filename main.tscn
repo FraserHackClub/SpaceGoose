@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dkiddq4jcf3fc"]
+[gd_scene load_steps=26 format=3 uid="uid://dkiddq4jcf3fc"]
 
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="1_mrbfn"]
 [ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_0cnrv"]
@@ -9,13 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="4_fcpxq"]
 [ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_mry41"]
 [ext_resource type="PackedScene" uid="uid://b14wpevjpm0bk" path="res://scenes/bread.tscn" id="5_n0rs2"]
+[ext_resource type="Texture2D" uid="uid://3finh2t8stx6" path="res://assets/sprites/Solar-Fragment.png" id="5_yaehf"]
 [ext_resource type="PackedScene" uid="uid://dekjhpo0k5564" path="res://scenes/egg.tscn" id="6_qafud"]
-[ext_resource type="Script" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
+[ext_resource type="Script" uid="uid://cg5q72t3ogvmv" path="res://scenes/camera_2d.gd" id="7_ldxp8"]
 [ext_resource type="PackedScene" uid="uid://bxrvkokllcflm" path="res://scenes/finish.tscn" id="7_sa7wo"]
-[ext_resource type="Script" path="res://scenes/spawnBread.gd" id="7_yfyqq"]
+[ext_resource type="Script" uid="uid://c5kwkid1vhlp3" path="res://scenes/spawnBread.gd" id="7_yfyqq"]
 [ext_resource type="PackedScene" uid="uid://y20l3ff4mvhr" path="res://scenes/duck.tscn" id="10_eyjyf"]
 [ext_resource type="PackedScene" uid="uid://bflp3u1sqwula" path="res://scenes/moving_platform.tscn" id="11_jkwc6"]
-[ext_resource type="Script" path="res://InvisibleBorder.gd" id="16_dnwys"]
+[ext_resource type="Script" uid="uid://dgip777v4ctej" path="res://InvisibleBorder.gd" id="16_dnwys"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqm7l"]
 texture = ExtResource("2_op8q6")
@@ -909,8 +910,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pg0re"]
 _data = {
-"RESET": SubResource("Animation_twfg4"),
-"move": SubResource("Animation_x0058")
+&"RESET": SubResource("Animation_twfg4"),
+&"move": SubResource("Animation_x0058")
 }
 
 [sub_resource type="TileSet" id="TileSet_rk52m"]
@@ -951,6 +952,27 @@ layout_mode = 2
 texture = ExtResource("4_mry41")
 
 [node name="BreadCountLabel" type="Label" parent="HUD/BreadCounter"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3u3i4")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="BulletCounter" type="HBoxContainer" parent="HUD"]
+offset_left = 124.0
+offset_top = 43.0
+offset_right = 219.0
+offset_bottom = 107.0
+theme_override_constants/separation = 10
+
+[node name="BulletIcon" type="TextureRect" parent="HUD/BulletCounter"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_yaehf")
+expand_mode = 3
+
+[node name="BulletCountLabel" type="Label" parent="HUD/BulletCounter"]
 texture_filter = 1
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -1025,24 +1047,12 @@ collision_mask = 2
 position = Vector2(4862, 392)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(5, 567)
+position = Vector2(450, 557)
 offset = Vector2(0, -200)
 script = ExtResource("7_ldxp8")
 
 [node name="duck2" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
 position = Vector2(4554, 479)
-
-[node name="duck4" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
-position = Vector2(2492, 478)
-
-[node name="duck5" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
-position = Vector2(2213, 503)
-
-[node name="duck6" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
-position = Vector2(2577, 495)
-
-[node name="duck3" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
-position = Vector2(2385, 483)
 
 [node name="duck" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
 position = Vector2(1568, 493)
@@ -1052,7 +1062,7 @@ position = Vector2(2970, 569)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MovingPlatform"]
 libraries = {
-"": SubResource("AnimationLibrary_pg0re")
+&"": SubResource("AnimationLibrary_pg0re")
 }
 autoplay = "move"
 

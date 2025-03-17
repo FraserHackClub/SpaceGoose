@@ -1,6 +1,6 @@
 [gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
 
-[ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
+[ext_resource type="Script" uid="uid://5h0y06gt3j0n" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="PackedScene" uid="uid://bdeou4rt4b4ki" path="res://scenes/player_gun.tscn" id="2_1i6l0"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://bdeou4rt4b4ki"]
 
 [ext_resource type="Texture2D" uid="uid://dytp6g0vqivo3" path="res://assets/sprites/image (4).png" id="1_336d6"]
-[ext_resource type="Script" path="res://scenes/player_gun.gd" id="1_t6s3g"]
+[ext_resource type="Script" uid="uid://t70ejvnd8apv" path="res://scenes/player_gun.gd" id="1_t6s3g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28eub"]
 atlas = ExtResource("1_336d6")
@@ -185,8 +185,7 @@ texture_filter = 1
 position = Vector2(53, -16)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_jctad")
-animation = &"AK47_Reloading"
-frame_progress = 0.226024
+animation = &"AK47_Default"
 
 [node name="BarrelMarker2D" type="Marker2D" parent="."]
 position = Vector2(205, -42)

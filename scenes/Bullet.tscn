@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bar376pcs68fc"]
 
-[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_1knss"]
+[ext_resource type="Script" uid="uid://db07cabsw4uev" path="res://scenes/bullet.gd" id="1_1knss"]
 [ext_resource type="Texture2D" uid="uid://dej04cnaqtbrl" path="res://assets/sprites/New Piskel (34).png" id="2_lrmry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rloh"]
