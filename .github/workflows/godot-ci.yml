@@ -37,9 +37,6 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_FILENAME.exe"
-          git add build
-          git commit -m "release build $TAG_NAME for Windows"
-          git push
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -68,10 +65,7 @@ jobs:
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_FILENAME.x86_64"
-          git add build
-          git commit -m "release build $TAG_NAME for Linux"
-          git push
+          godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_FILENAME.x86_64"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -101,9 +95,6 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
-          git add build
-          git commit -m "release build $TAG_NAME for HTML5"
-          git push
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
