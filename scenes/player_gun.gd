@@ -8,6 +8,12 @@ var is_reloading = false  # Prevents shooting & animation override
 
 func _process(delta: float) -> void:
 	look_at(get_global_mouse_position())
+	
+	rotation_degrees = wrap(rotation_degrees, 0, 360)
+	if rotation_degrees > 90 and rotation_degrees < 270:
+		scale.y = -0.75
+	else:
+		scale.y = 0.75
 
 	if Input.is_action_just_pressed("Reload") and not is_reloading:
 		await _reload()

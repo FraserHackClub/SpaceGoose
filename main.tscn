@@ -1026,13 +1026,25 @@ position = Vector2(4862, 392)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(5, 567)
-offset = Vector2(1570, -200)
+offset = Vector2(0, -200)
 script = ExtResource("7_ldxp8")
 
-[node name="duck2" parent="." instance=ExtResource("10_eyjyf")]
+[node name="duck2" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
 position = Vector2(4554, 479)
 
-[node name="duck" parent="." instance=ExtResource("10_eyjyf")]
+[node name="duck4" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
+position = Vector2(2492, 478)
+
+[node name="duck5" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
+position = Vector2(2213, 503)
+
+[node name="duck6" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
+position = Vector2(2577, 495)
+
+[node name="duck3" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
+position = Vector2(2385, 483)
+
+[node name="duck" parent="." groups=["enemies"] instance=ExtResource("10_eyjyf")]
 position = Vector2(1568, 493)
 
 [node name="MovingPlatform" parent="." instance=ExtResource("11_jkwc6")]

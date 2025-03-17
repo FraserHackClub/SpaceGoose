@@ -140,7 +140,7 @@ position = Vector2(0, 2)
 sprite_frames = SubResource("SpriteFrames_tk74f")
 autoplay = "default"
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["enemies"]]
 
 [node name="CollisionShape2D_side" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-2, 19)

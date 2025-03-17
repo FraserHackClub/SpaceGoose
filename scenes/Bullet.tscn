@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bar376pcs68fc"]
+[gd_scene load_steps=4 format=3 uid="uid://bar376pcs68fc"]
 
 [ext_resource type="Script" path="res://scenes/bullet.gd" id="1_1knss"]
 [ext_resource type="Texture2D" uid="uid://dej04cnaqtbrl" path="res://assets/sprites/New Piskel (34).png" id="2_lrmry"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rloh"]
+size = Vector2(22, 10)
 
 [node name="Bullet" type="Node2D"]
 script = ExtResource("1_1knss")
@@ -15,4 +18,10 @@ texture = ExtResource("2_lrmry")
 position = Vector2(-0.5, -0.5)
 scale = Vector2(1.45, 0.85)
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_8rloh")
+
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

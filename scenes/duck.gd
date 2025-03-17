@@ -68,14 +68,30 @@ func _physics_process(delta: float) -> void:
 
 	if goose_touching and (goose_on_top or (goose and not goose.is_on_floor())):
 		start_falling()
+	
+
+
+
+#Group Assignment
+func _ready():
+	add_to_group("enemies")  # Add the enemy scene to the group, NOT the hitbox!
+#Compliments Bullet Hit Logic
+
+
+
+
+
+
 
 func start_falling() -> void:
 	is_falling = true
 
-	$CollisionShape2D.disabled = true
-	collision_layer = 0
-	collision_mask = 0
+	# Defer all physics modifications
+	$CollisionShape2D.call_deferred("set_disabled", true)
+	call_deferred("set_collision_layer", 0)
+	call_deferred("set_collision_mask", 0)
 
+	# Timer to delete the duck after falling
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.wait_time = fall_delete_delay

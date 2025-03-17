@@ -71,5 +71,5 @@ theme_override_icons/icon = ExtResource("3_p2e6t")
 icon_alignment = 1
 expand_icon = true
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
