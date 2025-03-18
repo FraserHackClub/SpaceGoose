@@ -1,6 +1,6 @@
 [gd_scene load_steps=64 format=3 uid="uid://k85h5866618m"]
 
-[ext_resource type="Script" uid="uid://5h0y06gt3j0n" path="res://scenes/main_character.gd" id="1_tcf3c"]
+[ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="PackedScene" uid="uid://bdeou4rt4b4ki" path="res://scenes/player_gun.tscn" id="2_1i6l0"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
 [ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="9_4r58p"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
-[ext_resource type="PackedScene" uid="uid://bar376pcs68fc" path="res://scenes/Bullet.tscn" id="11_cs6h8"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
 [ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
 [ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
@@ -404,7 +403,7 @@ shape = SubResource("RectangleShape2D_p46we")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(1.52588e-05, 60.6)
+position = Vector2(149, -34)
 scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
@@ -450,10 +449,8 @@ position = Vector2(180, -242)
 texture = ExtResource("9_4r58p")
 
 [node name="Player_Gun" parent="." instance=ExtResource("2_1i6l0")]
-position = Vector2(-1.00005, -27)
+position = Vector2(132, -126)
 scale = Vector2(0.607002, 0.607002)
-
-[node name="Bullet" parent="." instance=ExtResource("11_cs6h8")]
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

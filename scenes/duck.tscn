@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://du6nelr40ctwo" path="res://assets/sprites/duckspace.png" id="4_p8gcj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e1sg"]
-size = Vector2(80, 91)
+size = Vector2(80, 92)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08o1r"]
 atlas = ExtResource("1_3iaxc")
@@ -148,27 +148,28 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
-size = Vector2(72, 17)
+size = Vector2(72, 16)
 
-[node name="Duck" type="CharacterBody2D"]
+[node name="Duck" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 15
+collision_mask = 15
 script = ExtResource("1_tqw0h")
 
 [node name="CollisionShape2D_side" type="CollisionShape2D" parent="."]
-position = Vector2(0, 18.5)
+position = Vector2(0, 18)
 shape = SubResource("RectangleShape2D_8e1sg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -1)
 sprite_frames = SubResource("SpriteFrames_tk74f")
-animation = &"spaceDuck"
 autoplay = "default"
-frame_progress = 0.952666
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 15
+collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -35.5)
+position = Vector2(0, -36)
 shape = SubResource("RectangleShape2D_mn2o7")
 
 [node name="DuckDie" type="AudioStreamPlayer" parent="."]
