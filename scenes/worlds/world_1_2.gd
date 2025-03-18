@@ -13,11 +13,11 @@ var rng = RandomNumberGenerator.new()
 const LEVEL_LENGTH = 11500
 const TIME = 120.0
 
+@onready var current_scene = self
+
 signal level_ready
 
 func _ready() -> void:
-	# Use self instead of get_tree().current_scene
-	var current_scene = self
 	var possible_bread_spawn_locations = [
 		Vector2(530, 400),
 		Vector2(1480, 512),
