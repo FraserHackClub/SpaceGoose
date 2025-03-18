@@ -33,6 +33,9 @@ func _on_trigger_area_body_entered(body: Node) -> void:
 
 func _on_timer_timeout() -> void:
 	falling = true
+	
+func start_falling() -> void:
+	queue_free()
 
 func _physics_process(delta: float) -> void:
 	if falling:

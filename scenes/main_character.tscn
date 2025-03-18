@@ -1,6 +1,6 @@
-[gd_scene load_steps=63 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=64 format=3 uid="uid://k85h5866618m"]
 
-[ext_resource type="Script" path="res://scenes/main_character.gd" id="1_tcf3c"]
+[ext_resource type="Script" uid="uid://cpse362qabw28" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
 [ext_resource type="Texture2D" uid="uid://cgkdw5bbw4ixh" path="res://assets/sprites/goose-idle.png" id="2_bypi8"]
 [ext_resource type="Texture2D" uid="uid://uq11x13sq5yx" path="res://assets/sprites/goose-crouch-idle.png" id="4_5vfar"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
 [ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
 [ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
+[ext_resource type="PackedScene" uid="uid://dcly4eh4gvtio" path="res://scenes/player_gun.tscn" id="14_pvtuh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -446,6 +447,10 @@ stream = ExtResource("12_noefn")
 [node name="Helmet" type="Sprite2D" parent="."]
 position = Vector2(180, -242)
 texture = ExtResource("9_4r58p")
+
+[node name="PlayerGun" parent="." instance=ExtResource("14_pvtuh")]
+position = Vector2(136, -125)
+scale = Vector2(0.655295, 0.655295)
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

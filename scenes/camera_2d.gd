@@ -8,7 +8,8 @@ extends Camera2D
 const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
-
+func _ready():
+	Global.bullet_counter = $HUD/BulletCounter/BulletCountLabel
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
