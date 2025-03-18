@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 		position.x = lerp(position.x, target_x, smooth_speed)
 	
 
-func update_viewport_size():
-	# Get the actual viewport size
-	VIEWPORT_WIDTH = get_viewport_rect().size.x
-	VIEWPORT_HEIGHT = get_viewport_rect().size.y
+#func update_viewport_size():
+	## Get the actual viewport size
+	#VIEWPORT_WIDTH = get_viewport_rect().size.x
+	#VIEWPORT_HEIGHT = get_viewport_rect().size.y

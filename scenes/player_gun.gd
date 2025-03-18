@@ -2,8 +2,7 @@ extends Node2D
 
 @onready var barrel_marker: Marker2D = $BarrelMarker2D
 @onready var SPRITE: AnimatedSprite2D = $AnimatedSprite2D2
-@onready var bullet_counter: Label = $"../../HUD/BulletCounter/BulletCountLabel"
-
+var bullet_counter: Label
 
 
 var BULLET = preload("res://scenes/bullet.tscn")
@@ -11,6 +10,12 @@ var Bulletamount = int(30)
 
 
 var is_reloading = false  # Prevents shooting & animation override
+
+func _ready() -> void:
+	call_deferred("_level_ready")
+
+func _level_ready() -> void:
+	bullet_counter = $"../../Camera2D/HUD/BulletCounter/BulletCountLabel"
 
 func _process(delta: float) -> void:
 	look_at(get_global_mouse_position())
