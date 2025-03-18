@@ -124,11 +124,6 @@ jobs:
         with:
           name: web-${{ github.ref_name }}
           path: build/
-      
-      - name: Zip Build
-        run: |
-          cd build
-          zip -r build.zip *
 
       - name: Create Release
         id: create_release
@@ -140,44 +135,33 @@ jobs:
           release_name: Release ${{ github.ref_name }}
           draft: true
           prerelease: false
-      
-      - name: Upload Asset
+
+      - name: Upload Windows Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/build.zip
-          asset_name: build.zip
+          asset_path: build/${{ env.PROJECT_NAME }}-windows-${{ github.ref_name }}.exe
+          asset_name: ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+
+      - name: Upload Linux Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/${{ env.PROJECT_NAME }}-linux-${{ github.ref_name }}.x86_64
+          asset_name: ${{ github.ref_name }}.x86_64
+          asset_content_type: application/octet-stream
+
+      - name: Upload Web Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/${{ env.PROJECT_NAME }}-web-${{ github.ref_name }}.zip
+          asset_name: web-${{ github.ref_name }}.zip
           asset_content_type: application/zip
-
-
-      # - name: Upload Windows Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: windows_build/windows-${{ github.ref_name }}.exe
-      #     asset_name: ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.exe
-      #     asset_content_type: application/vnd.microsoft.portable-executable
-
-      # - name: Upload Linux Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: linux_build/linux-${{ github.ref_name }}.x86_64
-      #     asset_name: ${{ github.ref_name }}.x86_64
-      #     asset_content_type: application/octet-stream
-
-      # - name: Upload Web Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: web_build/web-${{ github.ref_name }}.zip
-      #     asset_name: web-${{ github.ref_name }}.zip
-      #     asset_content_type: application/zip
