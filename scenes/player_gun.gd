@@ -21,10 +21,10 @@ func _process(delta: float) -> void:
 	else:
 		scale.y = 0.75
 
-	if Input.is_action_just_pressed("Reload") and not is_reloading:
+	if Input.is_action_just_pressed("reload") and not is_reloading:
 		await _reload()
 	
-	if Input.is_action_just_pressed("Shoot") and not is_reloading:
+	if Input.is_action_just_pressed("shoot") and not is_reloading:
 		_shoot()
 
 	if not is_reloading:
