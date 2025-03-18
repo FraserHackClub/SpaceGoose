@@ -19,7 +19,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: "$PROJECT_NAME-${{ github.ref_name }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,12 +35,12 @@ jobs:
           mkdir -v -p build/windows
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_FILENAME.exe"
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/${{ env.PROJECT_NAME }}-${{ env.TAG_NAME }}.exe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-${{ env.TAG_NAME }}
-          path: build/windows
+          path: build/windows/${{ env.PROJECT_NAME }}-${{ env.TAG_NAME }}.exe
 
   export-linux:
     name: Linux Export
@@ -50,7 +49,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,12 +63,12 @@ jobs:
           mkdir -v -p build/linux
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_FILENAME.x86_64"
+          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/${env.PROJECT_NAME}-${env.TAG_NAME}.x86_64"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux-${{ env.TAG_NAME }}
-          path: build/linux
+          path: build/linux/${{ env.PROJECT_NAME }}-${{ env.TAG_NAME }}.x86_64
 
   export-web:
     name: Web Export
@@ -79,7 +77,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -94,11 +91,11 @@ jobs:
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/${{ env.PROJECT_NAME }}-${{ env.TAG_NAME }}/index.html"
       - name: Zip Web Build
         run: |
           cd build
-          zip -r web-${{ env.TAG_NAME }}.zip web/
+          zip -r web-${{ env.TAG_NAME }}.zip web/${{ env.PROJECT_NAME }}-${{ env.TAG_NAME }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
