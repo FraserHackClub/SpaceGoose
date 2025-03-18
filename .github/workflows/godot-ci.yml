@@ -103,6 +103,8 @@ jobs:
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: [export-windows, export-linux, export-web]
     steps:
       - name: Download Windows Artifact
