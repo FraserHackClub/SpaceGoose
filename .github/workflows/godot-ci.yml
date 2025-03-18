@@ -34,6 +34,7 @@ jobs:
       - name: Windows Build
         run: |
           cd $PROJECT_PATH
+          mkdir -v -p $EXPORT_DIR
           godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-windows-${{ env.TAG_NAME }}.exe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -60,6 +61,7 @@ jobs:
       - name: Linux Build
         run: |
           cd $PROJECT_PATH
+          mkdir -v -p $EXPORT_DIR
           godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-linux-${{ env.TAG_NAME }}.x86_64"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -86,6 +88,7 @@ jobs:
       - name: Web Build
         run: |
           cd $PROJECT_PATH
+          mkdir -v -p $EXPORT_DIR
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}/index.html"
       - name: Zip Web Build
         run: |
