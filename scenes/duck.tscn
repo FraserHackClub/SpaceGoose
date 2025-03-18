@@ -1,7 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://y20l3ff4mvhr"]
+[gd_scene load_steps=27 format=3 uid="uid://y20l3ff4mvhr"]
 
 [ext_resource type="Texture2D" uid="uid://b7vyj1cumvccp" path="res://assets/sprites/duck-walk.png" id="1_3iaxc"]
-[ext_resource type="Script" path="res://scenes/duck.gd" id="1_tqw0h"]
+[ext_resource type="Script" uid="uid://d2o5uqawskuor" path="res://scenes/duck.gd" id="1_tqw0h"]
 [ext_resource type="AudioStream" uid="uid://gu1g66bcvr2b" path="res://assets/audio/effects/duck_die.mp3" id="4_eydad"]
 [ext_resource type="Texture2D" uid="uid://du6nelr40ctwo" path="res://assets/sprites/duckspace.png" id="4_p8gcj"]
 
@@ -150,7 +150,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mn2o7"]
 size = Vector2(72, 17)
 
-[node name="Duck" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kls7j"]
+size = Vector2(95, 115)
+
+[node name="Duck" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_tqw0h")
 
 [node name="CollisionShape2D_side" type="CollisionShape2D" parent="."]
@@ -170,6 +173,12 @@ frame_progress = 0.952666
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, -35.5)
 shape = SubResource("RectangleShape2D_mn2o7")
+
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(-4.5, 6.5)
+shape = SubResource("RectangleShape2D_kls7j")
 
 [node name="DuckDie" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_eydad")

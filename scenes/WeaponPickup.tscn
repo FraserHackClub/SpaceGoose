@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dku0nw67umeqg"]
+
+[ext_resource type="Script" uid="uid://d3d05btiqy05k" path="res://scenes/weapon_pickup.gd" id="1_4c0k1"]
+[ext_resource type="Texture2D" uid="uid://dfo70fu3glq4n" path="res://assets/sprites/image (4).png" id="2_cxdhy"]
+[ext_resource type="Script" uid="uid://g166mupx7dj1" path="res://scenes/animated_sprite_2d.gd" id="3_by0yp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_by0yp"]
+atlas = ExtResource("2_cxdhy")
+region = Rect2(0, 0, 320, 120)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54eao"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_by0yp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lonmt"]
+size = Vector2(175, 51)
+
+[node name="WeaponPickup" type="CharacterBody2D" groups=["item", "weapons"]]
+script = ExtResource("1_4c0k1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.623468, 0.623468)
+sprite_frames = SubResource("SpriteFrames_54eao")
+script = ExtResource("3_by0yp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_lonmt")

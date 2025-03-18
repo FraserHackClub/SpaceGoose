@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://cxbhxr3iytal3"]
 
-[ext_resource type="Script" path="res://basket.gd" id="1_kv7jm"]
+[ext_resource type="Script" uid="uid://l564lthf6o8s" path="res://basket.gd" id="1_kv7jm"]
 [ext_resource type="Texture2D" uid="uid://b1wtxxn4oltet" path="res://assets/sprites/picnic spritesheet.png" id="1_vn22p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e63mk"]
