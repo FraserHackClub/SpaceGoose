@@ -15,17 +15,9 @@ func _process(delta: float) -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
-	
 
-
-	# Check if the area belongs to a duck
-
-
-
-	
-
-
-func _on_area_2d_area_entered(touchedarea):
+# Check if the area belongs to a duck
+func _on_area_2d_area_entered(touchedarea: Node):
 	print("Bullet hit something:", touchedarea.name)
 	print("Groups:", touchedarea.get_groups())  
 

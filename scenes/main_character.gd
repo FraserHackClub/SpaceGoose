@@ -44,14 +44,6 @@ var inventory = {
 	"bread": 0,
 }
 
-# Overhead detection variables
-var overhead_count := 0
-var forced_crouch := false
-var inventory = {
-	"egg": 0,
-	"bread": 0,
-}
-
 var timer_label: Node
 var level_changing = false
 
