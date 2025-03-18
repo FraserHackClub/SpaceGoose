@@ -66,7 +66,7 @@ func spawn_enemies(scene: PackedScene, parent_scene: Node, pos_list):
 	spawn_entities(scene, parent_scene, pos_list, "enemy")
 
 func spawn_items(scene: PackedScene, parent_scene: Node, pos_list):
-	spawn_entities(scene, parent_scene, pos_list, "enemy")
+	spawn_entities(scene, parent_scene, pos_list, "item")
 
 func spawn_camera(parent_scene: Node, level_length: float):
 	var camera = Camera2d.instantiate()
