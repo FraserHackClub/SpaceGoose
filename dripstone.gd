@@ -6,6 +6,9 @@ var fall_delay_max: float = 1.0
 var contact_monitor = false
 var contacts_reported = 0
 
+@onready var sprite = $AnimatedSprite2D
+
+
 var gravity: float = 980.0
 @export var fall_speed_multiplier: float = 2.0
 
@@ -15,6 +18,7 @@ var landed: bool = false
 var game_over_triggered: bool = false
 
 func _ready() -> void:
+	sprite.play("default")
 	randomize()
 	velocity = Vector2.ZERO
 	contact_monitor = true
@@ -35,6 +39,8 @@ func _on_timer_timeout() -> void:
 	falling = true
 	
 func start_falling() -> void:
+	sprite.play("exploding")  # Start animation
+	await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds
 	queue_free()
 
 func _physics_process(delta: float) -> void:

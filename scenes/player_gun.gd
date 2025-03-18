@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var barrel_marker: Marker2D = $BarrelMarker2D
 @onready var SPRITE: AnimatedSprite2D = $AnimatedSprite2D2
+@onready var sfx_gunshoot: AudioStreamPlayer = $Gun_Shoot
+@onready var sfx_gunreload: AudioStreamPlayer = $Gun_Reload
 
 var BULLET = preload("res://scenes/bullet.tscn")
 var Bulletamount = 30
@@ -70,7 +72,7 @@ func _reload() -> void:
 
 	is_reloading = true
 	print("Setting animation to Reloading")
-
+	sfx_gunreload.play()
 	SPRITE.animation = "AK47_Reloading"
 	SPRITE.play()  # Ensure the animation plays
 
@@ -103,6 +105,7 @@ func _shoot():
 		return
 
 	if Bulletamount > 0:
+		sfx_gunshoot.play()
 		var bullet_instance = BULLET.instantiate()
 		get_tree().root.add_child(bullet_instance)
 		bullet_instance.global_position = barrel_marker.global_position
