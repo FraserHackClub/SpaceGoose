@@ -88,7 +88,7 @@ jobs:
       - name: Web Build
         run: |
           cd $PROJECT_PATH
-          mkdir -v -p $EXPORT_DIR
+          mkdir -v -p $EXPORT_DIR/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}/
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}/index.html"
       - name: Zip Web Build
         run: |
