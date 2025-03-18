@@ -2,10 +2,12 @@ extends CanvasLayer
 
 const WIN = 1
 const LOSE = 2
-const BASE_OFFSET = Vector2(600, 675)
+const BASE_OFFSET = Vector2(840, 675)
 
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
+@onready var sfx_die: AudioStreamPlayer = $sfx_die
+
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -18,7 +20,7 @@ func _ready():
 	# Set the TextureRect’s base position.
 	texture_rect.position = BASE_OFFSET
 	# Set a fixed, smaller scale.
-	self.scale = Vector2(0.4, 0.3)
+	self.scale = Vector2(0.35, 0.3)
 
 
 
@@ -27,6 +29,7 @@ func _ready():
 
 func set_game_over_state(state: int) -> void:
 	if state == LOSE:
+		sfx_die.play()
 		# Load the death screen image.
 		var death_texture: Texture2D = load("res://assets/sprites/die.png") as Texture2D
 		if death_texture:
@@ -50,7 +53,7 @@ func set_game_over_state(state: int) -> void:
 		
 func reset() -> void:
 	hide()
-	texture_rect.position = BASE_OFFSET		# Reset the position
+	texture_rect.position = BASE_OFFSET # Reset the position
 	# Optionally, stop any active tweens if stored
 		
 		

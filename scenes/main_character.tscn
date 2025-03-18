@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=64 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" uid="uid://5h0y06gt3j0n" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="PackedScene" uid="uid://bdeou4rt4b4ki" path="res://scenes/player_gun.tscn" id="2_1i6l0"]
@@ -9,8 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://ce5ywa307lr43" path="res://assets/sprites/goose-walk-idle.png" id="4_rbl7j"]
 [ext_resource type="Texture2D" uid="uid://bei1nmm7shybe" path="res://assets/sprites/Propulsion.png" id="5_l1r7p"]
 [ext_resource type="Texture2D" uid="uid://37t08sc281k8" path="res://assets/sprites/goose-jump.png" id="7_jbs0o"]
+[ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="9_4r58p"]
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 [ext_resource type="PackedScene" uid="uid://bar376pcs68fc" path="res://scenes/Bullet.tscn" id="11_cs6h8"]
+[ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
+[ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
+[ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -259,7 +263,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 6.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -381,20 +385,20 @@ size = Vector2(29, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
 size = Vector2(64, 64)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="goose" type="CharacterBody2D"]
+texture_filter = 1
 script = ExtResource("1_tcf3c")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(3, -63.4)
+position = Vector2(149, -174)
 sprite_frames = SubResource("SpriteFrames_835on")
-animation = &"walk"
 autoplay = "default"
-frame = 11
-frame_progress = 0.329782
+frame = 6
+frame_progress = 0.1818
 
 [node name="SquareCollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(7.99998, -15.4)
+position = Vector2(156, -126)
 scale = Vector2(0.998369, 0.998309)
 shape = SubResource("RectangleShape2D_p46we")
 
@@ -405,19 +409,20 @@ scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
 [node name="CollisionShape2D_Duck" type="CollisionShape2D" parent="."]
-position = Vector2(3.229, -27.9)
+visible = false
+position = Vector2(151.229, -138.5)
 rotation = -3.14159
 scale = Vector2(121.474, 5.79698)
 shape = SubResource("RectangleShape2D_1e7ql")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2(-146, 109.6)
+position = Vector2(2, -1)
 polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
 
 [node name="OverheadDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OverheadDetector"]
-position = Vector2(25, -124)
+position = Vector2(163.5, -234)
 shape = SubResource("RectangleShape2D_5ndes")
 
 [node name="ItemPickupArea" type="Area2D" parent="."]
@@ -425,8 +430,24 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemPickupArea"]
-position = Vector2(-1, -13)
+position = Vector2(149, -110)
 shape = SubResource("RectangleShape2D_o2pwf")
+
+[node name="sfx_jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_6bbu8")
+
+[node name="sfx_swoosh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_6bbu8")
+
+[node name="sfx_collect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_3ynm2")
+
+[node name="Blastoff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_noefn")
+
+[node name="Helmet" type="Sprite2D" parent="."]
+position = Vector2(180, -242)
+texture = ExtResource("9_4r58p")
 
 [node name="Player_Gun" parent="." instance=ExtResource("2_1i6l0")]
 position = Vector2(-1.00005, -27)

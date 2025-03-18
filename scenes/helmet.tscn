@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://da1i5kcu3864r"]
+
+[ext_resource type="Script" path="res://helmet.gd" id="1_sem44"]
+
+[node name="Helmet" type="CharacterBody2D"]
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1_sem44")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxrvkokllcflm"]
+[gd_scene load_steps=9 format=3 uid="uid://bxrvkokllcflm"]
 
 [ext_resource type="Texture2D" uid="uid://dgki7v6q2s6uw" path="res://assets/sprites/rockiet.png" id="1_l3byj"]
+[ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="2_y22hl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6vf5s"]
 atlas = ExtResource("1_l3byj")
@@ -44,20 +45,22 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0f3h"]
-size = Vector2(187, 254)
+size = Vector2(184, 244)
 
 [node name="finish" type="CharacterBody2D" groups=["win_zone"]]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(1, -7)
+position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_y35jx")
 animation = &"blastoff"
-autoplay = "blastoff"
-frame_progress = 0.212662
+autoplay = "idle"
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1, -6)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_d0f3h")
+
+[node name="Blastoff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_y22hl")
