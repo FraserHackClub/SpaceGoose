@@ -34,25 +34,45 @@ func _process(delta: float) -> void:
 
 	if not is_reloading:
 		_handle_animation()
-	bullet_counter.text = str(Bulletamount)
+
+	# Update bullet counter on UI
+	if Global.bullet_counter:
+		Global.bullet_counter.text = str(Bulletamount)
+
+	#print("Gun Process Running | Activated:", activated, "| Visible:", self.visible)
+
+func _pickedup() -> void:
+	print("DEBUG: _pickedup() function called!")  # Verify function call
+	activated = true
+
+	# Enable visibility and processing
+	self.show()
+	self.set_process(true)
+	self.set_physics_process(true)
+
+	#print("Gun picked up! Activated:", activated, "| Visible:", self.visible)
+
 func _reload() -> void:
+	if not activated:
+		print("Cannot reload, gun is not active!")
+		return
+
 	is_reloading = true
 	print("Setting animation to Reloading")
-	
-	SPRITE.animation = "AK47_Reloading"
-	SPRITE.play()  # Ensure the animation actually plays
 
-	# Manually set the reload animation duration (adjust to match your animation length)
+	SPRITE.animation = "AK47_Reloading"
+	SPRITE.play()  # Ensure the animation plays
+
 	var reload_time = 1.4  
 	print("Waiting for reload animation:", reload_time, "seconds")
 
 	await get_tree().create_timer(reload_time).timeout  # Wait for the animation to finish
 	
-	Bulletamount = int(30)
+	Bulletamount = 30
 
 	print("Setting animation to Default")
 	SPRITE.animation = "AK47_Default"
-	SPRITE.play()  # Ensure default animation plays
+	SPRITE.play()
 
 	is_reloading = false
 	print("Reload complete!")
@@ -67,6 +87,10 @@ func shake(node: Node2D, duration: float = 1.0, intensity: float = 5.0):
 	node.position = original_position  # Reset position after shaking
 
 func _shoot():
+	if not activated:
+		print("Cannot shoot, gun is not active!")
+		return
+
 	if Bulletamount > 0:
 		var bullet_instance = BULLET.instantiate()
 		get_tree().root.add_child(bullet_instance)
@@ -74,7 +98,7 @@ func _shoot():
 		bullet_instance.rotation = rotation
 		Bulletamount -= 1
 	else:
-		shake($AnimatedSprite2D2, 0.3, 5.0) #Time in seconds, Intensity
+		shake($AnimatedSprite2D2, 0.3, 5.0)  # Time in seconds, Intensity
 
 func _handle_animation():
 	if is_reloading:

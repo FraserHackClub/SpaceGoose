@@ -5,6 +5,14 @@ signal level_changed(level_index)
 const Camera2d: PackedScene = preload("res://scenes/camera_2d.tscn")
 const MainCharacter: PackedScene = preload("res://scenes/main_character.tscn")
 
+#REFERENCES:
+var bullet_counter: Label = null  # Store reference to BulletCountLabel
+var player_gun: Node = null  # Stores reference to the player's gun
+var main_character: Node2D = null  # Stores reference to the Player
+
+var player_gun_path: NodePath = "PlayerGun"  # Default relative path
+
+
 # Array containing paths to the level scenes in order
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
@@ -99,6 +107,7 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	if type is String:
 		entity.add_to_group(type)
 	parent_scene.add_child(entity)
+	print("Spawned entity:", entity, "at", pos)  # Debugging
 	
 func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
 	if amount <= 0:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://vr8nl7daua6g"]
 
-[ext_resource type="Script" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
+[ext_resource type="Script" uid="uid://d3dmfrh27pier" path="res://scenes/game_over_screen.gd" id="1_l5kpt"]
 [ext_resource type="Texture2D" uid="uid://cikaowdqhho48" path="res://assets/sprites/die.png" id="2_xflxv"]
 [ext_resource type="Texture2D" uid="uid://c8yky7wn50qvb" path="res://assets/sprites/restart.png" id="3_p2e6t"]
 [ext_resource type="AudioStream" uid="uid://byqg72aqusalv" path="res://assets/audio/effects/goose_die.ogg" id="4_d0hr4"]

@@ -10,6 +10,7 @@ env:
   GODOT_VERSION: 4.3
   PROJECT_NAME: SpaceGoose
   PROJECT_PATH: .
+  EXPORT_DIR: build
 
 jobs:
   export-windows:
@@ -19,7 +20,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: "$PROJECT_NAME-${{ github.ref_name }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,15 +33,14 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Windows Build
         run: |
-          mkdir -v -p build/windows
-          EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_FILENAME.exe"
+          mkdir -v -p $EXPORT_DIR
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-windows-${{ env.TAG_NAME }}.exe"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-${{ env.TAG_NAME }}
-          path: build/windows
+          path: ${{ env.EXPORT_DIR }}/${{ env.PROJECT_NAME }}-windows-${{ env.TAG_NAME }}.exe
 
   export-linux:
     name: Linux Export
@@ -50,7 +49,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -62,15 +60,14 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Linux Build
         run: |
-          mkdir -v -p build/linux
-          EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/linux/$EXPORT_FILENAME.x86_64"
+          mkdir -v -p $EXPORT_DIR
+          godot --headless --verbose --export-release "Linux" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-linux-${{ env.TAG_NAME }}.x86_64"
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: linux-${{ env.TAG_NAME }}
-          path: build/linux
+          path: ${{ env.EXPORT_DIR }}/${{ env.PROJECT_NAME }}-linux-${{ env.TAG_NAME }}.x86_64
 
   export-web:
     name: Web Export
@@ -79,7 +76,6 @@ jobs:
       image: barichello/godot-ci:4.3
     env:
       TAG_NAME: ${{ github.ref_name }}
-      EXPORT_FILENAME: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -91,42 +87,43 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Web Build
         run: |
-          mkdir -v -p build/web
-          EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+          mkdir -v -p $EXPORT_DIR/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}/
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}/index.html"
       - name: Zip Web Build
         run: |
           cd build
-          zip -r web-${{ env.TAG_NAME }}.zip web/
+          zip -r ${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}.zip ${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: web-${{ env.TAG_NAME }}
-          path: build/web-${{ env.TAG_NAME }}.zip
+          path: ${{ env.EXPORT_DIR }}/${{ env.PROJECT_NAME }}-web-${{ env.TAG_NAME }}.zip
 
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     needs: [export-windows, export-linux, export-web]
     steps:
       - name: Download Windows Artifact
         uses: actions/download-artifact@v4
         with:
           name: windows-${{ github.ref_name }}
-          path: windows_build/
+          path: build/
 
       - name: Download Linux Artifact
         uses: actions/download-artifact@v4
         with:
           name: linux-${{ github.ref_name }}
-          path: linux_build/
+          path: build/
 
       - name: Download Web Artifact
         uses: actions/download-artifact@v4
         with:
           name: web-${{ github.ref_name }}
-          path: web_build/
+          path: build/
 
       - name: Create Release
         id: create_release
@@ -145,7 +142,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: windows_build/windows/${{ env.PROJECT_NAME }}-${{ github.ref_name }}.exe
+          asset_path: build/${{ env.PROJECT_NAME }}-windows-${{ github.ref_name }}.exe
           asset_name: ${{ env.PROJECT_NAME }}-${{ github.ref_name }}.exe
           asset_content_type: application/vnd.microsoft.portable-executable
 
@@ -155,7 +152,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: linux_build/linux/${{ github.ref_name }}.x86_64
+          asset_path: build/${{ env.PROJECT_NAME }}-linux-${{ github.ref_name }}.x86_64
           asset_name: ${{ github.ref_name }}.x86_64
           asset_content_type: application/octet-stream
 
@@ -165,6 +162,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: web_build/web-${{ github.ref_name }}.zip
+          asset_path: build/${{ env.PROJECT_NAME }}-web-${{ github.ref_name }}.zip
           asset_name: web-${{ github.ref_name }}.zip
           asset_content_type: application/zip

@@ -26,12 +26,19 @@ const LOSE = 2
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 @onready var sfx_blastoff: AudioStreamPlayer = $Blastoff
 
+#GUN
+@onready var gun: Node2D = $PlayerGun
+
 
 @export var time = 60.0
 
 @export var inventory_labels: Dictionary
 
 @onready var goose = get_node_or_null(".")
+
+
+#GUN
+
 
 var jumpcount = 0
 var game_state = 0
@@ -42,6 +49,7 @@ var forced_crouch := false
 var inventory = {
 	"egg": 0,
 	"bread": 0,
+
 }
 
 var timer_label: Node
@@ -60,7 +68,15 @@ func _ready():
 	
 	_set_jump_velocity()
 	
+	#Global path assignment:
 
+	Global.main_character = self  # Store player globally
+
+	if gun:
+		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
+		print("PlayerGun path stored globally:", Global.player_gun_path)
+	else:
+		print("Error: PlayerGun not found!")
 	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
@@ -79,6 +95,7 @@ func _level_ready():
 	}
 	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
+
 	
 #=
 			
@@ -131,10 +148,14 @@ func collect_item(item: Object):
 	if item.is_in_group("bread"):
 		inventory["bread"] += 1
 
+
 	if item.has_method("collect_bread"):
 		item.collect_bread()
 	elif item.has_method("collect_egg"):
 		item.collect_egg()
+	elif item.has_method("collect_weapon"):
+		item.collect_weapon()
+		
 	else:
 		item.queue_free()  # Default behavior for other items
 
@@ -218,9 +239,6 @@ func _physics_process(delta: float) -> void:
 			velocity += gravity_force * delta
 	else:
 		jumpcount = 0
-	
-	if goose.position.y >= 800:
-		game_over(LOSE)
 	
 	if game_state == 0:
 		_handle_timer(delta)
