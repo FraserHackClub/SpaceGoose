@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://wv5ymagsuglg"]
 
-[ext_resource type="Script" uid="uid://byce2kx4uifsh" path="res://scenes/worlds/world_1_2.gd" id="1_vbgda"]
+[ext_resource type="Script" uid="uid://nb5hq6fwied7" path="res://scenes/worlds/world_1_2.gd" id="1_vbgda"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="2_yqnc1"]
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="4_hng2b"]
 [ext_resource type="Texture2D" uid="uid://ccuy002201flr" path="res://assets/mooonTiles (2).png" id="4_l8g4a"]
