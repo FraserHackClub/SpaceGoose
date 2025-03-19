@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://dh1vhhte7dpr2"]
 
-[ext_resource type="Script" uid="uid://bbldfk601q8df" path="res://scenes/worlds/world_1_1.gd" id="1_aet5s"]
+[ext_resource type="Script" uid="uid://ce0ysj8mhfq0p" path="res://scenes/worlds/world_1_1.gd" id="1_aet5s"]
 [ext_resource type="Texture2D" uid="uid://ta3yl1tocl3u" path="res://assets/background/earth/sky.png" id="1_peff5"]
 [ext_resource type="Texture2D" uid="uid://bdudrjqfqr47v" path="res://assets/background/earth/clouds.png" id="2_atbj0"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="3_7i24b"]

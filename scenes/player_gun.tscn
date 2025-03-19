@@ -1,7 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://dcly4eh4gvtio"]
+[gd_scene load_steps=29 format=3 uid="uid://dcly4eh4gvtio"]
 
 [ext_resource type="Texture2D" uid="uid://dfo70fu3glq4n" path="res://assets/sprites/image (4).png" id="1_2one0"]
-[ext_resource type="Script" uid="uid://bb5sqxvv2bhe" path="res://scenes/player_gun.gd" id="1_wjk2r"]
+[ext_resource type="Script" uid="uid://bi1ly0rbbqddf" path="res://scenes/player_gun.gd" id="1_wjk2r"]
+[ext_resource type="AudioStream" uid="uid://svfyn01t8bcb" path="res://assets/audio/effects/Gun_Shooting.mp3" id="3_gf8w7"]
+[ext_resource type="AudioStream" uid="uid://dtt7wb717lcid" path="res://assets/audio/effects/Gun_Reloading.mp3" id="4_g1o67"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wjk2r"]
 atlas = ExtResource("1_2one0")
@@ -189,3 +191,9 @@ animation = &"AK47_Reloading"
 
 [node name="BarrelMarker2D" type="Marker2D" parent="."]
 position = Vector2(195, -40)
+
+[node name="Gun_Shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_gf8w7")
+
+[node name="Gun_Reload" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_g1o67")

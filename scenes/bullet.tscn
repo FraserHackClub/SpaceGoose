@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://daiftd1j4rkwv"]
 
 [ext_resource type="Texture2D" uid="uid://b3otk45ft5g7h" path="res://assets/sprites/New Piskel (34).png" id="1_mkf8s"]
-[ext_resource type="Script" uid="uid://ba7dyfn46cpnt" path="res://scenes/bullet.gd" id="1_y25gk"]
+[ext_resource type="Script" uid="uid://nhwkul28dcj3" path="res://scenes/bullet.gd" id="1_y25gk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y25gk"]
 size = Vector2(65.8365, 35.7425)
