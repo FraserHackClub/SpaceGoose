@@ -403,7 +403,7 @@ shape = SubResource("RectangleShape2D_p46we")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(149, -34)
+position = Vector2(148, -50)
 scale = Vector2(3.40625, 2.125)
 texture = ExtResource("5_l1r7p")
 
@@ -448,9 +448,9 @@ stream = ExtResource("12_noefn")
 position = Vector2(180, -242)
 texture = ExtResource("9_4r58p")
 
-[node name="Player_Gun" parent="." instance=ExtResource("2_1i6l0")]
-position = Vector2(132, -126)
-scale = Vector2(0.607002, 0.607002)
+[node name="PlayerGun" parent="." instance=ExtResource("14_pvtuh")]
+position = Vector2(136, -125)
+scale = Vector2(0.655295, 0.655295)
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

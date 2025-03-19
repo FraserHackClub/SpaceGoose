@@ -2,34 +2,45 @@ extends Node2D
 
 @onready var barrel_marker: Marker2D = $BarrelMarker2D
 @onready var SPRITE: AnimatedSprite2D = $AnimatedSprite2D2
-var bullet_counter: Label
-
 
 var BULLET = preload("res://scenes/bullet.tscn")
-var Bulletamount = int(30)
-
-
+var Bulletamount = 30
 var is_reloading = false  # Prevents shooting & animation override
+var activated = false  # Controls gun visibility and function
 
-func _ready() -> void:
-	call_deferred("_level_ready")
+func _ready():
+	if Global.bullet_counter:
+		print("BulletCountLabel found at:", Global.bullet_counter.get_path())
+	else:
+		print("BulletCountLabel not assigned! Check Main Scene.")
 
-func _level_ready() -> void:
-	bullet_counter = $"../../Camera2D/HUD/BulletCounter/BulletCountLabel"
+	# Initially hide and disable gun processing
+	self.hide()
+	self.set_process(false)
+	self.set_physics_process(false)
 
 func _process(delta: float) -> void:
+	if not activated:
+		self.hide()
+		return  # Prevents execution if gun is not activated
+
+	# Ensure gun is visible and active when activated
+	if not self.visible:
+		print("Gun is now active and visible!")
+	self.show()
+
 	look_at(get_global_mouse_position())
-	
+
 	rotation_degrees = wrap(rotation_degrees, 0, 360)
 	if rotation_degrees > 90 and rotation_degrees < 270:
 		scale.y = -0.75
 	else:
 		scale.y = 0.75
 
-	if Input.is_action_just_pressed("reload") and not is_reloading:
+	if Input.is_action_just_pressed("Reload") and not is_reloading:
 		await _reload()
-	
-	if Input.is_action_just_pressed("shoot") and not is_reloading:
+
+	if Input.is_action_just_pressed("Shoot") and not is_reloading:
 		_shoot()
 
 	if not is_reloading:

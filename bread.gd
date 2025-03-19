@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	if collected:
 		velocity.y = fly_up_speed  
 		move_and_slide()  # Fixed typo here.
-		return
+		return  
 
 	time_since_spawn += delta
 
