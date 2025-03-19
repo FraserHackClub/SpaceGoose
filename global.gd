@@ -13,6 +13,15 @@ var main_character: Node2D = null  # Stores reference to the Player
 var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 
 
+const default_inventory = {
+	"items": {
+		"egg": 3,
+		"bread": 0
+	},
+	"score": 0,
+	"current_level": 0
+}
+
 # Array containing paths to the level scenes in order
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
@@ -82,10 +91,11 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	camera.LEVEL_LENGTH = level_length
 	parent_scene.add_child(camera)
 
-func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float):
+func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, inventory: Inventory):
 	var player = player_scene.instantiate()
 	player.position = pos
 	player.time = time
+	player.inventory = inventory
 	parent_scene.add_child(player)
 	
 	# Ensure helmet is hidden by default

@@ -15,6 +15,9 @@ const TIME = 120.0
 
 @onready var current_scene = self
 
+@onready var inventory = preload("res://Inventory.gd").new()
+
+
 signal level_ready
 
 func _ready() -> void:
@@ -46,12 +49,12 @@ func _ready() -> void:
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
+	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory)
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
 	await get_tree().create_timer(0.1).timeout
 	toggle_helmet()
