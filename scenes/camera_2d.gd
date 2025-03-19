@@ -1,7 +1,7 @@
 extends Camera2D
 
 @onready var goose: CharacterBody2D = $"../goose"
-@onready var camera_2d: Camera2D = $"."
+@onready var camera_2d: Camera2D = self
 
 @export var smooth_speed: float = 0.1
 @export var LEVEL_LENGTH: float = 0.0
@@ -17,3 +17,8 @@ func _process(_delta: float) -> void:
 		var target_x = min(max(0.0, goose.position.x), (LEVEL_LENGTH - VIEWPORT_WIDTH))
 		position.x = lerp(position.x, target_x, smooth_speed)
 	
+
+#func update_viewport_size():
+	## Get the actual viewport size
+	#VIEWPORT_WIDTH = get_viewport_rect().size.x
+	#VIEWPORT_HEIGHT = get_viewport_rect().size.y

@@ -43,7 +43,6 @@ const LOSE = 2
 var jumpcount = 0
 var game_state = 0
 
-
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
