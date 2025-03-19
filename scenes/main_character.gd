@@ -16,7 +16,7 @@ const LOSE = 2
 # OverheadDetector is an Area2D node added as a child to the player.
 @onready var overhead_detector: Area2D = $OverheadDetector
 
-@onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+@onready var game_over_screen_scene: PackedScene = preload("res://scenes/game_over_screen.tscn")
 @onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
 @onready var finish_plate = null
 @onready var win_area = null
@@ -29,6 +29,7 @@ const LOSE = 2
 #GUN
 @onready var gun: Node2D = $PlayerGun
 
+var inventory: Inventory
 
 @export var time = 60.0
 
@@ -47,11 +48,6 @@ var game_state = 0
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
-var inventory = {
-	"egg": 0,
-	"bread": 0,
-
-}
 
 var timer_label: Node
 var level_changing = false
@@ -94,13 +90,11 @@ func _level_ready():
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
+	
+	update_inventory_labels()
+	
 	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
-
-	
-#=
-			
-
 
 
 func _on_goose_frame_changed() -> void:
@@ -145,9 +139,9 @@ func _on_area_body_entered(body):
 func collect_item(item: Object):
 	sfx_collect.play()
 	if item.is_in_group("egg"):
-		inventory["egg"] += 1
+		inventory.add_item("egg", 1)
 	if item.is_in_group("bread"):
-		inventory["bread"] += 1
+		inventory.add_item("bread", 1)
 
 
 	if item.has_method("collect_bread"):
@@ -156,15 +150,14 @@ func collect_item(item: Object):
 		item.collect_egg()
 	elif item.has_method("collect_weapon"):
 		item.collect_weapon()
-		
 	else:
 		item.queue_free()  # Default behavior for other items
 
 	update_inventory_labels()
 
 func update_inventory_labels():
-	for item in inventory.keys():
-		inventory_labels[item].text = str(inventory[item])
+	for item in inventory.get_all_items().keys():
+		inventory_labels[item].text = str(inventory.get_item_count(item))
 
 func _on_hazards_body_entered(body):
 	if body == self:
@@ -189,6 +182,8 @@ func game_over(state: int):
 		else:
 			print("Finish sprite not found!")
 		
+		inventory.commit_inventory()
+		
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
@@ -199,8 +194,10 @@ func game_over(state: int):
 		else:
 			print("Goose node not found!")
 	else:
+		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
-		var game_over_screen = game_over_screen_scene.instantiate()
+		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
+		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen

@@ -7,7 +7,7 @@ const BASE_OFFSET = Vector2(840, 675)
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
 @onready var sfx_die: AudioStreamPlayer = $sfx_die
-
+var inventory: Inventory
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -21,10 +21,6 @@ func _ready():
 	texture_rect.position = BASE_OFFSET
 	# Set a fixed, smaller scale.
 	self.scale = Vector2(0.35, 0.3)
-
-
-
-
 
 
 func set_game_over_state(state: int) -> void:
@@ -47,7 +43,6 @@ func set_game_over_state(state: int) -> void:
 			var off = BASE_OFFSET + Vector2(randf_range(-20, 20), randf_range(-20, 20))
 			shake_tween.tween_property(texture_rect, "position", off, 0.1).set_trans(Tween.TRANS_LINEAR)
 			shake_tween.tween_property(texture_rect, "position", BASE_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-
 	else:
 		hide()
 		
@@ -59,4 +54,6 @@ func reset() -> void:
 		
 func _on_restart_button_pressed() -> void:
 	hide()  # ✅ Hide the death screen
+	inventory.remove_item("egg", 1)
+	inventory.commit_inventory()
 	Global.restart_game()  # ✅ Calls the global restart function

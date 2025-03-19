@@ -15,6 +15,8 @@ var rng = RandomNumberGenerator.new()
 signal level_ready
 
 @onready var current_scene = self
+@onready var inventory = preload("res://Inventory.gd").new()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,7 +43,7 @@ func _ready() -> void:
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 439), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, inventory)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
 	emit_signal("level_ready")
