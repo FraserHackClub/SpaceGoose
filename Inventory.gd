@@ -3,20 +3,29 @@ class_name Inventory
 const INVENTORYFILEPATH: String = "user://inventory.json"
 var inventory_file: FileAccess
 
+var previous_content: String
+
 var items: Dictionary
 var score: int
 var current_level: int
 
 func _init():
-	if not FileAccess.file_exists(INVENTORYFILEPATH):
-		inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.WRITE)
-		inventory_file.store_line(JSON.stringify(Global.default_inventory))
-		inventory_file.close()
-	
 	inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
+	if (not FileAccess.file_exists(INVENTORYFILEPATH)) or (not inventory_file.get_as_text()):
+		populate_inventory()
+	
 	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
+	print(get_item_count("egg"))
+	
+	if get_item_count("egg") <= 0:
+		populate_inventory()
 	
 	commit_inventory()
+
+func populate_inventory():
+	set_inventory(Global.default_inventory)
+	commit_inventory()
+
 
 func get_inventory() -> Dictionary:
 	return {
@@ -47,5 +56,6 @@ func get_all_items() -> Dictionary:
 
 func commit_inventory() -> void:
 	inventory_file.seek(0)
-	inventory_file.store_line(JSON.stringify(get_inventory()))
+	inventory_file.resize(0)
+	inventory_file.store_string(JSON.stringify(get_inventory()))
 	inventory_file.flush()

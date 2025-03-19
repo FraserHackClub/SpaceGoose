@@ -16,7 +16,7 @@ const LOSE = 2
 # OverheadDetector is an Area2D node added as a child to the player.
 @onready var overhead_detector: Area2D = $OverheadDetector
 
-@onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+@onready var game_over_screen_scene: PackedScene = preload("res://scenes/game_over_screen.tscn")
 @onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
 @onready var finish_plate = null
 @onready var win_area = null
@@ -194,8 +194,10 @@ func game_over(state: int):
 		else:
 			print("Goose node not found!")
 	else:
+		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
-		var game_over_screen = game_over_screen_scene.instantiate()
+		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
+		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen
