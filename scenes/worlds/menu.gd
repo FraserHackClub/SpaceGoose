@@ -2,17 +2,18 @@ extends Control
 
 var current_index: int = 0
 
-@onready var bread: TextureRect = $Bread
+@onready var bread: AnimatedSprite2D = $Bread
 @export var smooth_speed: float = 0.2
 
 var y_positions = [170.0, 330.0]
 var actions = [
 	play, gambling
 ]
+var y_positions = [236.0, 396.0]
 
 func _ready() -> void:
 	bread.position.y = y_positions[current_index]
-	bread.position.x = 626.0
+	bread.position.x = 696.0
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
@@ -24,9 +25,4 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		actions[current_index].call()
-
-func play() -> void:
-	print("Starting game...")
-
-func gambling() -> void:
-	print("Wasting monies")
+		queue_free()
