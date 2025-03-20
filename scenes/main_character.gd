@@ -18,6 +18,7 @@ const LOSE = 2
 
 @onready var game_over_screen_scene: PackedScene = preload("res://scenes/game_over_screen.tscn")
 @onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
+@onready var signs: TileMap = get_node_or_null("../Signs")
 @onready var finish_plate = null
 @onready var win_area = null
 @onready var finish_sprite: AnimatedSprite2D
@@ -292,6 +293,10 @@ func _handle_timer(delta: float):
 
 func _handle_animation() -> String:
 	var desired_anim = "default"
+	
+	if Input.is_action_just_pressed("help"):
+		if signs:
+			signs.visible = !signs.visible
 	
 	if Input.is_action_just_pressed("restart"):
 		# Only handle restart if we're not in a game over state
