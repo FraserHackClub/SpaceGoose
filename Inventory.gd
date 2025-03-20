@@ -12,6 +12,11 @@ var current_level: int
 func _init():
 	inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
 	if (not FileAccess.file_exists(INVENTORYFILEPATH)) or (not inventory_file.get_as_text()):
+		if inventory_file:
+			inventory_file.close()
+		inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.WRITE)
+		inventory_file.close()
+		inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
 		populate_inventory()
 	
 	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
