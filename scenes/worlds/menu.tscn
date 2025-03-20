@@ -3049,7 +3049,6 @@ texture = ExtResource("4_ded4i")
 [sub_resource type="TileSet" id="TileSet_80ey4"]
 sources/3 = SubResource("TileSetAtlasSource_vojhl")
 
-[node name="Control" type="Control"]
 [sub_resource type="SpriteFrames" id="SpriteFrames_80ey4"]
 animations = [{
 "frames": [{
@@ -3061,6 +3060,7 @@ animations = [{
 "speed": 6.0
 }]
 
+[node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
