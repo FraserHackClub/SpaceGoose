@@ -172,6 +172,7 @@ func game_over(state: int):
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
+	gun.activated = false
 	game_state = state
 	if game_state == WIN:
 		if finish_sprite:
