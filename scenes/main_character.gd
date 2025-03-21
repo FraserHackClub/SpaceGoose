@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 400
-var JUMP_VELOCITY = -900.0  # Changed from const to var
+@export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
 const WIN = 1
@@ -64,8 +64,6 @@ func _ready():
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	_set_jump_velocity()
-	
 	#Global path assignment:
 
 	Global.main_character = self  # Store player globally
@@ -94,7 +92,6 @@ func _level_ready():
 	
 	update_inventory_labels()
 	
-	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 
 
@@ -103,22 +100,6 @@ func _on_goose_frame_changed() -> void:
 		return
 	var positions = [ -242, -237, -230, -226, -230, -237, -242, -237, -230, -226, -230, -237 ]
 	helmet.position.y = positions[sprite_2d.frame % positions.size()]
-
-
-
-
-
-func _set_jump_velocity():
-	var current_level_index = Global.current_level_index
-	
-	match current_level_index:
-		1:
-			JUMP_VELOCITY = -1400
-		_:
-			JUMP_VELOCITY = -900.0
-	
-	print_debug("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
-
 
 func _on_OverheadDetector_body_entered(body):
 	if body == self:

@@ -9,6 +9,7 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 
 const LEVEL_LENGTH = 5056.0
 const TIME = 60.0
+const JUMP_VELOCITY = -900
 
 var rng = RandomNumberGenerator.new()
 
@@ -43,7 +44,7 @@ func _ready() -> void:
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 439), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, inventory)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, inventory, JUMP_VELOCITY)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
 	emit_signal("level_ready")
