@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 400
-var JUMP_VELOCITY = -900.0  # Changed from const to var
+@export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
 const WIN = 1
@@ -64,17 +64,15 @@ func _ready():
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	_set_jump_velocity()
-	
 	#Global path assignment:
 
 	Global.main_character = self  # Store player globally
 
 	if gun:
 		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
-		print("PlayerGun path stored globally:", Global.player_gun_path)
+		print_debug("PlayerGun path stored globally:", Global.player_gun_path)
 	else:
-		print("Error: PlayerGun not found!")
+		printerr("Error: PlayerGun not found!")
 	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
@@ -94,7 +92,6 @@ func _level_ready():
 	
 	update_inventory_labels()
 	
-	_set_jump_velocity()
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 
 
@@ -103,22 +100,6 @@ func _on_goose_frame_changed() -> void:
 		return
 	var positions = [ -242, -237, -230, -226, -230, -237, -242, -237, -230, -226, -230, -237 ]
 	helmet.position.y = positions[sprite_2d.frame % positions.size()]
-
-
-
-
-
-func _set_jump_velocity():
-	var current_level_index = Global.current_level_index
-	
-	match current_level_index:
-		1:
-			JUMP_VELOCITY = -1400
-		_:
-			JUMP_VELOCITY = -900.0
-	
-	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
-
 
 func _on_OverheadDetector_body_entered(body):
 	if body == self:
@@ -172,6 +153,7 @@ func game_over(state: int):
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
+	gun.activated = false
 	game_state = state
 	if game_state == WIN:
 		if finish_sprite:
@@ -181,7 +163,7 @@ func game_over(state: int):
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
 		else:
-			print("Finish sprite not found!")
+			printerr("Finish sprite not found!")
 		
 		inventory.commit_inventory()
 		
@@ -193,7 +175,7 @@ func game_over(state: int):
 			await get_tree().create_timer(11.0).timeout
 			change_to_next_level()
 		else:
-			print("Goose node not found!")
+			printerr("Goose node not found!")
 	else:
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
@@ -210,13 +192,13 @@ func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	print("Changing from level index", current_level_index, "to", next_level_index)
+	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	# Check if there's a next level to go to
 	if Global.has_level(next_level_index):
 		Global.change_level(next_level_index)
 	else:
-		print("No more levels! Game complete!")
+		print_debug("No more levels! Game complete!")
 		# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
@@ -337,6 +319,6 @@ func _handle_animation() -> String:
 func toggle_helmet() -> void:
 	if helmet:
 		helmet.visible = !helmet.visible
-		print("Helmet visibility toggled to: ", helmet.visible)
+		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
-		print("Helmet node not found")
+		printerr("Helmet node not found")

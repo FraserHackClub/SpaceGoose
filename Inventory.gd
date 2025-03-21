@@ -20,7 +20,6 @@ func _init():
 		populate_inventory()
 	
 	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
-	print(get_item_count("egg"))
 	
 	if get_item_count("egg") <= 0:
 		populate_inventory()
@@ -60,6 +59,7 @@ func get_all_items() -> Dictionary:
 	return items
 
 func commit_inventory() -> void:
+	print_debug("Committing inventory")
 	inventory_file.seek(0)
 	inventory_file.resize(0)
 	inventory_file.store_string(JSON.stringify(get_inventory()))

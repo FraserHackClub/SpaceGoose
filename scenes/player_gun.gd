@@ -12,9 +12,9 @@ var activated = false  # Controls gun visibility and function
 
 func _ready():
 	if Global.bullet_counter:
-		print("BulletCountLabel found at:", Global.bullet_counter.get_path())
+		print_debug("BulletCountLabel found at:", Global.bullet_counter.get_path())
 	else:
-		print("BulletCountLabel not assigned! Check Main Scene.")
+		printerr("BulletCountLabel not assigned! Check Main Scene.")
 
 	# Initially hide and disable gun processing
 	self.hide()
@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 
 	# Ensure gun is visible and active when activated
 	if not self.visible:
-		print("Gun is now active and visible!")
+		print_debug("Gun is now active and visible!")
 	self.show()
 
 	look_at(get_global_mouse_position())
@@ -52,10 +52,10 @@ func _process(delta: float) -> void:
 	if Global.bullet_counter:
 		Global.bullet_counter.text = str(Bulletamount)
 
-	#print("Gun Process Running | Activated:", activated, "| Visible:", self.visible)
+	#print_debug("Gun Process Running | Activated:", activated, "| Visible:", self.visible)
 
 func _pickedup() -> void:
-	print("DEBUG: _pickedup() function called!")  # Verify function call
+	print_debug("_pickedup() function called!")  # Verify function call
 	activated = true
 
 	# Enable visibility and processing
@@ -63,32 +63,32 @@ func _pickedup() -> void:
 	self.set_process(true)
 	self.set_physics_process(true)
 
-	#print("Gun picked up! Activated:", activated, "| Visible:", self.visible)
+	#print_debug("Gun picked up! Activated:", activated, "| Visible:", self.visible)
 
 func _reload() -> void:
 	if not activated:
-		print("Cannot reload, gun is not active!")
+		print_debug("Cannot reload, gun is not active!")
 		return
 
 	is_reloading = true
-	print("Setting animation to Reloading")
+	print_verbose("Setting animation to Reloading")
 	sfx_gunreload.play()
 	SPRITE.animation = "AK47_Reloading"
 	SPRITE.play()  # Ensure the animation plays
 
 	var reload_time = 1.4  
-	print("Waiting for reload animation:", reload_time, "seconds")
+	print_verbose("Waiting for reload animation:", reload_time, "seconds")
 
 	await get_tree().create_timer(reload_time).timeout  # Wait for the animation to finish
 	
 	Bulletamount = 30
 
-	print("Setting animation to Default")
+	print_verbose("Setting animation to Default")
 	SPRITE.animation = "AK47_Default"
 	SPRITE.play()
 
 	is_reloading = false
-	print("Reload complete!")
+	print_debug("Reload complete!")
 
 func shake(node: Node2D, duration: float = 1.0, intensity: float = 5.0):
 	var original_position = node.position  # Store original position
@@ -101,7 +101,7 @@ func shake(node: Node2D, duration: float = 1.0, intensity: float = 5.0):
 
 func _shoot():
 	if not activated:
-		print("Cannot shoot, gun is not active!")
+		print_debug("Cannot shoot, gun is not active!")
 		return
 
 	if Bulletamount > 0:
@@ -116,6 +116,6 @@ func _shoot():
 
 func _handle_animation():
 	if is_reloading:
-		print("Skipping animation override during reload")  # Debugging
+		print_verbose("Skipping animation override during reload")  # Debugging
 		return  
 	SPRITE.animation = "AK47_Default"

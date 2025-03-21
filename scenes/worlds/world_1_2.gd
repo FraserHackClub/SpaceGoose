@@ -12,6 +12,7 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 var rng = RandomNumberGenerator.new()
 const LEVEL_LENGTH = 11500
 const TIME = 120.0
+const JUMP_VELOCITY = -1400
 
 @onready var current_scene = self
 
@@ -53,7 +54,7 @@ func _ready() -> void:
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, inventory, JUMP_VELOCITY)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
 	await get_tree().create_timer(0.1).timeout
