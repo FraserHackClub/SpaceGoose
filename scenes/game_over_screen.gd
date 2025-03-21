@@ -33,7 +33,7 @@ func set_game_over_state(state: int) -> void:
 			texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			texture_rect.modulate = Color(1, 1, 1, 1)
 		else:
-			print("Error: Could not load die.png!")
+			printerr("Error: Could not load die.png!")
 		show()  # Show the death screen.
 		
 		# Shake tween: 10 cycles of a rigid, sharp shake applied to the TextureRect.

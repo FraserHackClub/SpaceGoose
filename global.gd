@@ -12,7 +12,6 @@ var main_character: Node2D = null  # Stores reference to the Player
 
 var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 
-
 const default_inventory = {
 	"items": {
 		"egg": 3,
@@ -26,6 +25,10 @@ const default_inventory = {
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
 	"res://scenes/worlds/world_1-2.tscn"
+]
+
+var space_level_indices = [
+	1,
 ]
 
 var current_level_index = -1
@@ -60,7 +63,7 @@ func switch_level(level_index):
 func restart_game():
 	# Store the current level index
 	var current_index = current_level_index
-	print("Restarting level with index: ", current_index)
+	print_debug("Restarting level with index: ", current_index)
 	
 	# First, remove any game over screens that might be present
 	remove_game_over_screens()
@@ -117,7 +120,7 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	if type is String:
 		entity.add_to_group(type)
 	parent_scene.add_child(entity)
-	print("Spawned entity:", entity, "at", pos)  # Debugging
+	print_debug("Spawned entity:", entity, "at", pos)  # Debugging
 	
 func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
 	if amount <= 0:

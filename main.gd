@@ -10,12 +10,11 @@ var menu
 
 func _ready():
 	# Debugging - print the node path to verify it exists
-	print("Node path: ", get_path())
-	print("Children: ", get_children())
+	print_debug("Node path: ", get_path(), "\nChildren: ", get_children())
 	
 	# Make sure the level container exists
 	if has_node("LevelContainer"):
-		print("LevelContainer found")
+		print_debug("LevelContainer found")
 	else:
 		push_error("LevelContainer not found!")
 		# Try to create it if missing

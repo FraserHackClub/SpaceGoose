@@ -27,11 +27,11 @@ func _on_level_changed(level_index: int) -> void:
 	call_deferred("_update_animation_for_level", level_index)
 
 func _update_animation_for_level(level_index: int) -> void:
-	if level_index == 1:  # Second level (index 1)
-		print("Space level detected (index 1), playing spaceDuck animation")
+	if level_index in Global.space_level_indices:
+		print_debug("Space level detected (index 1), playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
-		print("Regular level detected (index " + str(level_index) + "), playing default animation")
+		print_debug("Regular level detected (index " + str(level_index) + "), playing default animation")
 		animated_sprite.play("default")
 
 func _check_scene() -> void:
@@ -69,10 +69,10 @@ func _check_scene() -> void:
 	
 	# Apply the correct animation
 	if is_space_level:
-		print("Space level detected through scene detection, playing spaceDuck animation")
+		print_debug("Space level detected through scene detection, playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
-		print("Regular level detected through scene detection, playing default animation")
+		print_debug("Regular level detected through scene detection, playing default animation")
 		animated_sprite.play("default")
 
 func _physics_process(_delta: float) -> void:

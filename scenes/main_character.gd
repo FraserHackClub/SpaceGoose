@@ -72,9 +72,9 @@ func _ready():
 
 	if gun:
 		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
-		print("PlayerGun path stored globally:", Global.player_gun_path)
+		print_debug("PlayerGun path stored globally:", Global.player_gun_path)
 	else:
-		print("Error: PlayerGun not found!")
+		printerr("Error: PlayerGun not found!")
 	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
@@ -117,7 +117,7 @@ func _set_jump_velocity():
 		_:
 			JUMP_VELOCITY = -900.0
 	
-	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
+	print_debug("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
 
 
 func _on_OverheadDetector_body_entered(body):
@@ -181,7 +181,7 @@ func game_over(state: int):
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
 		else:
-			print("Finish sprite not found!")
+			printerr("Finish sprite not found!")
 		
 		inventory.commit_inventory()
 		
@@ -193,7 +193,7 @@ func game_over(state: int):
 			await get_tree().create_timer(11.0).timeout
 			change_to_next_level()
 		else:
-			print("Goose node not found!")
+			printerr("Goose node not found!")
 	else:
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
@@ -210,13 +210,13 @@ func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	print("Changing from level index", current_level_index, "to", next_level_index)
+	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	# Check if there's a next level to go to
 	if Global.has_level(next_level_index):
 		Global.change_level(next_level_index)
 	else:
-		print("No more levels! Game complete!")
+		print_debug("No more levels! Game complete!")
 		# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
@@ -337,6 +337,6 @@ func _handle_animation() -> String:
 func toggle_helmet() -> void:
 	if helmet:
 		helmet.visible = !helmet.visible
-		print("Helmet visibility toggled to: ", helmet.visible)
+		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
-		print("Helmet node not found")
+		printerr("Helmet node not found")

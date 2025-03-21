@@ -25,22 +25,22 @@ func collect_weapon() -> void:
 	set_deferred("collision_layer", 0)  
 	set_deferred("collision_mask", 0)  
 
-	print("WeaponPickup collected! Checking global main_character...")
+	print_debug("WeaponPickup collected! Checking global main_character...")
 
 	if Global.main_character:
-		print("Main Character found globally:", Global.main_character.name)
+		print_debug("Main Character found globally:", Global.main_character.name)
 
 		# Retrieve the gun using the stored path
 		var gun = Global.main_character.get_node_or_null(Global.player_gun_path)
 		
 		if gun:
-			print("Gun found via stored path! Activating...")
+			print_debug("Gun found via stored path! Activating...")
 			gun._pickedup()  # Activate the gun!
 		else:
-			print("Error: Could not find PlayerGun using stored path!")
+			printerr("Error: Could not find PlayerGun using stored path!")
 
 	else:
-		print("Error: Global.main_character is null!")
+		printerr("Error: Global.main_character is null!")
 
 	velocity = Vector2(0, fly_up_speed)  
 	await get_tree().create_timer(disappear_delay).timeout  
