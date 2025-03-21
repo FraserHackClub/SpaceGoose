@@ -6,6 +6,7 @@ extends CharacterBody2D
 
 var direction: Vector2 = Vector2.LEFT
 var is_falling: bool = false
+var space_levels = [1, 2]  # Array of level indices that should use the space duck animation
 
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -27,8 +28,8 @@ func _on_level_changed(level_index: int) -> void:
 	call_deferred("_update_animation_for_level", level_index)
 
 func _update_animation_for_level(level_index: int) -> void:
-	if level_index == 1:  # Second level (index 1)
-		print("Space level detected (index 1), playing spaceDuck animation")
+	if level_index in space_levels:  # Check if the level index is in our space_levels array
+		print("Space level detected (index " + str(level_index) + "), playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
 		print("Regular level detected (index " + str(level_index) + "), playing default animation")
@@ -51,18 +52,19 @@ func _check_scene() -> void:
 	var is_space_level = false
 	
 	# Method 1: Check scene name directly
-	if current_scene.name == "1-2":
+	# Fix the logical error in the original code
+	if current_scene.name == "1-2" or current_scene.name == "1-3":
 		is_space_level = true
 	
 	# Method 2: Check scene filename
 	var scene_path = current_scene.scene_file_path if current_scene else ""
-	if "1-2" in scene_path or "space" in scene_path.to_lower():
+	if "1-2" in scene_path or "1-3" in scene_path:
 		is_space_level = true
 	
 	# Method 3: Check parent node names for clues
 	var parent = get_parent()
 	while parent:
-		if "1-2" in parent.name or "space" in parent.name.to_lower():
+		if "1-2" in parent.name or "1-3" in parent.name:
 			is_space_level = true
 			break
 		parent = parent.get_parent()

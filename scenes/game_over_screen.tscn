@@ -75,8 +75,8 @@ offset_left = 25.1067
 offset_top = 42.9937
 offset_right = 25.5376
 offset_bottom = 16.7499
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/icon_pressed_color = Color(0.129558, 0.129558, 0.129558, 1)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 1)
 theme_override_icons/icon = ExtResource("3_p2e6t")
 shortcut = SubResource("Shortcut_7n5pa")
 icon_alignment = 1
@@ -85,5 +85,5 @@ expand_icon = true
 [node name="sfx_die" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_d0hr4")
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]

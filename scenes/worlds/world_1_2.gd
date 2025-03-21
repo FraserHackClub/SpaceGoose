@@ -17,7 +17,6 @@ signal level_ready
 
 func _ready() -> void:
 	# Use self instead of get_tree().current_scene
-	print("FIRST POINT")
 	var current_scene = self
 	print("SECOND POINT")
 	var possible_bread_spawn_locations = [
@@ -42,9 +41,9 @@ func _ready() -> void:
 	var weapon_pickup_locations = [Vector2(8670, -851)]
 	rng.randomize()
 	print("FORTH POINT")
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 15)
 	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
-	var egg_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
+
 	var basket_spawn_locations = [Vector2(810,430), Vector2(7444, 416), Vector2(7864, -65)]
 	var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
 	print("FIFTH POINT")
@@ -60,12 +59,12 @@ func _ready() -> void:
 	print("SIXTH POINT")
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
 	await get_tree().create_timer(0.1).timeout
-	toggle_helmet()
+	show_helmet()
 	
 	emit_signal("level_ready")
 	print("SEVENTH POINT")
-# Simple function to toggle the helmet visibility
-func toggle_helmet() -> void:
+# Function to ensure helmet is visible
+func show_helmet() -> void:
 	var goose = get_node_or_null("goose")
 	if not goose:
 		# Try finding the goose in a common container like LevelContainer
@@ -73,7 +72,7 @@ func toggle_helmet() -> void:
 	
 	if goose and goose.has_node("Helmet"):
 		var helmet = goose.get_node("Helmet")
-		helmet.visible = !helmet.visible
-		print("Helmet visibility toggled to: ", helmet.visible)
+		helmet.visible = true
+		print("Helmet visibility set to: ", helmet.visible)
 	else:
 		print("Could not find goose or helmet node")

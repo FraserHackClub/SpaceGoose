@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300
+const SPEED = 1000
 var JUMP_VELOCITY = -900.0  # Changed from const to var
 const DUCKING_MULTIPLIER = 0.75
 
@@ -117,12 +117,18 @@ func _set_jump_velocity():
 	var current_level_index = Global.current_level_index
 	
 	match current_level_index:
+		0:
+			JUMP_VELOCITY = -900.0 #Earth
 		1:
-			JUMP_VELOCITY = -1400
+			JUMP_VELOCITY = -1400.0 #Moon
+		2:
+			JUMP_VELOCITY = -1100 #Mars
 		_:
 			JUMP_VELOCITY = -900.0
 	
 	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
+
+
 
 
 func _on_OverheadDetector_body_entered(body):
@@ -208,18 +214,15 @@ func game_over(state: int):
 			game_over_screen.set_level_index(Global.current_level_index)
 
 func change_to_next_level():
-	# Check current level before switching
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
 	print("Changing from level index", current_level_index, "to", next_level_index)
 	
-	# Check if there's a next level to go to
 	if Global.has_level(next_level_index):
-		Global.change_level(next_level_index)
+		await Global.change_level(next_level_index)
 	else:
 		print("No more levels! Game complete!")
-		# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)
@@ -244,8 +247,7 @@ func _physics_process(delta: float) -> void:
 	if game_state == 0:
 		_handle_timer(delta)
 		_handle_movement(delta)
-		move_and_slide()
-	
+		move_and_slide()	
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset

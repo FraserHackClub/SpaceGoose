@@ -7,7 +7,7 @@ func _ready():
 	# Debugging - print the node path to verify it exists
 	print("Node path: ", get_path())
 	print("Children: ", get_children())
-	
+	Global.toggle_fps_display()
 	# Make sure the level container exists
 	if has_node("LevelContainer"):
 		print("LevelContainer found")
