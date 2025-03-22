@@ -42,14 +42,12 @@ var terrain_chunk_manager = null
 # FPS counter
 var fps_canvas_layer = null
 var fps_label = null
-var show_fps = true
+var show_fps = false
 var c_key_pressed = false
 
 func _ready():
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))
-	
-	# Create FPS counter
-	create_fps_counter()
+
 
 func _process(delta):
 	# Update FPS counter if visible
