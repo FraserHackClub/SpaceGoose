@@ -187,9 +187,12 @@ func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
+	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	if Global.has_level(next_level_index):
+		inventory.current_level = next_level_index
+		inventory.commit_inventory()
 		await Global.change_level(next_level_index)
 	else:
 		print_debug("No more levels! Game complete!")
