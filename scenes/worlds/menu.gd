@@ -7,7 +7,7 @@ const JUMP_VELOCITY = -1400
 @onready var bread: AnimatedSprite2D = $Bread
 @export var smooth_speed: float = 0.2
 @export var play: Callable
-@export var gamble: Callable
+@export var select_level: Callable
 
 var inventory: Inventory
 
@@ -19,7 +19,7 @@ func _ready() -> void:
 	bread.position.y = y_positions[current_index]
 	bread.position.x = 696.0
 	actions = [
-		play, gamble
+		play, select_level
 	]
 
 

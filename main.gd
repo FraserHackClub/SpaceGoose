@@ -6,7 +6,7 @@ var inventory = preload("res://Inventory.gd").new()
 
 
 var current_level = null
-var menu
+var menu: Control
 
 func _ready():
 	# Debugging - print the node path to verify it exists
@@ -26,7 +26,7 @@ func _ready():
 	menu = menu_scene.instantiate()
 	if menu:
 		menu.play = play
-		menu.gamble = gamble
+		menu.select_level = select_level
 		menu.inventory = inventory
 		add_child(menu)
 	
@@ -35,7 +35,7 @@ func _ready():
 func play() -> void:
 	load_level(inventory.current_level)
 
-func gamble() -> void:
+func select_level() -> void:
 	pass
 
 func load_level(level_index):
