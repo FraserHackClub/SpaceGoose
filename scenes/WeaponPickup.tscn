@@ -26,6 +26,7 @@ size = Vector2(175, 51)
 script = ExtResource("1_4c0k1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(0.623468, 0.623468)
 sprite_frames = SubResource("SpriteFrames_54eao")
 script = ExtResource("3_by0yp")

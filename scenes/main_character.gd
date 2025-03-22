@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-const SPEED = 1000
-var JUMP_VELOCITY = -900.0  # Changed from const to var
+const SPEED = 400
+@export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
 const WIN = 1
@@ -16,8 +16,9 @@ const LOSE = 2
 # OverheadDetector is an Area2D node added as a child to the player.
 @onready var overhead_detector: Area2D = $OverheadDetector
 
-@onready var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+@onready var game_over_screen_scene: PackedScene = preload("res://scenes/game_over_screen.tscn")
 @onready var hazards_tilemap: TileMap = get_node_or_null("../Hazards")
+@onready var signs: TileMap = get_node_or_null("../Signs")
 @onready var finish_plate = null
 @onready var win_area = null
 @onready var finish_sprite: AnimatedSprite2D
@@ -29,6 +30,7 @@ const LOSE = 2
 #GUN
 @onready var gun: Node2D = $PlayerGun
 
+var inventory: Inventory
 
 @export var time = 60.0
 
@@ -47,11 +49,6 @@ var game_state = 0
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
-var inventory = {
-	"egg": 0,
-	"bread": 0,
-
-}
 
 var timer_label: Node
 var level_changing = false
@@ -67,17 +64,15 @@ func _ready():
 	overhead_detector.connect("body_entered", Callable(self, "_on_OverheadDetector_body_entered"))
 	overhead_detector.connect("body_exited", Callable(self, "_on_OverheadDetector_body_exited"))
 	
-	_set_jump_velocity()
-	
 	#Global path assignment:
 
 	Global.main_character = self  # Store player globally
 
 	if gun:
 		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
-		print("PlayerGun path stored globally:", Global.player_gun_path)
+		print_debug("PlayerGun path stored globally:", Global.player_gun_path)
 	else:
-		print("Error: PlayerGun not found!")
+		printerr("Error: PlayerGun not found!")
 	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
@@ -94,13 +89,10 @@ func _level_ready():
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
 	}
-	_set_jump_velocity()
-	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
-
 	
-#=
-			
-
+	update_inventory_labels()
+	
+	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 
 
 func _on_goose_frame_changed() -> void:
@@ -108,28 +100,6 @@ func _on_goose_frame_changed() -> void:
 		return
 	var positions = [ -242, -237, -230, -226, -230, -237, -242, -237, -230, -226, -230, -237 ]
 	helmet.position.y = positions[sprite_2d.frame % positions.size()]
-
-
-
-
-
-func _set_jump_velocity():
-	var current_level_index = Global.current_level_index
-	
-	match current_level_index:
-		0:
-			JUMP_VELOCITY = -900.0 #Earth
-		1:
-			JUMP_VELOCITY = -1400.0 #Moon
-		2:
-			JUMP_VELOCITY = -1100 #Mars
-		_:
-			JUMP_VELOCITY = -900.0
-	
-	print("Set jump velocity to: ", JUMP_VELOCITY, " for level index: ", current_level_index)
-
-
-
 
 func _on_OverheadDetector_body_entered(body):
 	if body == self:
@@ -151,9 +121,9 @@ func _on_area_body_entered(body):
 func collect_item(item: Object):
 	sfx_collect.play()
 	if item.is_in_group("egg"):
-		inventory["egg"] += 1
+		inventory.add_item("egg", 1)
 	if item.is_in_group("bread"):
-		inventory["bread"] += 1
+		inventory.add_item("bread", 1)
 
 
 	if item.has_method("collect_bread"):
@@ -162,15 +132,14 @@ func collect_item(item: Object):
 		item.collect_egg()
 	elif item.has_method("collect_weapon"):
 		item.collect_weapon()
-		
 	else:
 		item.queue_free()  # Default behavior for other items
 
 	update_inventory_labels()
 
 func update_inventory_labels():
-	for item in inventory.keys():
-		inventory_labels[item].text = str(inventory[item])
+	for item in inventory.get_all_items().keys():
+		inventory_labels[item].text = str(inventory.get_item_count(item))
 
 func _on_hazards_body_entered(body):
 	if body == self:
@@ -184,6 +153,7 @@ func game_over(state: int):
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
+	gun.activated = false
 	game_state = state
 	if game_state == WIN:
 		if finish_sprite:
@@ -193,7 +163,9 @@ func game_over(state: int):
 			tween.tween_property(finish_sprite, "position:y", final_target, 10).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tween.tween_callback(func(): finish_sprite.hide())
 		else:
-			print("Finish sprite not found!")
+			printerr("Finish sprite not found!")
+		
+		inventory.commit_inventory()
 		
 		if goose:
 			goose.hide()
@@ -203,10 +175,12 @@ func game_over(state: int):
 			await get_tree().create_timer(11.0).timeout
 			change_to_next_level()
 		else:
-			print("Goose node not found!")
+			printerr("Goose node not found!")
 	else:
+		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
-		var game_over_screen = game_over_screen_scene.instantiate()
+		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
+		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen
@@ -217,12 +191,13 @@ func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	print("Changing from level index", current_level_index, "to", next_level_index)
+	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	if Global.has_level(next_level_index):
 		await Global.change_level(next_level_index)
 	else:
-		print("No more levels! Game complete!")
+		print_debug("No more levels! Game complete!")
+		# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)
@@ -298,6 +273,10 @@ func _handle_timer(delta: float):
 func _handle_animation() -> String:
 	var desired_anim = "default"
 	
+	if Input.is_action_just_pressed("help"):
+		if signs:
+			signs.visible = !signs.visible
+	
 	if Input.is_action_just_pressed("restart"):
 		# Only handle restart if we're not in a game over state
 		if game_state == 0:
@@ -337,6 +316,6 @@ func _handle_animation() -> String:
 func toggle_helmet() -> void:
 	if helmet:
 		helmet.visible = !helmet.visible
-		print("Helmet visibility toggled to: ", helmet.visible)
+		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
-		print("Helmet node not found")
+		printerr("Helmet node not found")

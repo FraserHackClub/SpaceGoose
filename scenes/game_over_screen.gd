@@ -7,7 +7,7 @@ const BASE_OFFSET = Vector2(840, 675)
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
 @onready var sfx_die: AudioStreamPlayer = $sfx_die
-
+var inventory: Inventory
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -23,10 +23,6 @@ func _ready():
 	self.scale = Vector2(0.35, 0.3)
 
 
-
-
-
-
 func set_game_over_state(state: int) -> void:
 	if state == LOSE:
 		sfx_die.play()
@@ -37,7 +33,7 @@ func set_game_over_state(state: int) -> void:
 			texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			texture_rect.modulate = Color(1, 1, 1, 1)
 		else:
-			print("Error: Could not load die.png!")
+			printerr("Error: Could not load die.png!")
 		show()  # Show the death screen.
 		
 		# Shake tween: 10 cycles of a rigid, sharp shake applied to the TextureRect.
@@ -47,7 +43,6 @@ func set_game_over_state(state: int) -> void:
 			var off = BASE_OFFSET + Vector2(randf_range(-20, 20), randf_range(-20, 20))
 			shake_tween.tween_property(texture_rect, "position", off, 0.1).set_trans(Tween.TRANS_LINEAR)
 			shake_tween.tween_property(texture_rect, "position", BASE_OFFSET, 0.1).set_trans(Tween.TRANS_LINEAR)
-
 	else:
 		hide()
 		
@@ -59,4 +54,6 @@ func reset() -> void:
 		
 func _on_restart_button_pressed() -> void:
 	hide()  # ✅ Hide the death screen
+	inventory.remove_item("egg", 1)
+	inventory.commit_inventory()
 	Global.restart_game()  # ✅ Calls the global restart function

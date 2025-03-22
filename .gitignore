@@ -29,6 +29,12 @@ addons/**/~*
 *old**
 *tmp**
 
+# Build directories
+build/
+out/
+
+# VSCode local config
+.vscode/
 
 ###############
 # OS-SPECIFIC #

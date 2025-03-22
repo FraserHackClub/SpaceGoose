@@ -12,13 +12,16 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 var rng = RandomNumberGenerator.new()
 const LEVEL_LENGTH = 11500
 const TIME = 120.0
+const JUMP_VELOCITY = -1400
+
+@onready var current_scene = self
+
+@onready var inventory = preload("res://Inventory.gd").new()
+
 
 signal level_ready
 
 func _ready() -> void:
-	# Use self instead of get_tree().current_scene
-	var current_scene = self
-	print("SECOND POINT")
 	var possible_bread_spawn_locations = [
 		Vector2(530, 400),
 		Vector2(1480, 512),
@@ -37,34 +40,29 @@ func _ready() -> void:
 		Vector2(9892, 460),
 		Vector2(10658, 486)
 	]
-	print("THIRD POINT")
 	var weapon_pickup_locations = [Vector2(8670, -851)]
 	rng.randomize()
-	print("FORTH POINT")
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 15)
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
 
 	var basket_spawn_locations = [Vector2(810,430), Vector2(7444, 416), Vector2(7864, -65)]
 	var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
-	print("FIFTH POINT")
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
-	print("SIXTH POINT")
+	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, inventory, JUMP_VELOCITY)
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
 	await get_tree().create_timer(0.1).timeout
 	show_helmet()
 	
 	emit_signal("level_ready")
-	print("SEVENTH POINT")
-# Function to ensure helmet is visible
-func show_helmet() -> void:
+# Simple function to toggle the helmet visibility
+func toggle_helmet() -> void:
 	var goose = get_node_or_null("goose")
 	if not goose:
 		# Try finding the goose in a common container like LevelContainer

@@ -11,13 +11,29 @@ var main_character: Node2D = null
 var custom_font = load("res://assets/PixeloidMono.ttf")
 var player_gun_path: NodePath = "PlayerGun"
 
+var player_gun_path: NodePath = "PlayerGun"  # Default relative path
+
+const default_inventory = {
+	"items": {
+		"egg": 3,
+		"bread": 0
+	},
+	"score": 0,
+	"current_level": 0
+}
+
+# Array containing paths to the level scenes in order
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
 	"res://scenes/worlds/world_1-2.tscn",
 	"res://scenes/worlds/world_1-3.tscn"
 ]
 
-var current_level_index = 0
+var space_level_indices = [
+	1,
+]
+
+var current_level_index = -1
 var current_level = null
 
 var helmet_visible_levels = [1,2]
@@ -170,6 +186,11 @@ func change_to_next_level():
 	return change_level(next_level_index)
 
 func restart_game():
+	# Store the current level index
+	var current_index = current_level_index
+	print_debug("Restarting level with index: ", current_index)
+	
+	# First, remove any game over screens that might be present
 	remove_game_over_screens()
 	print("Restarting level with index:", current_level_index)
 	change_level(current_level_index)
@@ -192,10 +213,12 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	camera.LEVEL_LENGTH = level_length
 	parent_scene.add_child(camera)
 
-func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float):
+func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, inventory: Inventory, jump_velocity: float = -900):
 	var player = player_scene.instantiate()
 	player.position = pos
 	player.time = time
+	player.inventory = inventory
+	player.JUMP_VELOCITY = jump_velocity
 	parent_scene.add_child(player)
 	
 	main_character = player
@@ -291,8 +314,8 @@ func spawn_entity(scene: PackedScene, parent_scene: Node, pos: Vector2, type=nul
 	if type is String:
 		entity.add_to_group(type)
 	parent_scene.add_child(entity)
-	print("Spawned entity:", entity, "at", pos)
-
+	print_debug("Spawned entity:", entity, "at", pos)  # Debugging
+	
 func get_random_element(array: Array, rng: RandomNumberGenerator, amount: int = 0):
 	if amount <= 0:
 		return []

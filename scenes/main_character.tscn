@@ -445,7 +445,7 @@ stream = ExtResource("11_3ynm2")
 stream = ExtResource("12_noefn")
 
 [node name="Helmet" type="Sprite2D" parent="."]
-position = Vector2(180, -242)
+position = Vector2(177, -242)
 texture = ExtResource("9_4r58p")
 
 [node name="PlayerGun" parent="." instance=ExtResource("14_pvtuh")]

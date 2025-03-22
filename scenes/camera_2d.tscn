@@ -72,9 +72,9 @@ layout_mode = 2
 texture = ExtResource("5_x6f0p")
 
 [node name="BulletCounter" type="HBoxContainer" parent="HUD"]
-offset_left = 105.0
-offset_right = 200.0
-offset_bottom = 64.0
+offset_top = 128.0
+offset_right = 95.0
+offset_bottom = 192.0
 theme_override_constants/separation = 10
 
 [node name="BulletIcon" type="TextureRect" parent="HUD/BulletCounter"]
