@@ -49,7 +49,7 @@ func _ready():
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))
 
 
-func _process(delta):
+func _process(_delta):
 	# Update FPS counter if visible
 	if fps_label and show_fps:
 		fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
@@ -261,12 +261,12 @@ func find_player_in_scene():
 	
 	return find_node_by_name(current_scene, "goose")
 
-func find_node_by_name(node, name):
-	if node.name == name:
+func find_node_by_name(node, node_name):
+	if node.name == node_name:
 		return node
 	
 	for child in node.get_children():
-		var found = find_node_by_name(child, name)
+		var found = find_node_by_name(child, node_name)
 		if found:
 			return found
 	
