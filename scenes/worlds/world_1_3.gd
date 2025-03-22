@@ -17,8 +17,8 @@ signal level_ready
 @onready var inventory = preload("res://Inventory.gd").new()
 
 func _ready() -> void:
-		var current_scene = self
-		var possible_bread_spawn_locations = [
+	var current_scene = self
+	var possible_bread_spawn_locations = [
 		Vector2(492, 500),
 		Vector2(1008, 370),
 		Vector2(1403, 243),
@@ -38,19 +38,13 @@ func _ready() -> void:
 		Vector2(10390, 253),
 		Vector2(12680, 253)
 	]
-	#Global.toggle_fps_display()
-		var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 		var duck_spawn_locations = [Vector2(1735, 81), Vector2(2686,463), Vector2(3060, 464), Vector2(3062, 463), Vector2(7110, 817), Vector2(6647, 817), Vector2(8044, 464), Vector2(9760, 224), Vector2(9760, 224), Vector2(12389, 225)]
-		var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
-		Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
-		Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
-		Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-		Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
-		Global.spawn_camera(current_scene, LEVEL_LENGTH)
-		Global.spawn_entity(finish_scene, current_scene, Vector2(13009, 165), "win_zone")
-		emit_signal("level_ready")
-	
-	
-
-		
-		
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
+	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
+	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
+	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
+	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
+	Global.spawn_entity(finish_scene, current_scene, Vector2(13009, 165), "win_zone")
+	emit_signal("level_ready")
