@@ -19,7 +19,7 @@ signal level_ready
 func _ready() -> void:
 	var current_scene = self
 	var possible_bread_spawn_locations = [
-		Vector2(492, 500),
+		Vector2(768, 500),
 		Vector2(1008, 370),
 		Vector2(1403, 243),
 		Vector2(1977, 239),
