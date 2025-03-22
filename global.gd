@@ -11,8 +11,6 @@ var main_character: Node2D = null
 var custom_font = load("res://assets/PixeloidMono.ttf")
 var player_gun_path: NodePath = "PlayerGun"
 
-var player_gun_path: NodePath = "PlayerGun"  # Default relative path
-
 const default_inventory = {
 	"items": {
 		"egg": 3,
