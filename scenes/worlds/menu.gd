@@ -9,6 +9,7 @@ const JUMP_VELOCITY = -1400
 @export var play: Callable
 @export var gamble: Callable
 
+var inventory: Inventory
 
 var y_positions = [236.0, 396.0]
 var actions: Array
@@ -20,7 +21,7 @@ func _ready() -> void:
 	actions = [
 		play, gamble
 	]
-	
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_down"):
@@ -45,3 +46,7 @@ func _process(_delta: float) -> void:
 		else:
 			actions[current_index].call()
 			queue_free()
+
+
+func _on_restart_pressed() -> void:
+	inventory.populate_inventory()

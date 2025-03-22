@@ -27,6 +27,7 @@ func _ready():
 	if menu:
 		menu.play = play
 		menu.gamble = gamble
+		menu.inventory = inventory
 		add_child(menu)
 	
 
