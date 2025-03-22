@@ -179,6 +179,24 @@ func game_over(state: int):
 			level_changing = true
 		else:
 			printerr("Goose node not found!")
+		
+		time = int(time)
+		
+		while time > 0:
+			time -= 1
+			
+			if timer_label:
+				timer_label.text = str(int(time))
+			
+			$sfx_boop.play()
+			await get_tree().create_timer(0.1).timeout
+			increase_score(25)
+			
+		$sfx_beep.play()
+		await get_tree().create_timer(4.0).timeout
+		
+		inventory.commit_inventory()
+		change_to_next_level()
 	else:
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
