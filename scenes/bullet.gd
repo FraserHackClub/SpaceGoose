@@ -23,11 +23,11 @@ func _on_area_2d_area_entered(touchedarea: Node):
 
 	if enemy and enemy.is_in_group("enemy"):  
 		print_verbose("Enemy detected:", enemy.name)
-		enemy.start_falling()
+		enemy.start_falling("bullet")
 		queue_free()  # Destroy the bullet
 	elif touchedarea and touchedarea.is_in_group("enemy"):
 		print_verbose("Enemy detected:", touchedarea.name)
-		touchedarea.start_falling()
+		touchedarea.start_falling("bullet")
 		queue_free()  # Destroy the bullet
 	elif touchedarea and touchedarea.name == "Terrain":
 		print_verbose("Terrain detected, breaking bullet")

@@ -105,7 +105,7 @@ func _on_top_area_entered(body: Node) -> void:
 	if body.name == "goose":
 		start_falling()
 
-func start_falling() -> void:
+func start_falling(body: String = "goose") -> void:
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0

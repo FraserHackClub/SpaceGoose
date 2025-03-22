@@ -38,7 +38,7 @@ func _on_trigger_area_body_entered(body: Node) -> void:
 func _on_timer_timeout() -> void:
 	falling = true
 	
-func start_falling() -> void:
+func start_falling(body: String = "") -> void:
 	sprite.play("exploding")  # Start animation
 	await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds
 	queue_free()
