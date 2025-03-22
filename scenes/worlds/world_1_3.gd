@@ -49,10 +49,12 @@ func _ready() -> void:
 		Vector2(9760, 224),
 		Vector2(12389, 225)
 	]
+	var weapon_pickup_locations = [Vector2(492, 500)]
 	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
+	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(13009, 165), "win_zone")
