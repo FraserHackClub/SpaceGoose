@@ -28,7 +28,7 @@ var level_paths = [
 ]
 
 var space_level_indices = [
-	1,
+	1, 2
 ]
 
 var current_level_index = -1

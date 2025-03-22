@@ -38,10 +38,6 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
-
-#GUN
-
-
 var jumpcount = 0
 var game_state = 0
 
