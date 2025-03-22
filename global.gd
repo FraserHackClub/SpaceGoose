@@ -5,11 +5,12 @@ signal level_changed(level_index)
 const Camera2d: PackedScene = preload("res://scenes/camera_2d.tscn")
 const MainCharacter: PackedScene = preload("res://scenes/main_character.tscn")
 
-var bullet_counter: Label = null
-var player_gun: Node = null
-var main_character: Node2D = null
-var custom_font = load("res://assets/PixeloidMono.ttf")
-var player_gun_path: NodePath = "PlayerGun"
+#REFERENCES:
+var bullet_counter: Label = null  # Store reference to BulletCountLabel
+var player_gun: Node = null  # Stores reference to the player's gun
+var main_character: Node2D = null  # Stores reference to the Player
+var camera_2d: Camera2D = null
+var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 
 const default_inventory = {
 	"items": {
@@ -151,6 +152,8 @@ func setup_chunk_managers():
 			print("Terrain tilemap not found")
 
 func has_level(level_index):
+	print("current level index >")
+	print(level_index)
 	return level_index >= 0 and level_index < level_paths.size()
 
 func change_level(level_index):
@@ -183,13 +186,20 @@ func change_to_next_level():
 
 func restart_game():
 	# Store the current level index
+	
 	var current_index = current_level_index
 	print_debug("Restarting level with index: ", current_index)
 	
 	# First, remove any game over screens that might be present
 	remove_game_over_screens()
-	print("Restarting level with index:", current_level_index)
-	change_level(current_level_index)
+	
+	# If we're in a level, use switch_level to properly reload it
+	if has_level(current_index):
+		switch_level(current_index)
+		print("skibidi")
+	else:
+		# Fallback to reloading the current scene if we're not in a tracked level
+		get_tree().reload_current_scene()
 
 func remove_game_over_screens():
 	var root = get_tree().get_root()

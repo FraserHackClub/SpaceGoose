@@ -38,6 +38,10 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
+
+#GUN
+
+@onready var is_disabled := false
 var jumpcount = 0
 var game_state = 0
 
@@ -64,6 +68,7 @@ func _ready():
 
 	Global.main_character = self  # Store player globally
 
+
 	if gun:
 		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
 		print_debug("PlayerGun path stored globally:", Global.player_gun_path)
@@ -72,6 +77,8 @@ func _ready():
 	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
+
+
 
 func _level_ready():
 	finish_plate = get_node_or_null("../finish")
@@ -89,7 +96,14 @@ func _level_ready():
 	update_inventory_labels()
 	
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
+#=
+			
 
+func disable():
+	is_disabled = true
+
+func enable():
+	is_disabled = false
 
 func _on_goose_frame_changed() -> void:
 	if sprite_2d.animation != "default":
@@ -113,6 +127,9 @@ func _on_OverheadDetector_body_exited(body):
 func _on_area_body_entered(body):
 	if body.is_in_group("item"):
 		collect_item(body)
+
+
+
 
 func collect_item(item: Object):
 	sfx_collect.play()
@@ -138,6 +155,8 @@ func update_inventory_labels():
 		inventory_labels[item].text = str(inventory.get_item_count(item))
 
 func _on_hazards_body_entered(body):
+	if is_disabled:
+		return  # ignore death triggers
 	if body == self:
 		game_over(LOSE)
 
@@ -146,6 +165,8 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
+	print(game_state)
+	print(level_changing)
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 
@@ -204,6 +225,9 @@ func change_to_next_level():
 func _physics_process(delta: float) -> void:
 	if level_changing:
 		return
+	if is_disabled:
+		velocity = Vector2.ZERO
+		return  # skip movement and input
 		
 	if not is_on_floor():
 		var gravity_force = get_gravity()
