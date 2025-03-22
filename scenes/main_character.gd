@@ -38,10 +38,6 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
-
-#GUN
-
-
 var jumpcount = 0
 var game_state = 0
 
@@ -188,15 +184,16 @@ func game_over(state: int):
 			game_over_screen.set_level_index(Global.current_level_index)
 
 func change_to_next_level():
-	# Check current level before switching
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
+	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
-	# Check if there's a next level to go to
 	if Global.has_level(next_level_index):
-		Global.change_level(next_level_index)
+		inventory.current_level = next_level_index
+		inventory.commit_inventory()
+		await Global.change_level(next_level_index)
 	else:
 		print_debug("No more levels! Game complete!")
 		# Show a game completion screen or return to main menu
@@ -224,8 +221,7 @@ func _physics_process(delta: float) -> void:
 	if game_state == 0:
 		_handle_timer(delta)
 		_handle_movement(delta)
-		move_and_slide()
-	
+		move_and_slide()	
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset

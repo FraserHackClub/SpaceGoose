@@ -70,7 +70,7 @@ func toggle_helmet() -> void:
 	
 	if goose and goose.has_node("Helmet"):
 		var helmet = goose.get_node("Helmet")
-		helmet.visible = !helmet.visible
-		print("Helmet visibility toggled to: ", helmet.visible)
+		helmet.visible = true
+		print("Helmet visibility set to: ", helmet.visible)
 	else:
 		print("Could not find goose or helmet node")

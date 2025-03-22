@@ -50,6 +50,8 @@ func load_level(level_index):
 		level_container.call_deferred("add_child", current_level)
 		Global.current_level_index = level_index
 		inventory.current_level = level_index
+		print(inventory.current_level)
 		inventory.commit_inventory()
+		print(inventory.get_inventory())
 		return true
 	return false

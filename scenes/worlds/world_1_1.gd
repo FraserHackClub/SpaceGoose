@@ -22,6 +22,7 @@ signal level_ready
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	rng.randomize()
+	Global.toggle_fps_display()
 	var possible_bread_spawn_locations = [
 		Vector2(768, 528),
 		Vector2(1600, 336),
