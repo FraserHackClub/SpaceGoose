@@ -84,6 +84,7 @@ func _level_ready():
 	inventory_labels = {
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
+		"score": $"../Camera2D/HUD/Score/ScoreLabel"
 	}
 	
 	update_inventory_labels()
@@ -118,8 +119,10 @@ func collect_item(item: Object):
 	sfx_collect.play()
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
+		increase_score(100)
 	if item.is_in_group("bread"):
 		inventory.add_item("bread", 1)
+		increase_score(50)
 
 
 	if item.has_method("collect_bread"):
@@ -133,9 +136,16 @@ func collect_item(item: Object):
 
 	update_inventory_labels()
 
+func increase_score(amount: int):
+	inventory.score += amount
+	
+	update_inventory_labels()
+
 func update_inventory_labels():
 	for item in inventory.get_all_items().keys():
 		inventory_labels[item].text = str(inventory.get_item_count(item))
+	
+	inventory_labels["score"].text = str(inventory.score)
 
 func _on_hazards_body_entered(body):
 	if body == self:
@@ -161,15 +171,12 @@ func game_over(state: int):
 		else:
 			printerr("Finish sprite not found!")
 		
-		inventory.commit_inventory()
-		
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
 			# Wait for the blastoff sound to play before changing level
-			level_changing = true
 			await get_tree().create_timer(11.0).timeout
-			change_to_next_level()
+			level_changing = true
 		else:
 			printerr("Goose node not found!")
 	else:
