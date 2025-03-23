@@ -51,6 +51,8 @@ func _ready() -> void:
 	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
+	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
