@@ -11,6 +11,7 @@ var current_level: int
 
 func _init():
 	inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
+	
 	if (not FileAccess.file_exists(INVENTORYFILEPATH)) or (not inventory_file.get_as_text()):
 		if inventory_file:
 			inventory_file.close()
@@ -19,17 +20,19 @@ func _init():
 		inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
 		populate_inventory()
 	
-	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
+	fetch_inventory()
+	print_debug(get_inventory())
+	
 	
 	if get_item_count("egg") <= 0:
 		populate_inventory()
-	
-	commit_inventory()
 
 func populate_inventory():
 	set_inventory(Global.default_inventory)
 	commit_inventory()
 
+func fetch_inventory() -> void:
+	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
 
 func get_inventory() -> Dictionary:
 	return {
@@ -39,6 +42,8 @@ func get_inventory() -> Dictionary:
 	}
 
 func set_inventory(inventory: Dictionary) -> void:
+	print("Fetching inventory")
+	print_debug(inventory)
 	items = inventory["items"]
 	score = inventory["score"]
 	current_level = inventory["current_level"]
@@ -60,6 +65,7 @@ func get_all_items() -> Dictionary:
 
 func commit_inventory() -> void:
 	print_debug("Committing inventory")
+	print_debug(get_inventory())
 	inventory_file.seek(0)
 	inventory_file.resize(0)
 	inventory_file.store_string(JSON.stringify(get_inventory()))
