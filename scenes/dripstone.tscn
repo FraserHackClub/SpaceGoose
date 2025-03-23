@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://d0icqb2lv6drm"]
 
-[ext_resource type="Script" uid="uid://ck8wk2hneteyv" path="res://dripstone.gd" id="1_akwyh"]
+[ext_resource type="Script" uid="uid://bbi701kmkwdoo" path="res://dripstone.gd" id="1_akwyh"]
 [ext_resource type="Texture2D" uid="uid://b22olw8acdfqn" path="res://assets/sprites/dripstone.png" id="1_b8qdf"]
 [ext_resource type="Texture2D" uid="uid://ctjl0vvw1wekd" path="res://assets/sprites/dripstone_explode_1.png" id="3_uw3w3"]
 

@@ -1,4 +1,8 @@
-[gd_scene format=3 uid="uid://da1i5kcu3864r"]
+[gd_scene load_steps=2 format=3 uid="uid://da1i5kcu3864r"]
+
+[sub_resource type="Resource" id="Resource_yqac1"]
+metadata/__load_path__ = "res://helmet.gd"
 
 [node name="Helmet" type="CharacterBody2D"]
 scale = Vector2(0.8, 0.8)
+script = SubResource("Resource_yqac1")
