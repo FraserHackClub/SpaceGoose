@@ -38,8 +38,13 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
+@onready var main = $"/root/Main"
+
 var jumpcount = 0
 var game_state = 0
+
+var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
+var popup_window: PopupPanel
 
 
 # Overhead detection variables
@@ -74,6 +79,8 @@ func _ready():
 	call_deferred("_level_ready")
 
 func _level_ready():
+	inventory.fetch_inventory()
+	
 	finish_plate = get_node_or_null("../finish")
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
@@ -189,19 +196,20 @@ func game_over(state: int):
 				timer_label.text = str(int(time))
 			
 			$sfx_boop.play()
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.125).timeout
 			increase_score(25)
 			
 		$sfx_beep.play()
 		await get_tree().create_timer(4.0).timeout
 		
 		inventory.commit_inventory()
+		print(inventory.get_inventory())
 		change_to_next_level()
 	else:
+		inventory.remove_item("egg", 1)
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
 		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
-		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen
@@ -212,16 +220,18 @@ func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	if Global.has_level(next_level_index):
-		inventory.current_level = next_level_index
-		inventory.commit_inventory()
-		await Global.change_level(next_level_index)
+		if inventory.score >= Global.level_score_reqs[next_level_index]:
+			inventory.current_level = next_level_index
+			inventory.commit_inventory()
+			await Global.change_level(next_level_index)
+		else:
+			main.select_level()
 	else:
 		print_debug("No more levels! Game complete!")
-		# Show a game completion screen or return to main menu
+			# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)

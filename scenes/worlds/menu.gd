@@ -24,28 +24,27 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("ui_down"):
-		current_index  = 1
-		$Select_sound.play()
-	elif Input.is_action_just_pressed("ui_up"):
-		current_index = 0
-		$Select_sound.play()
-	
-	bread.position.y = lerp(bread.position.y, y_positions[current_index], smooth_speed)
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		$Goose/Goose.animation = "jump"
-		$Start_sound.play()
-		call_action = true
-	
 	if call_action:
 		if $Start_sound.playing or $Goose.position.y >= -500:
-			print($Goose.position)
 			$Goose.velocity.y = JUMP_VELOCITY
 			$Goose.move_and_slide()
 		else:
 			actions[current_index].call()
 			queue_free()
+	else:
+		if Input.is_action_just_pressed("ui_down"):
+			current_index  = 1
+			$Select_sound.play()
+		elif Input.is_action_just_pressed("ui_up"):
+			current_index = 0
+			$Select_sound.play()
+		
+		bread.position.y = lerp(bread.position.y, y_positions[current_index], smooth_speed)
+		
+		if Input.is_action_just_pressed("ui_accept"):
+			$Goose/Goose.animation = "jump"
+			$Start_sound.play()
+			call_action = true
 
 
 func _on_restart_pressed() -> void:

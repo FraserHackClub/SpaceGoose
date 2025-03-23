@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="9_mt224"]
 [ext_resource type="Texture2D" uid="uid://dq0t0qlb0dow5" path="res://assets/icons/restart_inventory.png" id="10_4v0ps"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jg4ok"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4v0ps"]
 texture = ExtResource("1_kxoy0")
 0:0/0 = 0
 1:0/0 = 0
@@ -271,7 +271,7 @@ texture = ExtResource("1_kxoy0")
 15:15/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_rlfvu"]
-sources/0 = SubResource("TileSetAtlasSource_jg4ok")
+sources/0 = SubResource("TileSetAtlasSource_4v0ps")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rlfvu"]
 texture = ExtResource("2_jg4ok")
@@ -3118,7 +3118,7 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ni2s4")
 animation = &"jump"
 autoplay = "default"
-frame_progress = 0.490633
+frame_progress = 0.401225
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goose"]
 shape = SubResource("RectangleShape2D_mt224")

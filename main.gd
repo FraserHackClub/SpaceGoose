@@ -2,11 +2,13 @@ extends Node
 
 @onready var level_container = $LevelContainer
 @onready var menu_scene: PackedScene = preload("res://scenes/worlds/menu.tscn")
+@onready var level_selector_scene: PackedScene = preload("res://scenes/worlds/level_selector.tscn")
 var inventory = preload("res://Inventory.gd").new()
 
 
 var current_level = null
 var menu: Control
+var level_selector: Control
 
 func _ready():
 	# Debugging - print the node path to verify it exists
@@ -23,20 +25,29 @@ func _ready():
 		add_child(container)
 		level_container = container
 	
+	load_menu()
+
+func load_menu() -> void:
+	inventory.fetch_inventory()
 	menu = menu_scene.instantiate()
 	if menu:
 		menu.play = play
 		menu.select_level = select_level
 		menu.inventory = inventory
 		add_child(menu)
-	
 
 
 func play() -> void:
 	load_level(inventory.current_level)
 
 func select_level() -> void:
-	pass
+	if level_container.get_child_count() > 0:
+		for child in level_container.get_children():
+			child.queue_free()
+	
+	level_selector = level_selector_scene.instantiate()
+	level_selector.inventory = inventory
+	add_child(level_selector)
 
 func load_level(level_index):
 	# Clear existing level

@@ -27,6 +27,10 @@ var level_paths = [
 	"res://scenes/worlds/world_1-3.tscn"
 ]
 
+var level_score_reqs = [
+	0, 3000, 10000
+]
+
 var space_level_indices = [
 	1, 2
 ]
@@ -159,19 +163,21 @@ func change_level(level_index):
 		current_level_index = level_index
 		print("Set current_level_index to:", current_level_index)
 		
-		var level_path = level_paths[level_index]
-		print("Loading scene:", level_path)
+		#var level_path = level_paths[level_index]
+		#print("Loading scene:", level_path)
 		
-		var error = get_tree().change_scene_to_file(level_path)
-		if error == OK:
-			print("Scene loaded successfully")
-			emit_signal("level_changed", level_index)
-			# Setup chunk managers for the new level
-			call_deferred("setup_chunk_managers")
-			return true
-		else:
-			print("Failed to load scene. Error:", error)
-			return false
+		get_node("/root/Main").load_level(level_index)
+		
+		#var error = get_tree().change_scene_to_file(level_path)
+		#if error == OK:
+			#print("Scene loaded successfully")
+		emit_signal("level_changed", level_index)
+			## Setup chunk managers for the new level
+		call_deferred("setup_chunk_managers")
+			#return true
+		#else:
+			#print("Failed to load scene. Error:", error)
+			#return false
 	else:
 		print("Level index out of range:", level_index)
 		return false
@@ -439,7 +445,7 @@ class ChunkManager:
 				if tilemap.get_cell_source_id(0, cell) >= 0:
 					active_chunks[chunk_key].cells.append(cell)
 		
-		print("Created terrain chunk at: ", chunk_pos, " with ", active_chunks[chunk_key].cells.size(), " cells")
+		print_verbose("Created terrain chunk at: ", chunk_pos, " with ", active_chunks[chunk_key].cells.size(), " cells")
 	
 	func update_active_chunks():
 		if !tilemap or !tilemap.is_inside_tree():
