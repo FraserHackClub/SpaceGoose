@@ -116,11 +116,27 @@ func _on_area_body_entered(body):
 
 func collect_item(item: Object):
 	sfx_collect.play()
+
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
 	if item.is_in_group("bread"):
 		inventory.add_item("bread", 1)
+	if item.is_in_group("juice"):
+		# Add juice to inventory based on type
+		if "juice_type" in item:
+			match item.juice_type:
+				"apple":
+					inventory.add_item("apple_juice", 1)
+				"orange":
+					inventory.add_item("orange_juice", 1)
+				"grape":
+					inventory.add_item("grape_juice", 1)
+				_:
+					inventory.add_item("juice", 1)
+		else:
 
+			inventory.add_item("juice", 1)
+	
 
 	if item.has_method("collect_bread"):
 		item.collect_bread()
@@ -128,14 +144,21 @@ func collect_item(item: Object):
 		item.collect_egg()
 	elif item.has_method("collect_weapon"):
 		item.collect_weapon()
+	elif item.has_method("collect_juice"):
+		item.collect_juice()
 	else:
-		item.queue_free()  # Default behavior for other items
+		item.queue_free() 
 
 	update_inventory_labels()
 
 func update_inventory_labels():
 	for item in inventory.get_all_items().keys():
-		inventory_labels[item].text = str(inventory.get_item_count(item))
+		if item in inventory_labels:
+			inventory_labels[item].text = str(inventory.get_item_count(item))
+		else:
+
+			print_debug("No label found for inventory item: " + item)
+
 
 func _on_hazards_body_entered(body):
 	if body == self:
@@ -147,7 +170,7 @@ func _on_win_area_body_entered(body):
 
 func game_over(state: int):
 	if game_state != 0 or level_changing:
-		return  # Prevent multiple game_over triggers
+		return  
 
 	gun.activated = false
 	game_state = state
@@ -166,7 +189,7 @@ func game_over(state: int):
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
-			# Wait for the blastoff sound to play before changing level
+
 			level_changing = true
 			await get_tree().create_timer(11.0).timeout
 			change_to_next_level()
