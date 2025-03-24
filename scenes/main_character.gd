@@ -79,6 +79,7 @@ func _ready():
 	call_deferred("_level_ready")
 
 func _level_ready():
+	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	
 	finish_plate = get_node_or_null("../finish")
@@ -165,7 +166,9 @@ func _on_win_area_body_entered(body):
 func game_over(state: int):
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
-
+	
+	inventory.commit_inventory()
+	
 	gun.activated = false
 	game_state = state
 	if game_state == WIN:
@@ -199,11 +202,10 @@ func game_over(state: int):
 			await get_tree().create_timer(0.125).timeout
 			increase_score(25)
 			
+		inventory.commit_inventory()
 		$sfx_beep.play()
 		await get_tree().create_timer(4.0).timeout
 		
-		inventory.commit_inventory()
-		print(inventory.get_inventory())
 		change_to_next_level()
 	else:
 		inventory.remove_item("egg", 1)
@@ -215,6 +217,8 @@ func game_over(state: int):
 		# Store the current level index in the game over screen
 		if game_over_screen.has_method("set_level_index"):
 			game_over_screen.set_level_index(Global.current_level_index)
+		await get_tree().create_timer(1.0).timeout
+			
 
 func change_to_next_level():
 	var current_level_index = Global.current_level_index

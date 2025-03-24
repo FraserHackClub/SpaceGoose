@@ -21,8 +21,6 @@ func _init():
 		populate_inventory()
 	
 	fetch_inventory()
-	print_debug(get_inventory())
-	
 	
 	if get_item_count("egg") <= 0:
 		populate_inventory()
@@ -32,7 +30,9 @@ func populate_inventory():
 	commit_inventory()
 
 func fetch_inventory() -> void:
-	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
+	var inventory = JSON.parse_string(inventory_file.get_as_text())
+	print_debug("Fetching inventory:\n", inventory)
+	set_inventory(inventory)
 
 func get_inventory() -> Dictionary:
 	return {
@@ -42,8 +42,6 @@ func get_inventory() -> Dictionary:
 	}
 
 func set_inventory(inventory: Dictionary) -> void:
-	print("Fetching inventory")
-	print_debug(inventory)
 	items = inventory["items"]
 	score = inventory["score"]
 	current_level = inventory["current_level"]
@@ -70,3 +68,7 @@ func commit_inventory() -> void:
 	inventory_file.resize(0)
 	inventory_file.store_string(JSON.stringify(get_inventory()))
 	inventory_file.flush()
+
+func close_inventory() -> void:
+	inventory_file.flush()
+	inventory_file.close()

@@ -10,12 +10,12 @@ const JUMP_VELOCITY = -1400
 @export var select_level: Callable
 
 var inventory: Inventory
-
 var y_positions = [236.0, 396.0]
 var actions: Array
 var call_action = false
 
 func _ready() -> void:
+	inventory = preload("res://Inventory.gd").new()
 	bread.position.y = y_positions[current_index]
 	bread.position.x = 696.0
 	actions = [

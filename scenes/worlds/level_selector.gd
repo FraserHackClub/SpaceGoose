@@ -27,6 +27,7 @@ var positions = [
 ]
 
 func _ready() -> void:
+	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	current_index = inventory.current_level
 	pointer.position = positions[current_index]
@@ -45,13 +46,12 @@ func _process(_delta: float) -> void:
 		elif round(pointer.position.x) == round(positions[current_index].x):
 			clicking_phase = 0
 	elif call_action:
+		call_action = false
 		if inventory.score >= Global.level_score_reqs[current_index]:
-			call_action = false
 			$Start_sound.play()
 			main.load_level(current_index)
 			queue_free()
 		else:
-			call_action = false
 			$Wrong_sound.play()
 			popup_window = popup_scene.instantiate()
 			add_child(popup_window)

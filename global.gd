@@ -215,11 +215,10 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	camera.LEVEL_LENGTH = level_length
 	parent_scene.add_child(camera)
 
-func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, inventory: Inventory, jump_velocity: float = -900):
+func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, jump_velocity: float = -900):
 	var player = player_scene.instantiate()
 	player.position = pos
 	player.time = time
-	player.inventory = inventory
 	player.JUMP_VELOCITY = jump_velocity
 	parent_scene.add_child(player)
 	

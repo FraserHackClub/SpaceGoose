@@ -14,8 +14,6 @@ const JUMP_VELOCITY = -1400.0
 const LEVEL_LENGTH = 13170
 signal level_ready
 
-@onready var inventory = preload("res://Inventory.gd").new()
-
 func _ready() -> void:
 	var current_scene = self
 	var possible_bread_spawn_locations = [
@@ -51,7 +49,7 @@ func _ready() -> void:
 	]
 	var weapon_pickup_locations = [Vector2(492, 500)]
 	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)

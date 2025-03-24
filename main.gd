@@ -33,11 +33,11 @@ func load_menu() -> void:
 	if menu:
 		menu.play = play
 		menu.select_level = select_level
-		menu.inventory = inventory
 		add_child(menu)
 
 
 func play() -> void:
+	inventory.fetch_inventory()
 	load_level(inventory.current_level)
 
 func select_level() -> void:
@@ -46,10 +46,10 @@ func select_level() -> void:
 			child.queue_free()
 	
 	level_selector = level_selector_scene.instantiate()
-	level_selector.inventory = inventory
 	add_child(level_selector)
 
 func load_level(level_index):
+	inventory.fetch_inventory()
 	# Clear existing level
 	if level_container.get_child_count() > 0:
 		for child in level_container.get_children():
