@@ -24,6 +24,7 @@ var has_landed: bool = false
 @onready var collision_shape = $CollisionShape2D if has_node("CollisionShape2D") else null
 @onready var particles = $GPUParticles2D if has_node("GPUParticles2D") else null
 
+
 signal meteor_landed
 
 func _ready() -> void:
@@ -54,6 +55,12 @@ func _ready() -> void:
 		rotation = angle - PI/2  
 		
 		create_contact_area()
+
+func start_falling(body: String = "") -> void:
+	if body == "bullet":
+		#animated_sprite.play("exploding")  # Start animation
+		await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds
+		queue_free()
 
 func create_contact_area() -> void:
 	var area = Area2D.new()
