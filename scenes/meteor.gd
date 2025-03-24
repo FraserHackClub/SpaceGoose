@@ -58,8 +58,8 @@ func _ready() -> void:
 
 func start_falling(body: String = "") -> void:
 	if body == "bullet":
-		#animated_sprite.play("exploding")  # Start animation
-		await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds
+		animated_sprite.play("exploding")  # Start animation
+		await get_tree().create_timer(0.5).timeout  # Waits for 2 seconds
 		queue_free()
 
 func create_contact_area() -> void:
