@@ -24,7 +24,8 @@ const default_inventory = {
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
 	"res://scenes/worlds/world_1-2.tscn",
-	"res://scenes/worlds/world_1-3.tscn"
+	"res://scenes/worlds/world_1-3.tscn",
+	"res://scenes/worlds/world_1_4.tscn"
 ]
 
 var space_level_indices = [
@@ -34,7 +35,7 @@ var space_level_indices = [
 var current_level_index = -1
 var current_level = null
 
-var helmet_visible_levels = [1,2]
+var helmet_visible_levels = [1,2,3]
 
 # Chunk management
 var terrain_chunk_manager = null

@@ -9,9 +9,9 @@ const basket_scene: PackedScene = preload("res://scenes/basket.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 var rng = RandomNumberGenerator.new()
-const TIME = 180.0
-const JUMP_VELOCITY = -1100
-const LEVEL_LENGTH = 13170
+const TIME = 300
+const JUMP_VELOCITY = -1400.0
+const LEVEL_LENGTH = 30000
 signal level_ready
 
 @onready var inventory = preload("res://Inventory.gd").new()
@@ -19,45 +19,58 @@ signal level_ready
 func _ready() -> void:
 	var current_scene = self
 	var possible_bread_spawn_locations = [
-		Vector2(768, 500),
+		Vector2(854, 284),
 		Vector2(1008, 370),
-		Vector2(1403, 243),
-		Vector2(1977, 239),
-		Vector2(2122, 307),
-		Vector2(2886, 371),
-		Vector2(3635, 254),
-		Vector2(4060, 313),
-		Vector2(4815, 361),
+		Vector2(2104, 361),
+		Vector2(3916, 390),
+		Vector2(4972, 338),
+		Vector2(7900, 410),
+		Vector2(8727, 198),
+		Vector2(10698, 300),
+		Vector2(12128, 243),
 		Vector2(5175, 554),
-		Vector2(5829, 522),
-		Vector2(6233, 524),
+		Vector2(12807, 201),
+		Vector2(15119, 215),
 		Vector2(8214, 556),
 		Vector2(8471, 558),
-		Vector2(8984, 552),
-		Vector2(9892, 251),
-		Vector2(10390, 253),
-		Vector2(12680, 253)
+		Vector2(15942, 362),
+		Vector2(17343, 298),
+		Vector2(19702, 219),
+		Vector2(21565, 465),
+		Vector2(22858, 281),
+		Vector2(24107, 89),
+		Vector2(25578, 197),
+		Vector2(27044, 59),
+		Vector2(28553, 118),
+		Vector2(29374, 417),
+		Vector2(30433, 308),
+		Vector2(31288, 139),
+		Vector2(34363, 218),
+		Vector2(37642, 205),
+		Vector2(39517, 164),
+		
+		
 	]
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
+	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
 	var duck_spawn_locations = [
-		Vector2(1735, 84),
-		Vector2(2686,464),
-		Vector2(3060, 464),
-		Vector2(7110, 817),
-		Vector2(6647, 817),
-		Vector2(8044, 464),
-		Vector2(9760, 224),
-		Vector2(12389, 225)
+		Vector2(5862, 382),
+		Vector2(9602, 456),
+		Vector2(14466, 337),
+		Vector2(20467, 368),
+		Vector2(26275, 320),
+		Vector2(28886, 480),
+		Vector2(35779, 418),
+		Vector2(40531, 509)
 	]
 	var weapon_pickup_locations = [Vector2(492, 500)]
 	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
-	var basket_spawn_locations = [Vector2(2631, 494), Vector2(6576, 850), Vector2(7128, 848), Vector2(9109, 495)]
+	var basket_spawn_locations = [Vector2(5824, 415), Vector2(7394, 141), Vector2(20434, 399), Vector2(36700, 100)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
-	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
-	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
+	#Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
+	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(13009, 165), "win_zone")
+	Global.spawn_entity(finish_scene, current_scene, Vector2(29380, 360), "win_zone")
 	emit_signal("level_ready")
