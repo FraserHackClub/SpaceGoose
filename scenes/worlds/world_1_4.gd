@@ -67,7 +67,7 @@ func _ready() -> void:
 	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
 	var basket_spawn_locations = [Vector2(5824, 415), Vector2(7394, 141), Vector2(20434, 399), Vector2(36700, 100)]
 	var galactic_spawn_locations = [Vector2(6794, 488), Vector2(41492, -123), Vector2(33616, 602)]
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(galactic_scene, current_scene, galactic_spawn_locations)
