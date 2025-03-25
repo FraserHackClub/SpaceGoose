@@ -17,6 +17,7 @@ var gravity: float = 980.0
 var actual_horizontal_speed: float = 0.0
 var game_over_triggered: bool = false
 var is_clone: bool = false
+var is_exploding: bool = false
 var rng = RandomNumberGenerator.new()
 var has_landed: bool = false
 
@@ -58,6 +59,7 @@ func _ready() -> void:
 
 func start_falling(body: String = "") -> void:
 	if body == "bullet":
+		is_exploding = true
 		animated_sprite.play("exploding")  # Start animation
 		await get_tree().create_timer(0.5).timeout  # Waits for 2 seconds
 		queue_free()
@@ -82,6 +84,8 @@ func create_contact_area() -> void:
 	area.connect("body_entered", Callable(self, "_on_contact_area_body_entered"))
 
 func _on_contact_area_body_entered(body: Node) -> void:
+	if is_exploding:
+		return
 	if body.name == "goose" and not game_over_triggered:
 		game_over_triggered = true
 		body.call("game_over", 2)  
