@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var gravity: float = 500.0         
+@export var gravity: float = 600       
 @export var ground_y: float = 650          
 @export var spawn_protection_duration: float = 0.5 
 @export var fly_up_speed: float = -800  
@@ -9,6 +9,9 @@ extends CharacterBody2D
 var time_since_spawn: float = 0.0
 var collected: bool = false
 var juice_type: String = "apple"  
+
+# Static variable to track if any juice is currently being collected
+static var collection_in_progress: bool = false
 
 func _ready() -> void:
 	add_to_group("juice")
@@ -48,8 +51,8 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 
-
-	if time_since_spawn >= spawn_protection_duration: 
+	# Only check for collisions after spawn protection ends and if no other juice is being collected
+	if time_since_spawn >= spawn_protection_duration and not collection_in_progress: 
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
@@ -61,19 +64,20 @@ func _physics_process(delta: float) -> void:
 					collect_juice()
 					return
 
-
 func collect() -> void:
 	collect_juice()
 
 func collect_juice() -> void:
 	print("collect_juice() called")
 	
-	if collected:
-		print("Already collected, ignoring")
+	# Don't collect if already collected or another juice is being collected
+	if collected or collection_in_progress:
+		print("Already collected or collection in progress, ignoring")
 		return  
 
 	print("Setting collected=true and starting fly-up animation")
-	collected = true  
+	collected = true
+	collection_in_progress = true  # Set the static flag
 	
 	set_collision_layer(0)
 	set_collision_mask(0)
@@ -82,11 +86,9 @@ func collect_juice() -> void:
 	visible = true
 	z_index = 100
 	
-
 	velocity.y = fly_up_speed
 	print("Set juice velocity to: ", velocity)
 	
-
 	var timer = get_tree().create_timer(disappear_delay)
 	timer.timeout.connect(_on_animation_complete)
 
@@ -114,5 +116,7 @@ func _on_animation_complete() -> void:
 		if Global.main_character.has_method("update_inventory_labels"):
 			Global.main_character.update_inventory_labels()
 	
-
+	# Reset the static flag so other juices can be collected
+	collection_in_progress = false
+	
 	queue_free()
