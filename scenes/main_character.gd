@@ -168,6 +168,7 @@ func game_over(state: int):
 		return  # Prevent multiple game_over triggers
 	
 	inventory.commit_inventory()
+	$"../Camera2D".playing_cutscene = true
 	
 	gun.activated = false
 	game_state = state
