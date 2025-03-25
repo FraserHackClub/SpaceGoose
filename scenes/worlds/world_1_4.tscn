@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://csgqn3ehxcq2f"]
+[gd_scene load_steps=9 format=3 uid="uid://c58sv7l0wpb3d"]
 
-[ext_resource type="Script" uid="uid://dup6bchua1tct" path="res://scenes/worlds/world_1_4.gd" id="1_4w8yo"]
+[ext_resource type="Script" path="res://scenes/worlds/world_1_4.gd" id="1_4w8yo"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="2_onxxy"]
-[ext_resource type="Texture2D" uid="uid://c1w14yrpa5uga" path="res://assets/asteroids.png" id="2_xxl0x"]
+[ext_resource type="Texture2D" path="res://assets/asteroids.png" id="2_xxl0x"]
+[ext_resource type="PackedScene" uid="uid://cxbhxr3iytal3" path="res://scenes/basket.tscn" id="4_onxxy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7tjat"]
 texture = ExtResource("2_onxxy")

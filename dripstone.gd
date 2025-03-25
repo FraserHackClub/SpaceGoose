@@ -12,6 +12,8 @@ var contacts_reported = 0
 var gravity: float = 980.0
 @export var fall_speed_multiplier: float = 2.0
 
+@onready var goose = $"../goose"
+
 var triggered: bool = false
 var falling: bool = false
 var landed: bool = false
@@ -38,7 +40,10 @@ func _on_trigger_area_body_entered(body: Node) -> void:
 func _on_timer_timeout() -> void:
 	falling = true
 	
-func start_falling() -> void:
+func start_falling(body: String = "") -> void:
+	if body == "bullet":
+		goose.increase_score(25)
+
 	sprite.play("exploding")  # Start animation
 	await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds
 	queue_free()

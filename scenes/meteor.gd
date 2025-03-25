@@ -17,6 +17,7 @@ var gravity: float = 980.0
 var actual_horizontal_speed: float = 0.0
 var game_over_triggered: bool = false
 var is_clone: bool = false
+var is_exploding: bool = false
 var rng = RandomNumberGenerator.new()
 var has_landed: bool = false
 
@@ -55,6 +56,13 @@ func _ready() -> void:
 		
 		create_contact_area()
 
+func start_falling(body: String = "") -> void:
+	if body == "bullet":
+		is_exploding = true
+		animated_sprite.play("exploding")  # Start animation
+		await get_tree().create_timer(0.5).timeout  # Waits for 2 seconds
+		queue_free()
+
 func create_contact_area() -> void:
 	var area = Area2D.new()
 	area.name = "ContactArea"
@@ -75,6 +83,8 @@ func create_contact_area() -> void:
 	area.connect("body_entered", Callable(self, "_on_contact_area_body_entered"))
 
 func _on_contact_area_body_entered(body: Node) -> void:
+	if is_exploding:
+		return
 	if body.name == "goose" and not game_over_triggered:
 		game_over_triggered = true
 		body.call("game_over", 2)  
@@ -91,6 +101,9 @@ func start_meteor_spawner() -> void:
 	spawn_meteor()
 
 func spawn_meteor() -> void:
+	if game_over_triggered:
+		return
+	
 	var current_meteors = get_tree().get_nodes_in_group("meteors")
 	if current_meteors.size() >= max_meteors:
 		return
@@ -124,6 +137,9 @@ func spawn_meteor() -> void:
 	print("Spawned meteor at X: " + str(spawn_x))
 
 func _physics_process(delta: float) -> void:
+	if $"../goose".game_state > 0:
+		game_over_triggered = true
+	
 	if not is_clone:
 		return  
 		

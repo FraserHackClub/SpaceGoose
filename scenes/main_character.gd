@@ -38,8 +38,13 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
+@onready var main = $"/root/Main"
+
 var jumpcount = 0
 var game_state = 0
+
+var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
+var popup_window: PopupPanel
 
 
 # Overhead detection variables
@@ -74,6 +79,9 @@ func _ready():
 	call_deferred("_level_ready")
 
 func _level_ready():
+	inventory = preload("res://Inventory.gd").new()
+	inventory.fetch_inventory()
+	
 	finish_plate = get_node_or_null("../finish")
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
@@ -84,6 +92,7 @@ func _level_ready():
 	inventory_labels = {
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
+		"score": $"../Camera2D/HUD/Score/ScoreLabel"
 	}
 	
 	update_inventory_labels()
@@ -119,8 +128,10 @@ func collect_item(item: Object):
 
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
+		increase_score(100)
 	if item.is_in_group("bread"):
 		inventory.add_item("bread", 1)
+		increase_score(50)
 	if item.is_in_group("juice"):
 		# Add juice to inventory based on type
 		if "juice_type" in item:
@@ -134,7 +145,6 @@ func collect_item(item: Object):
 				_:
 					inventory.add_item("juice", 1)
 		else:
-
 			inventory.add_item("juice", 1)
 	
 
@@ -151,14 +161,19 @@ func collect_item(item: Object):
 
 	update_inventory_labels()
 
+func increase_score(amount: int):
+	inventory.score += amount
+	
+	update_inventory_labels()
+
 func update_inventory_labels():
 	for item in inventory.get_all_items().keys():
 		if item in inventory_labels:
 			inventory_labels[item].text = str(inventory.get_item_count(item))
 		else:
-
 			print_debug("No label found for inventory item: " + item)
-
+	
+	inventory_labels["score"].text = str(inventory.score)
 
 func _on_hazards_body_entered(body):
 	if body == self:
@@ -170,8 +185,11 @@ func _on_win_area_body_entered(body):
 
 func game_over(state: int):
 	if game_state != 0 or level_changing:
-		return  
-
+		return  # Prevent multiple game_over triggers
+	
+	inventory.commit_inventory()
+	$"../Camera2D".playing_cutscene = true
+	
 	gun.activated = false
 	game_state = state
 	if game_state == WIN:
@@ -184,42 +202,63 @@ func game_over(state: int):
 		else:
 			printerr("Finish sprite not found!")
 		
-		inventory.commit_inventory()
-		
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
 
 			level_changing = true
+			# Wait for the blastoff sound to play before changing level
 			await get_tree().create_timer(11.0).timeout
-			change_to_next_level()
+			level_changing = true
 		else:
 			printerr("Goose node not found!")
+		
+		time = int(time)
+		
+		while time > 0:
+			time -= 1
+			
+			if timer_label:
+				timer_label.text = str(int(time))
+			
+			$sfx_boop.play()
+			await get_tree().create_timer(0.125).timeout
+			increase_score(25)
+			
+		inventory.commit_inventory()
+		$sfx_beep.play()
+		await get_tree().create_timer(4.0).timeout
+		
+		change_to_next_level()
 	else:
+		inventory.remove_item("egg", 1)
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
 		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
-		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen
 		if game_over_screen.has_method("set_level_index"):
 			game_over_screen.set_level_index(Global.current_level_index)
+		await get_tree().create_timer(1.0).timeout
+			
 
 func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	if Global.has_level(next_level_index):
-		inventory.current_level = next_level_index
-		inventory.commit_inventory()
-		await Global.change_level(next_level_index)
+		if inventory.score >= Global.level_score_reqs[next_level_index]:
+			inventory.current_level = next_level_index
+			inventory.commit_inventory()
+			await Global.change_level(next_level_index)
+		else:
+			main.select_level()
 	else:
 		print_debug("No more levels! Game complete!")
-		# Show a game completion screen or return to main menu
+			# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)

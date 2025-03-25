@@ -10,12 +10,10 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 const juice_scene: PackedScene = preload("res://scenes/juice.tscn")
 
 var rng = RandomNumberGenerator.new()
-const TIME = 180.0
+const TIME = 120.0
 const JUMP_VELOCITY = -1100
 const LEVEL_LENGTH = 13170
 signal level_ready
-
-@onready var inventory = preload("res://Inventory.gd").new()
 
 func _ready() -> void:
 	var current_scene = self
@@ -54,7 +52,7 @@ func _ready() -> void:
 	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
 	var basket_spawn_locations = [Vector2(2631, 494), Vector2(6576, 850), Vector2(7128, 848), Vector2(9109, 495)]
 	var juice_spawn_locations = [Vector2(1661, 92), Vector2(7759, 476), Vector2(11954, 477), Vector2(9671, 235)]
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, inventory, JUMP_VELOCITY)
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)

@@ -11,6 +11,8 @@ var space_levels = [1, 2, 3]  # Updated to include levels 1-2, 1-3, and 1-4 (ind
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+@onready var goose = $"../goose"
+
 func _ready() -> void:
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
 	
@@ -105,7 +107,12 @@ func _on_top_area_entered(body: Node) -> void:
 	if body.name == "goose":
 		start_falling()
 
-func start_falling() -> void:
+func start_falling(body: String = "goose") -> void:
+	if body == "bullet":
+		goose.increase_score(100)
+	else:
+		goose.increase_score(250)
+		
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0

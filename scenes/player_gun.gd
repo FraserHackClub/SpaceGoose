@@ -21,7 +21,7 @@ func _ready():
 	self.set_process(false)
 	self.set_physics_process(false)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not activated:
 		self.hide()
 		return  # Prevents execution if gun is not activated

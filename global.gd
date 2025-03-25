@@ -28,6 +28,10 @@ var level_paths = [
 	"res://scenes/worlds/world_1_4.tscn"
 ]
 
+var level_score_reqs = [
+	0, 3000, 10000
+]
+
 var space_level_indices = [
 	1, 2
 ]
@@ -50,7 +54,7 @@ func _ready():
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))
 
 
-func _process(delta):
+func _process(_delta):
 	# Update FPS counter if visible
 	if fps_label and show_fps:
 		fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
@@ -217,19 +221,21 @@ func change_level(level_index):
 		current_level_index = level_index
 		print("Set current_level_index to:", current_level_index)
 		
-		var level_path = level_paths[level_index]
-		print("Loading scene:", level_path)
+		#var level_path = level_paths[level_index]
+		#print("Loading scene:", level_path)
 		
-		var error = get_tree().change_scene_to_file(level_path)
-		if error == OK:
-			print("Scene loaded successfully")
-			emit_signal("level_changed", level_index)
-			# Setup chunk managers for the new level
-			call_deferred("setup_chunk_managers")
-			return true
-		else:
-			print("Failed to load scene. Error:", error)
-			return false
+		get_node("/root/Main").load_level(level_index)
+		
+		#var error = get_tree().change_scene_to_file(level_path)
+		#if error == OK:
+			#print("Scene loaded successfully")
+		emit_signal("level_changed", level_index)
+			## Setup chunk managers for the new level
+		call_deferred("setup_chunk_managers")
+			#return true
+		#else:
+			#print("Failed to load scene. Error:", error)
+			#return false
 	else:
 		print("Level index out of range:", level_index)
 		return false
@@ -267,11 +273,10 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	camera.LEVEL_LENGTH = level_length
 	parent_scene.add_child(camera)
 
-func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, inventory: Inventory, jump_velocity: float = -900):
+func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, jump_velocity: float = -900):
 	var player = player_scene.instantiate()
 	player.position = pos
 	player.time = time
-	player.inventory = inventory
 	player.JUMP_VELOCITY = jump_velocity
 	parent_scene.add_child(player)
 	
@@ -319,12 +324,12 @@ func find_player_in_scene():
 	
 	return find_node_by_name(current_scene, "goose")
 
-func find_node_by_name(node, name):
-	if node.name == name:
+func find_node_by_name(node, node_name):
+	if node.name == node_name:
 		return node
 	
 	for child in node.get_children():
-		var found = find_node_by_name(child, name)
+		var found = find_node_by_name(child, node_name)
 		if found:
 			return found
 	
@@ -497,7 +502,7 @@ class ChunkManager:
 				if tilemap.get_cell_source_id(0, cell) >= 0:
 					active_chunks[chunk_key].cells.append(cell)
 		
-		print("Created terrain chunk at: ", chunk_pos, " with ", active_chunks[chunk_key].cells.size(), " cells")
+		print_verbose("Created terrain chunk at: ", chunk_pos, " with ", active_chunks[chunk_key].cells.size(), " cells")
 	
 	func update_active_chunks():
 		if !tilemap or !tilemap.is_inside_tree():
