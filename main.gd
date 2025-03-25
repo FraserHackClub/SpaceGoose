@@ -77,5 +77,4 @@ func _process(_delta: float):
 	if Input.is_action_just_pressed("pause") and is_level():
 		paused = !paused
 		for child in level_container.get_children():
-
 			child.get_tree().paused = paused
