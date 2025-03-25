@@ -29,7 +29,7 @@ var level_paths = [
 ]
 
 var level_score_reqs = [
-	0, 3000, 10000
+	0, 3000, 10000, 25000
 ]
 
 var space_level_indices = [

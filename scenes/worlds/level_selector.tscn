@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c50nj6eoif7n3"]
+[gd_scene load_steps=18 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://hhxciwfg7va5" path="res://assets/planets/moon.png" id="3_1x7o1"]
 [ext_resource type="Texture2D" uid="uid://i1dx3qeuqenn" path="res://assets/planets/mars.png" id="4_8owdg"]
 [ext_resource type="Texture2D" uid="uid://cnvj3kjb72wk6" path="res://assets/icons/pointer.png" id="6_am6ep"]
+[ext_resource type="Texture2D" uid="uid://bd4jl322xprxs" path="res://assets/planets/asteroids.png" id="6_iguuw"]
 [ext_resource type="AudioStream" uid="uid://dcsd01y3fmyon" path="res://assets/audio/effects/swoosh.ogg" id="7_i1yxt"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="8_hgln0"]
 [ext_resource type="AudioStream" uid="uid://tckjnrvritc4" path="res://assets/audio/effects/mouse_click.mp3" id="9_got47"]
@@ -322,14 +323,23 @@ texture = ExtResource("3_1x7o1")
 [node name="Mars" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 0
-offset_left = 456.0
-offset_top = 374.0
-offset_right = 648.0
-offset_bottom = 566.0
+offset_left = 392.0
+offset_top = 310.0
+offset_right = 584.0
+offset_bottom = 502.0
 texture = ExtResource("4_8owdg")
+
+[node name="Asteroids" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 468.0
+offset_right = 792.0
+offset_bottom = 648.0
+texture = ExtResource("6_iguuw")
 
 [node name="pointer" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(592, 376)
 sprite_frames = SubResource("SpriteFrames_hgln0")
 
 [node name="Select_sound" type="AudioStreamPlayer" parent="."]
