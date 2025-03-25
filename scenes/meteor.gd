@@ -25,7 +25,6 @@ var has_landed: bool = false
 @onready var collision_shape = $CollisionShape2D if has_node("CollisionShape2D") else null
 @onready var particles = $GPUParticles2D if has_node("GPUParticles2D") else null
 
-
 signal meteor_landed
 
 func _ready() -> void:
@@ -102,6 +101,9 @@ func start_meteor_spawner() -> void:
 	spawn_meteor()
 
 func spawn_meteor() -> void:
+	if game_over_triggered:
+		return
+	
 	var current_meteors = get_tree().get_nodes_in_group("meteors")
 	if current_meteors.size() >= max_meteors:
 		return
@@ -135,6 +137,9 @@ func spawn_meteor() -> void:
 	print("Spawned meteor at X: " + str(spawn_x))
 
 func _physics_process(delta: float) -> void:
+	if $"../goose".game_state > 0:
+		game_over_triggered = true
+	
 	if not is_clone:
 		return  
 		
