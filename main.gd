@@ -9,6 +9,7 @@ var inventory = preload("res://Inventory.gd").new()
 var current_level = null
 var menu: Control
 var level_selector: Control
+var paused: bool = false
 
 func _ready():
 	# Debugging - print the node path to verify it exists
@@ -35,15 +36,20 @@ func load_menu() -> void:
 		menu.select_level = select_level
 		add_child(menu)
 
+func is_level():
+	return level_container.get_child_count() > 0
+
+func remove_levels():
+	for child in level_container.get_children():
+		child.queue_free()
 
 func play() -> void:
 	inventory.fetch_inventory()
 	load_level(inventory.current_level)
 
 func select_level() -> void:
-	if level_container.get_child_count() > 0:
-		for child in level_container.get_children():
-			child.queue_free()
+	if is_level():
+		remove_levels()
 	
 	level_selector = level_selector_scene.instantiate()
 	add_child(level_selector)
@@ -51,9 +57,8 @@ func select_level() -> void:
 func load_level(level_index):
 	inventory.fetch_inventory()
 	# Clear existing level
-	if level_container.get_child_count() > 0:
-		for child in level_container.get_children():
-			child.queue_free()
+	if is_level():
+		remove_levels()
 	
 	# Load new level
 	var level_scene = load(Global.level_paths[level_index])
@@ -67,3 +72,9 @@ func load_level(level_index):
 		print(inventory.get_inventory())
 		return true
 	return false
+
+func _process(delta: float):
+	if Input.is_action_just_pressed("pause") and is_level():
+		paused = !paused
+		for child in level_container.get_children():
+			child.get_tree().paused = paused
