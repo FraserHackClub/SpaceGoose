@@ -9,6 +9,8 @@ extends Camera2D
 const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
+var playing_cutscene: bool = false
+
 func _ready():
 	Global.bullet_counter = $HUD/BulletCounter/BulletCountLabel
 
@@ -18,7 +20,9 @@ func _process(_delta: float) -> void:
 		var target_x = min(max(0.0, goose.position.x), (LEVEL_LENGTH - VIEWPORT_WIDTH))
 		position.x = lerp(position.x, target_x, smooth_speed)
 	
-	if get_tree().paused:
+	if playing_cutscene:
+		$"status-indicator".animation = "stop"
+	elif get_tree().paused:
 		$"status-indicator".animation = "pause"
 	else:
 		$"status-indicator".animation = "default"

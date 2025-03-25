@@ -1298,7 +1298,8 @@ texture = ExtResource("3_veoj6")
 41:21/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_ojocf"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 15
+physics_layer_0/collision_mask = 15
 sources/0 = SubResource("TileSetAtlasSource_0614x")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ojocf"]
