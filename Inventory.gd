@@ -62,9 +62,6 @@ func add_item(item_id: String, count: int = 1) -> void:
 	
 	items[item_id] += count
 	print_debug("Added " + str(count) + " " + item_id + ", new total: " + str(items[item_id])) 
-	
-	items[item_id] += count
-	print_debug("Added " + str(count) + " " + item_id + ", new total: " + str(items[item_id]))
 
 func remove_item(item_id: String, count: int = 1) -> void:
 	if items.has(item_id):
