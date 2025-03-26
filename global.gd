@@ -24,11 +24,12 @@ const default_inventory = {
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
 	"res://scenes/worlds/world_1-2.tscn",
-	"res://scenes/worlds/world_1-3.tscn"
+	"res://scenes/worlds/world_1-3.tscn",
+	"res://scenes/worlds/world_1_4.tscn"
 ]
 
 var level_score_reqs = [
-	0, 3000, 10000
+	0, 3000, 10000, 25000
 ]
 
 var space_level_indices = [
@@ -38,7 +39,7 @@ var space_level_indices = [
 var current_level_index = -1
 var current_level = null
 
-var helmet_visible_levels = [1,2]
+var helmet_visible_levels = [1,2,3]
 
 # Chunk management
 var terrain_chunk_manager = null
@@ -66,6 +67,63 @@ func _process(_delta):
 	else:
 		c_key_pressed = false
 
+func spawn_juice(scene: PackedScene, parent_scene: Node, pos_list: Array):
+	# Create a list of juice types
+	var juice_types = ["apple", "orange", "grape"]
+	
+	# Randomize the seed
+	randomize()
+	
+	# Shuffle the juice types to ensure randomness
+	juice_types.shuffle()
+	
+	# Debug: Check available animations in the scene
+	var temp_juice = scene.instantiate()
+	var temp_sprite = temp_juice.get_node("AnimatedSprite2D")
+	if temp_sprite and temp_sprite.sprite_frames:
+		print_debug("Available juice animations:", temp_sprite.sprite_frames.get_animation_names())
+	temp_juice.queue_free()
+	
+	# For each position in the list
+	for i in range(pos_list.size()):
+		var pos = pos_list[i]
+		var juice = scene.instantiate()
+		juice.position = pos
+		
+		# Get the AnimatedSprite2D
+		var sprite = juice.get_node("AnimatedSprite2D")
+		if sprite and sprite.sprite_frames:
+			# Choose a juice type - ensure variety when possible
+			var type_index = i % juice_types.size()
+			var selected_type = juice_types[type_index]
+			
+			# Verify the animation exists
+			if sprite.sprite_frames.has_animation(selected_type):
+				# Set the animation directly on the sprite
+				sprite.animation = selected_type
+				
+				# Store the juice type on the node for collection logic
+				juice.juice_type = selected_type
+				
+				print_debug("Set juice type to:", selected_type, "at position:", pos)
+			else:
+				print_debug("ERROR: Animation", selected_type, "not found! Using default.")
+				# List available animations
+				print_debug("Available animations:", sprite.sprite_frames.get_animation_names())
+				
+				# Default to first animation if available
+				if sprite.sprite_frames.get_animation_names().size() > 0:
+					var default_anim = sprite.sprite_frames.get_animation_names()[0]
+					sprite.animation = default_anim
+					juice.juice_type = default_anim
+		else:
+			print_debug("ERROR: AnimatedSprite2D or SpriteFrames not found in juice scene!")
+		
+		juice.add_to_group("item")
+		juice.add_to_group("juice")
+		parent_scene.add_child(juice)
+		print_debug("Spawned juice:", juice.juice_type, "at", pos)
+		
 func create_fps_counter():
 	# Remove any existing FPS counter first
 	remove_fps_counter()
