@@ -43,7 +43,22 @@ var inventory: Inventory
 var jumpcount = 0
 var game_state = 0
 
-@export var flash_colors : Array[Color] = [Color(0.3, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1), Color(1.0, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1)]
+@export var flash_colors : Array[Color] = [
+	Color(0.3, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(1.0, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+]
 var invincible: bool = false
 var invincible_time: float = 0.0
 var color_index : int = 0
@@ -59,6 +74,7 @@ var delta_sum: float = 0.0
 var overhead_count := 0
 var forced_crouch := false
 
+var grapejuice_timer_label: Label
 var timer_label: Node
 var level_changing = false
 var juice_actions = {
@@ -113,6 +129,7 @@ func _level_ready():
 	update_inventory_labels()
 	
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
+	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
 
 func _on_goose_frame_changed() -> void:
@@ -325,7 +342,7 @@ func _physics_process(delta: float) -> void:
 
 func _handle_movement(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
-		if is_on_wall():
+		if is_on_wall() or invincible:
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			sfx_swoosh.play()
 			$Sprite2D2.show()
@@ -363,6 +380,13 @@ func _handle_timer(delta: float):
 		
 	if timer_label:
 		timer_label.text = str(int(time))
+	
+	if grapejuice_timer_label:
+		if invincible:
+			grapejuice_timer_label.get_parent().show()
+			grapejuice_timer_label.text = str(int(invincible_time))
+		else:
+			grapejuice_timer_label.get_parent().hide()
 	
 	if time <= 0:
 		game_over(LOSE)

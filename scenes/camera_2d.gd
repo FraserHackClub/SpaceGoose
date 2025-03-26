@@ -1,10 +1,12 @@
 extends Camera2D
 
+@onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
 @onready var goose: CharacterBody2D = $"../goose"
 @onready var camera_2d: Camera2D = $"."
 @onready var level: Node2D = $".."
 @onready var juice_menu_scene: PackedScene = preload("res://scenes/worlds/juice_menu.tscn")
 @onready var main: Node = get_node_or_null("/root/Main")
+
 @export var smooth_speed: float = 0.1
 @export var LEVEL_LENGTH: float = 0.0
 const VIEWPORT_WIDTH = 1152.0
@@ -36,6 +38,7 @@ func _process(_delta: float) -> void:
 	if is_instance_valid(goose):
 		var target_x = min(max(0.0, goose.position.x), (LEVEL_LENGTH - VIEWPORT_WIDTH))
 		position.x = lerp(position.x, target_x, smooth_speed)
+		grapejuice_timericon.modulate = goose.modulate
 	
 	if Input.is_action_just_pressed("juice") and not playing_cutscene:
 		toggle_juice_menu()
