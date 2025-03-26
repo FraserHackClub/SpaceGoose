@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c50nj6eoif7n3"]
+[gd_scene load_steps=15 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bd4jl322xprxs" path="res://assets/planets/asteroids.png" id="6_iguuw"]
 [ext_resource type="AudioStream" uid="uid://dcsd01y3fmyon" path="res://assets/audio/effects/swoosh.ogg" id="7_i1yxt"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="8_hgln0"]
-[ext_resource type="AudioStream" uid="uid://tckjnrvritc4" path="res://assets/audio/effects/mouse_click.mp3" id="9_got47"]
 [ext_resource type="AudioStream" uid="uid://bil2oerrtqpig" path="res://assets/audio/effects/wrong.mp3" id="10_05854"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="10_e0il0"]
 [ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="11_05854"]
@@ -328,10 +327,6 @@ volume_db = -7.904
 
 [node name="Start_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_hgln0")
-playback_type = 1
-
-[node name="Click_sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_got47")
 playback_type = 1
 
 [node name="Wrong_sound" type="AudioStreamPlayer" parent="."]

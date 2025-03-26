@@ -41,6 +41,7 @@ func _process(_delta: float) -> void:
 		call_action = false
 		if inventory.score >= Global.level_score_reqs[current_index]:
 			$Start_sound.play()
+			await get_tree().create_timer(0.3).timeout
 			main.load_level(current_index)
 			queue_free()
 		else:
@@ -72,7 +73,6 @@ func _process(_delta: float) -> void:
 				planet.scale = lerp(planet.scale, Vector2(1.0, 1.0), smooth_speed)
 		
 		if Input.is_action_just_pressed("ui_accept"):
-			$Click_sound.play()
 			pointer.click()
 		elif Input.is_action_just_pressed("ui_cancel"):
 			main.load_menu()

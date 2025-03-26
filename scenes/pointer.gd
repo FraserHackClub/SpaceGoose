@@ -6,6 +6,7 @@ extends Node2D
 var clicking_phase: int = false
 
 func click() -> void:
+	$Click_sound.play()
 	clicking_phase = max(clicking_phase, 1)
 
 func _process(_delta: float) -> void:	
