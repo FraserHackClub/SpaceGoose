@@ -50,7 +50,7 @@ func collect_bread() -> void:
 	set_deferred("collision_layer", 0)  
 	set_deferred("collision_mask", 0)  
 
-	velocity.y = fly_up_speed  
+	velocity.y = fly_up_speed
 
 	await get_tree().create_timer(disappear_delay).timeout  
 	queue_free()

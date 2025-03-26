@@ -47,7 +47,21 @@ func set_inventory(inventory: Dictionary) -> void:
 	current_level = inventory["current_level"]
 
 func add_item(item_id: String, count: int = 1) -> void:
+	# Ensure item_id is a valid string
+	if item_id == null or item_id == "":
+		printerr("Invalid item_id provided to add_item")
+		return
+		
+	# Convert to string just to be safe
+	item_id = str(item_id)
+	
+	# Initialize if not exists
+	if not items.has(item_id):
+		items[item_id] = 0
+		print_debug("Created new inventory entry for: " + item_id)
+	
 	items[item_id] += count
+	print_debug("Added " + str(count) + " " + item_id + ", new total: " + str(items[item_id])) 
 
 func remove_item(item_id: String, count: int = 1) -> void:
 	if items.has(item_id):

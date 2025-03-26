@@ -17,13 +17,15 @@ var call_action: bool = false
 var positions = [
 	Vector2(32.0, 416.0),
 	Vector2(288.0, 272.0),
-	Vector2(448.0, 572.0)
+	Vector2(384.0, 508.0),
+	Vector2(592.0, 376.0)
 ]
 
 @onready var planets = [
 	$Earth,
 	$Moon,
-	$Mars
+	$Mars,
+	$Asteroids
 ]
 
 func _ready() -> void:

@@ -129,7 +129,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbnq7"]
-size = Vector2(89, 114)
+size = Vector2(64, 67)
 
 [node name="Basket" type="CharacterBody2D"]
 script = ExtResource("1_kv7jm")
@@ -143,5 +143,5 @@ frame_progress = 0.607558
 position = Vector2(0, 1.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
-position = Vector2(-11.5, -25.5)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_vbnq7")
