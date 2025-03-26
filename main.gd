@@ -29,6 +29,7 @@ func _ready():
 	load_menu()
 
 func load_menu() -> void:
+	if is_level(): remove_levels()
 	inventory.fetch_inventory()
 	menu = menu_scene.instantiate()
 	if menu:

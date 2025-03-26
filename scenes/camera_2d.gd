@@ -22,8 +22,16 @@ func _process(_delta: float) -> void:
 	
 	if playing_cutscene:
 		$"status-indicator".animation = "stop"
+		$"exit-btn".hide()
 	elif get_tree().paused:
 		$"status-indicator".animation = "pause"
+		$"exit-btn".show()
 	else:
 		$"status-indicator".animation = "default"
-	
+		$"exit-btn".hide()
+
+
+func _on_exitbtn_pressed() -> void:
+	if get_node_or_null("/root/Main"):
+		level.get_tree().paused = false
+		get_node_or_null("/root/Main").load_menu()
