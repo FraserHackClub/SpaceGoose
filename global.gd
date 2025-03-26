@@ -11,7 +11,7 @@ var player_gun: Node = null  # Stores reference to the player's gun
 var main_character: Node2D = null  # Stores reference to the Player
 var camera_2d: Camera2D = null
 var player_gun_path: NodePath = "PlayerGun"  # Default relative path
-
+var custom_font = load("res://assets/PixeloidMono.ttf")
 const default_inventory = {
 	"items": {
 		"egg": 3,
@@ -25,7 +25,10 @@ const default_inventory = {
 var level_paths = [
 	"res://scenes/worlds/world_1-1.tscn",
 	"res://scenes/worlds/world_1-2.tscn",
-	"res://scenes/worlds/world_1-3.tscn"
+	"res://scenes/worlds/world_1-3.tscn",
+	"res://scenes/worlds/world_2-1.tscn",
+	"res://scenes/worlds/world_2-2.tscn",
+	"res://scenes/worlds/world_3-1.tscn"
 ]
 
 var space_level_indices = [
@@ -45,13 +48,16 @@ var fps_canvas_layer = null
 var fps_label = null
 var show_fps = false
 var c_key_pressed = false
-
+@onready var KeyID: float = 0.0
 func _ready():
+	KeyID = 0.0
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))
 
 
 func _process(delta):
+	#print(KeyID)
 	# Update FPS counter if visible
+	
 	if fps_label and show_fps:
 		fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 	
@@ -168,6 +174,7 @@ func change_level(level_index):
 		var error = get_tree().change_scene_to_file(level_path)
 		if error == OK:
 			print("Scene loaded successfully")
+			KeyID = 0.0
 			emit_signal("level_changed", level_index)
 			# Setup chunk managers for the new level
 			call_deferred("setup_chunk_managers")
@@ -181,12 +188,13 @@ func change_level(level_index):
 
 func change_to_next_level():
 	var next_level_index = current_level_index + 1
+	KeyID = 0.0
 	print("Changing from level", current_level_index, "to", next_level_index)
 	return change_level(next_level_index)
 
 func restart_game():
 	# Store the current level index
-	
+	KeyID = 0.0
 	var current_index = current_level_index
 	print_debug("Restarting level with index: ", current_index)
 	
@@ -195,7 +203,7 @@ func restart_game():
 	
 	# If we're in a level, use switch_level to properly reload it
 	if has_level(current_index):
-		switch_level(current_index)
+		change_level(current_index)
 		print("skibidi")
 	else:
 		# Fallback to reloading the current scene if we're not in a tracked level

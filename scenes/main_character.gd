@@ -145,6 +145,9 @@ func collect_item(item: Object):
 		item.collect_egg()
 	elif item.has_method("collect_weapon"):
 		item.collect_weapon()
+	elif item.has_method("collect_key"):
+		item.collect_key()
+		
 	else:
 		item.queue_free()  # Default behavior for other items
 
@@ -223,6 +226,8 @@ func change_to_next_level():
 		game_over_screen.set_game_over_state(WIN)
 
 func _physics_process(delta: float) -> void:
+	#print("Right Pressed: ", Input.is_action_pressed("right"))
+	#print("Left Pressed: ", Input.is_action_pressed("left"))
 	if level_changing:
 		return
 	if is_disabled:

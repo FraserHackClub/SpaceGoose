@@ -77,13 +77,13 @@ func _process(delta: float) -> void:
 	#print("📐 Level Bounds: ", LEVEL_LENGTH, LEVEL_HEIGHT)
 
 	# --- Level 0 & 1: Horizontal only ---
-	if Global.current_level_index == 0 or Global.current_level_index == 1:
-		custom_camera_offset = Vector2(500, -400)
+	if Global.current_level_index == 0 or Global.current_level_index == 1 or Global.current_level_index == 2:
+		custom_camera_offset = Vector2(500, 0)
 		position.x = lerp(position.x, target_x, x_smooth_speed * delta)
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 2:
+	if Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2

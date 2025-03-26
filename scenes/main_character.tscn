@@ -416,7 +416,7 @@ shape = SubResource("RectangleShape2D_1e7ql")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(2, -1)
-polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
+polygon = PackedVector2Array(212, -253, 212, -242, 212, -236, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
 
 [node name="OverheadDetector" type="Area2D" parent="."]
 

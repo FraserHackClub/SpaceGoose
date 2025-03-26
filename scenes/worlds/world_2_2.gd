@@ -10,8 +10,8 @@ const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
-const LEVEL_LENGTH = 16000.0
-const TIME = 180.0
+const LEVEL_LENGTH = 55000.0
+const TIME = 600.0
 
 var rng = RandomNumberGenerator.new()
 
@@ -23,7 +23,7 @@ signal level_ready
 func _ready() -> void:
 	
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 3
+	Global.current_level_index = 4
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
