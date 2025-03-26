@@ -15,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	move_and_slide()
 
-func collect_egg() -> void:
+func collect() -> void:
 	if collected:
 		return  
 

@@ -61,13 +61,10 @@ func _physics_process(delta: float) -> void:
 				# Check if it's likely the player
 				if collider.is_in_group("player") or collider.name.to_lower().contains("goose") or collider == Global.main_character:
 					print("Juice collided with player/goose: ", collider.name)
-					collect_juice()
+					collect()
 					return
 
 func collect() -> void:
-	collect_juice()
-
-func collect_juice() -> void:
 	print("collect_juice() called")
 	
 	# Don't collect if already collected or another juice is being collected

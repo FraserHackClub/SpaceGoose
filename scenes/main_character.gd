@@ -148,14 +148,8 @@ func collect_item(item: Object):
 			inventory.add_item("juice", 1)
 	
 
-	if item.has_method("collect_bread"):
-		item.collect_bread()
-	elif item.has_method("collect_egg"):
-		item.collect_egg()
-	elif item.has_method("collect_weapon"):
-		item.collect_weapon()
-	elif item.has_method("collect_juice"):
-		item.collect_juice()
+	if item.has_method("collect"):
+		item.collect()
 	else:
 		item.queue_free() 
 
