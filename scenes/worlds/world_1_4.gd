@@ -63,16 +63,12 @@ func _ready() -> void:
 		Vector2(35779, 418),
 		Vector2(40531, 509)
 	]
-	var weapon_pickup_locations = [Vector2(492, 500)]
-	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
 	var basket_spawn_locations = [Vector2(5824, 415), Vector2(7394, 141), Vector2(20434, 399), Vector2(36700, 100)]
 	var galactic_spawn_locations = [Vector2(6794, 488), Vector2(41492, -123), Vector2(33616, 602)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(galactic_scene, current_scene, galactic_spawn_locations)
-	#Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(29380, 360), "win_zone")

@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	move_and_slide()
 
-func collect_weapon() -> void:
+func collect() -> void:
 	if collected:
 		return  
 

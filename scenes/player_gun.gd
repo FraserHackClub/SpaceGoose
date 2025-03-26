@@ -6,7 +6,9 @@ extends Node2D
 @onready var sfx_gunreload: AudioStreamPlayer = $Gun_Reload
 
 var BULLET = preload("res://scenes/bullet.tscn")
-var Bulletamount = 30
+var FIREBALL = preload("res://scenes/fireball.tscn")
+var projectile: PackedScene
+var Bulletamount = 0
 var is_reloading = false  # Prevents shooting & animation override
 var activated = false  # Controls gun visibility and function
 
@@ -59,15 +61,19 @@ func _pickedup() -> void:
 	activated = true
 
 	# Enable visibility and processing
+	self._reload()
 	self.show()
 	self.set_process(true)
 	self.set_physics_process(true)
 
 	#print_debug("Gun picked up! Activated:", activated, "| Visible:", self.visible)
 
-func _reload() -> void:
+func _reload(projectile_type: PackedScene = BULLET, amount: int = 30) -> void:
 	if not activated:
 		print_debug("Cannot reload, gun is not active!")
+		return
+	if projectile_type == BULLET and Bulletamount > 0:
+		print_debug("Cannot reload, gun has bullets in the chamber")
 		return
 
 	is_reloading = true
@@ -75,13 +81,15 @@ func _reload() -> void:
 	sfx_gunreload.play()
 	SPRITE.animation = "AK47_Reloading"
 	SPRITE.play()  # Ensure the animation plays
+	
+	projectile = projectile_type
 
-	var reload_time = 1.4  
+	var reload_time = 1.4
 	print_verbose("Waiting for reload animation:", reload_time, "seconds")
 
 	await get_tree().create_timer(reload_time).timeout  # Wait for the animation to finish
 	
-	Bulletamount = 30
+	Bulletamount = amount
 
 	print_verbose("Setting animation to Default")
 	SPRITE.animation = "AK47_Default"
@@ -106,7 +114,7 @@ func _shoot():
 
 	if Bulletamount > 0:
 		sfx_gunshoot.play()
-		var bullet_instance = BULLET.instantiate()
+		var bullet_instance = projectile.instantiate()
 		get_tree().root.add_child(bullet_instance)
 		bullet_instance.global_position = barrel_marker.global_position
 		bullet_instance.rotation = rotation

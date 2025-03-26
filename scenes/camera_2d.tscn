@@ -158,6 +158,29 @@ texture_filter = 1
 layout_mode = 2
 texture = ExtResource("5_x6f0p")
 
+[node name="GrapeJuiceTimer" type="HBoxContainer" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_top = 128.0
+offset_bottom = 192.0
+grow_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="TimerLabel" type="Label" parent="HUD/GrapeJuiceTimer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_40275")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="TimerIcon" type="TextureRect" parent="HUD/GrapeJuiceTimer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_x6f0p")
+
 [node name="status-indicator" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(1104, 600)

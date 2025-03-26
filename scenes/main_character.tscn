@@ -389,9 +389,6 @@ size = Vector2(64, 64)
 [node name="goose" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_tcf3c")
-JUMP_VELOCITY = null
-time = null
-inventory_labels = null
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

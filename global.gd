@@ -14,7 +14,10 @@ var player_gun_path: NodePath = "PlayerGun"
 const default_inventory = {
 	"items": {
 		"egg": 3,
-		"bread": 0
+		"bread": 0,
+		"apple_juice": 0,
+		"orange_juice": 0,
+		"grape_juice": 0
 	},
 	"score": 0,
 	"current_level": 0

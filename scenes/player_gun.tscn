@@ -187,7 +187,7 @@ texture_filter = 1
 position = Vector2(55, -15)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_agw2f")
-animation = &"AK47_Reloading"
+animation = &"AK47_Default"
 
 [node name="BarrelMarker2D" type="Marker2D" parent="."]
 position = Vector2(195, -40)
