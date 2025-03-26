@@ -75,11 +75,14 @@ func load_level(level_index):
 
 func _process(_delta: float):
 	if Input.is_action_just_pressed("pause") and is_level():
-		var camera = level_container.get_children()[0].get_node_or_null("Camera2D")
-		if camera:
-			if camera.playing_cutscene:
-				return
-		
-		paused = !paused
-		for child in level_container.get_children():
-			child.get_tree().paused = paused
+		toggle_pause()
+
+func toggle_pause():
+	var camera = level_container.get_children()[0].get_node_or_null("Camera2D")
+	if camera:
+		if camera.playing_cutscene:
+			return
+	
+	paused = !paused
+	for child in level_container.get_children():
+		child.get_tree().paused = paused
