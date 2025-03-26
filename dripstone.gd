@@ -46,6 +46,8 @@ func start_falling(body: String = "") -> void:
 	if body  == "fireball":
 		goose.increase_score(50)
 		modulate = Color.DARK_ORANGE
+	if body == "invincible":
+		goose.increase_score(100)
 
 	sprite.play("exploding")  # Start animation
 	await get_tree().create_timer(0.27).timeout  # Waits for 2 seconds

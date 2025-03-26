@@ -134,9 +134,12 @@ func _on_OverheadDetector_body_exited(body):
 	if overhead_count == 0:
 		forced_crouch = false
 
-func _on_area_body_entered(body):
+func _on_area_body_entered(body: Node):
 	if body.is_in_group("item"):
 		collect_item(body)
+	if invincible:
+		if body.has_method("start_falling"):
+			body.start_falling("invincible")
 
 func collect_item(item: Object):
 	if item.collected: return
