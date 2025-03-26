@@ -110,6 +110,9 @@ func _on_top_area_entered(body: Node) -> void:
 func start_falling(body: String = "goose") -> void:
 	if body == "bullet":
 		goose.increase_score(100)
+	if body  == "fireball":
+		goose.increase_score(150)
+		modulate = Color.RED
 	else:
 		goose.increase_score(250)
 		
