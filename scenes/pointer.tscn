@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://tckjnrvritc4" path="res://assets/audio/effects/mouse_click.mp3" id="3_vyy14"]
 
 [node name="pointer" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_0hk4w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
