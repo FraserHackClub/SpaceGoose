@@ -30,6 +30,9 @@ func _process(_delta: float) -> void:
 	if not self.visible:
 		print_debug("Gun is now active and visible!")
 	self.show()
+	
+	if $"..".shoot_fireball:
+		BULLET = preload("res://scenes/fireball.tscn")
 
 	look_at(get_global_mouse_position())
 

@@ -43,10 +43,12 @@ var inventory: Inventory
 var jumpcount = 0
 var game_state = 0
 
-@export var flash_colors : Array[Color] = [Color(0.5, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1), Color(1.0, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1)]
+@export var flash_colors : Array[Color] = [Color(0.3, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1), Color(1.0, 0.0, 0.9, 1), Color(0.7, 0.0, 0.9, 1)]
 var invincible: bool = false
 var invincible_time: float = 0.0
 var color_index : int = 0
+
+var shoot_fireball: bool = false
 
 var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
 var popup_window: PopupPanel
@@ -425,7 +427,7 @@ func apple_juice():
 	SPEED *= 1.5
 
 func orange_juice():
-	pass
+	shoot_fireball = true
 
 func grape_juice():
 	invincible_time += 15.0
