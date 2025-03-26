@@ -184,3 +184,4 @@ shape = SubResource("RectangleShape2D_kls7j")
 stream = ExtResource("4_eydad")
 
 [connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]

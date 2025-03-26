@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 400
+var SPEED = 400  # 
 @export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
@@ -43,17 +43,43 @@ var inventory: Inventory
 var jumpcount = 0
 var game_state = 0
 
+@export var flash_colors : Array[Color] = [
+	Color(0.3, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(1.0, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+]
+var invincible: bool = false
+var invincible_time: float = 0.0
+var color_index : int = 0
+
 var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
 var popup_window: PopupPanel
 
+var delta_sum: float = 0.0
 
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
 
+var grapejuice_timer_label: Label
 var timer_label: Node
 var level_changing = false
-
+var juice_actions = {
+	"apple": apple_juice,
+	"orange": orange_juice,
+	"grape": grape_juice,
+}
 
 
 func _ready():
@@ -92,12 +118,16 @@ func _level_ready():
 	inventory_labels = {
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
-		"score": $"../Camera2D/HUD/Score/ScoreLabel"
+		"score": $"../Camera2D/HUD/Score/ScoreLabel",
+		"apple_juice": $"../Camera2D/juice_menu/juice_arranger/apple/apple_label",
+		"orange_juice": $"../Camera2D/juice_menu/juice_arranger/orange/orange_label",
+		"grape_juice": $"../Camera2D/juice_menu/juice_arranger/grape/grape_label"
 	}
 	
 	update_inventory_labels()
 	
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
+	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
 
 func _on_goose_frame_changed() -> void:
@@ -119,11 +149,16 @@ func _on_OverheadDetector_body_exited(body):
 	if overhead_count == 0:
 		forced_crouch = false
 
-func _on_area_body_entered(body):
+func _on_area_body_entered(body: Node):
 	if body.is_in_group("item"):
 		collect_item(body)
+	if invincible:
+		if body.has_method("start_falling"):
+			body.start_falling("invincible")
 
 func collect_item(item: Object):
+	if item.collected: return
+	
 	sfx_collect.play()
 
 	if item.is_in_group("egg"):
@@ -133,6 +168,7 @@ func collect_item(item: Object):
 		inventory.add_item("bread", 1)
 		increase_score(50)
 	if item.is_in_group("juice"):
+		if not item.is_collectable(): return
 		# Add juice to inventory based on type
 		if "juice_type" in item:
 			match item.juice_type:
@@ -148,18 +184,23 @@ func collect_item(item: Object):
 			inventory.add_item("juice", 1)
 	
 
-	if item.has_method("collect_bread"):
-		item.collect_bread()
-	elif item.has_method("collect_egg"):
-		item.collect_egg()
-	elif item.has_method("collect_weapon"):
-		item.collect_weapon()
-	elif item.has_method("collect_juice"):
-		item.collect_juice()
+	if item.has_method("collect"):
+		item.collect()
 	else:
 		item.queue_free() 
 
 	update_inventory_labels()
+
+func use_juice(juice: String) -> bool:
+	if inventory.get_item_count(juice + "_juice") <= 0:
+		return false
+	
+	if juice_actions[juice].call():
+		inventory.remove_item(juice + "_juice", 1)
+		update_inventory_labels()
+		return true
+	
+	return false
 
 func increase_score(amount: int):
 	inventory.score += amount
@@ -186,6 +227,9 @@ func _on_win_area_body_entered(body):
 func game_over(state: int):
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
+	
+	if invincible and state == LOSE:
+			return
 	
 	inventory.commit_inventory()
 	$"../Camera2D".playing_cutscene = true
@@ -291,13 +335,13 @@ func _physics_process(delta: float) -> void:
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):
 			game_over(LOSE)
 	
-	var desired_anim = _handle_animation()
+	var desired_anim = _handle_animation(delta)
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
 
 func _handle_movement(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
-		if is_on_wall():
+		if is_on_wall() or invincible:
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			sfx_swoosh.play()
 			$Sprite2D2.show()
@@ -325,13 +369,28 @@ func _handle_movement(_delta: float) -> void:
 func _handle_timer(delta: float):
 	time -= delta
 	time = max(time, 0.0)
+	
+	if invincible_time > 0.0:
+		invincible = true
+		invincible_time -= delta
+		invincible_time = min(max(invincible_time, 0.0), time)
+	else:
+		invincible = false
+		
 	if timer_label:
 		timer_label.text = str(int(time))
+	
+	if grapejuice_timer_label:
+		if invincible:
+			grapejuice_timer_label.get_parent().show()
+			grapejuice_timer_label.text = str(int(invincible_time))
+		else:
+			grapejuice_timer_label.get_parent().hide()
 	
 	if time <= 0:
 		game_over(LOSE)
 
-func _handle_animation() -> String:
+func _handle_animation(delta) -> String:
 	var desired_anim = "default"
 	
 	if Input.is_action_just_pressed("help"):
@@ -372,6 +431,15 @@ func _handle_animation() -> String:
 		else:
 			desired_anim = "default"
 	
+	if invincible and delta_sum >= 0.1:
+		color_index = (color_index + 1) % flash_colors.size()
+		modulate = flash_colors[color_index]
+		delta_sum -= 0.1
+	elif not invincible:
+		modulate = Color.WHITE
+	
+	delta_sum += delta
+	
 	return desired_anim
 
 func toggle_helmet() -> void:
@@ -380,3 +448,18 @@ func toggle_helmet() -> void:
 		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
 		printerr("Helmet node not found")
+
+func apple_juice() -> bool:
+	SPEED *= 1.5
+	return true
+
+func orange_juice() -> bool:
+	if gun.activated:
+		gun._reload(gun.FIREBALL, 15)
+		return true
+	
+	return false
+
+func grape_juice():
+	invincible_time += 15.0
+	return true

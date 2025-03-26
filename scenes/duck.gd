@@ -110,6 +110,11 @@ func _on_top_area_entered(body: Node) -> void:
 func start_falling(body: String = "goose") -> void:
 	if body == "bullet":
 		goose.increase_score(100)
+	if body  == "fireball":
+		goose.increase_score(150)
+		modulate = Color.RED
+	if body == "invincible":
+		goose.increase_score(500)
 	else:
 		goose.increase_score(250)
 		
@@ -127,3 +132,9 @@ func start_falling(body: String = "goose") -> void:
 
 func _on_fall_timeout() -> void:
 	queue_free()
+
+
+func _on_area_2d_2_body_entered(body: Node2D) -> void:
+	if body.name == "goose":
+		if body.invincible:
+			start_falling("invincible")

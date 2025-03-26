@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://budquqhwi354o" path="res://assets/menu_btns.png" id="4_ded4i"]
 [ext_resource type="Texture2D" uid="uid://cokluwexk2kr" path="res://assets/sprites/goose_idle_helmet.png" id="5_4v0ps"]
 [ext_resource type="Texture2D" uid="uid://clwus7a3c5dle" path="res://assets/sprites/goose-glide-withhelmet.png" id="6_4v0ps"]
-[ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="6_80ey4"]
 [ext_resource type="AudioStream" uid="uid://dcsd01y3fmyon" path="res://assets/audio/effects/swoosh.ogg" id="7_0f3pf"]
+[ext_resource type="Texture2D" uid="uid://cnvj3kjb72wk6" path="res://assets/icons/pointer.png" id="7_4v0ps"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="9_mt224"]
 [ext_resource type="Texture2D" uid="uid://dq0t0qlb0dow5" path="res://assets/icons/restart_inventory.png" id="10_4v0ps"]
 
@@ -3072,7 +3072,7 @@ size = Vector2(256, 384)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_80ey4")
+"texture": ExtResource("7_4v0ps")
 }],
 "loop": true,
 "name": &"default",
@@ -3123,10 +3123,10 @@ frame_progress = 0.401225
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goose"]
 shape = SubResource("RectangleShape2D_mt224")
 
-[node name="Bread" type="AnimatedSprite2D" parent="."]
+[node name="pointer" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(696, 236)
-scale = Vector2(2, 2)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_80ey4")
 autoplay = "default"
 frame_progress = 0.345321

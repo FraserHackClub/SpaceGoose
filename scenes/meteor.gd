@@ -57,11 +57,14 @@ func _ready() -> void:
 		create_contact_area()
 
 func start_falling(body: String = "") -> void:
-	if body == "bullet":
+	if body  == "fireball":
+		modulate = Color.DARK_ORANGE
+	if body == "bullet" or body == "fireball":
 		is_exploding = true
 		animated_sprite.play("exploding")  # Start animation
 		await get_tree().create_timer(0.5).timeout  # Waits for 2 seconds
 		queue_free()
+	
 
 func create_contact_area() -> void:
 	var area = Area2D.new()

@@ -4,20 +4,20 @@ var current_index: int = 0
 
 const JUMP_VELOCITY = -1400
 
-@onready var bread: AnimatedSprite2D = $Bread
+@onready var pointer: AnimatedSprite2D = $pointer
 @export var smooth_speed: float = 0.2
 @export var play: Callable
 @export var select_level: Callable
 
 var inventory: Inventory
-var y_positions = [236.0, 396.0]
+var y_positions = [300.0, 460.0]
 var actions: Array
 var call_action = false
 
 func _ready() -> void:
 	inventory = preload("res://Inventory.gd").new()
-	bread.position.y = y_positions[current_index]
-	bread.position.x = 696.0
+	pointer.position.y = y_positions[current_index]
+	pointer.position.x = 632.0
 	actions = [
 		play, select_level
 	]
@@ -39,7 +39,7 @@ func _process(_delta: float) -> void:
 			current_index = 0
 			$Select_sound.play()
 		
-		bread.position.y = lerp(bread.position.y, y_positions[current_index], smooth_speed)
+		pointer.position.y = lerp(pointer.position.y, y_positions[current_index], smooth_speed)
 		
 		if Input.is_action_just_pressed("ui_accept"):
 			$Goose/Goose.animation = "jump"
