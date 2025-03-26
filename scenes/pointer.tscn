@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://crjn18reqwst4"]
+
+[ext_resource type="Script" uid="uid://cfcbvwx06n83r" path="res://scenes/pointer.gd" id="1_0hk4w"]
+[ext_resource type="Texture2D" uid="uid://cnvj3kjb72wk6" path="res://assets/icons/pointer.png" id="1_6s21t"]
+
+[node name="pointer" type="Node2D"]
+script = ExtResource("1_0hk4w")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6s21t")

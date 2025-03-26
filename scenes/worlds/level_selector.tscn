@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://c50nj6eoif7n3"]
+[gd_scene load_steps=16 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
 [ext_resource type="Texture2D" uid="uid://tpwjgrvg8038" path="res://assets/planets/earth.png" id="2_ss6ea"]
 [ext_resource type="Texture2D" uid="uid://hhxciwfg7va5" path="res://assets/planets/moon.png" id="3_1x7o1"]
 [ext_resource type="Texture2D" uid="uid://i1dx3qeuqenn" path="res://assets/planets/mars.png" id="4_8owdg"]
-[ext_resource type="Texture2D" uid="uid://cnvj3kjb72wk6" path="res://assets/icons/pointer.png" id="6_am6ep"]
 [ext_resource type="Texture2D" uid="uid://bd4jl322xprxs" path="res://assets/planets/asteroids.png" id="6_iguuw"]
 [ext_resource type="AudioStream" uid="uid://dcsd01y3fmyon" path="res://assets/audio/effects/swoosh.ogg" id="7_i1yxt"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="8_hgln0"]
@@ -13,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://bil2oerrtqpig" path="res://assets/audio/effects/wrong.mp3" id="10_05854"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="10_e0il0"]
 [ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="11_05854"]
+[ext_resource type="PackedScene" uid="uid://crjn18reqwst4" path="res://scenes/pointer.tscn" id="11_iguuw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ss6ea"]
 texture = ExtResource("1_24b0a")
@@ -276,21 +276,6 @@ texture = ExtResource("1_24b0a")
 [sub_resource type="TileSet" id="TileSet_bur2k"]
 sources/0 = SubResource("TileSetAtlasSource_ss6ea")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i1yxt"]
-atlas = ExtResource("6_am6ep")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_hgln0"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i1yxt")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="LevelSelector" type="Control"]
 layout_mode = 3
 anchors_preset = 0
@@ -337,11 +322,6 @@ offset_right = 792.0
 offset_bottom = 648.0
 texture = ExtResource("6_iguuw")
 
-[node name="pointer" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(592, 376)
-sprite_frames = SubResource("SpriteFrames_hgln0")
-
 [node name="Select_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_i1yxt")
 volume_db = -7.904
@@ -358,6 +338,8 @@ playback_type = 1
 stream = ExtResource("10_05854")
 volume_db = -10.0
 playback_type = 1
+
+[node name="pointer" parent="." instance=ExtResource("11_iguuw")]
 
 [node name="Score" type="HBoxContainer" parent="."]
 layout_mode = 1
