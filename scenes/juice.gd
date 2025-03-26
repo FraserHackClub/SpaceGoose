@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	# Only check for collisions after spawn protection ends and if no other juice is being collected
-	if time_since_spawn >= spawn_protection_duration and not collection_in_progress: 
+	if is_collectable(): 
 		for i in range(get_slide_collision_count()):
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
@@ -64,13 +64,16 @@ func _physics_process(delta: float) -> void:
 					collect()
 					return
 
+func is_collectable() -> bool:
+	return time_since_spawn >= spawn_protection_duration and (not collection_in_progress) and (not collected)
+
 func collect() -> void:
 	print("collect_juice() called")
 	
 	# Don't collect if already collected or another juice is being collected
 	if collected or collection_in_progress:
 		print("Already collected or collection in progress, ignoring")
-		return  
+		return
 
 	print("Setting collected=true and starting fly-up animation")
 	collected = true
@@ -90,28 +93,28 @@ func collect() -> void:
 	timer.timeout.connect(_on_animation_complete)
 
 func _on_animation_complete() -> void:
-	print("Juice animation complete, adding to inventory")
+	print("Juice animation complete")
 	
-	# Add to inventory before disappearing
-	if Global.main_character and Global.main_character.inventory:
-		match juice_type:
-			"apple":
-				Global.main_character.inventory.add_item("apple_juice", 1)
-				print("Added apple juice to inventory")
-			"orange":
-				Global.main_character.inventory.add_item("orange_juice", 1)
-				print("Added orange juice to inventory")
-			"grape":
-				Global.main_character.inventory.add_item("grape_juice", 1)
-				print("Added grape juice to inventory")
-			_:
-				# Default case for any other juice types
-				Global.main_character.inventory.add_item("juice", 1)
-				print("Added generic juice to inventory")
-		
-		# Update UI if needed
-		if Global.main_character.has_method("update_inventory_labels"):
-			Global.main_character.update_inventory_labels()
+	## Add to inventory before disappearing
+	#if Global.main_character and Global.main_character.inventory:
+		#match juice_type:
+			#"apple":
+				#Global.main_character.inventory.add_item("apple_juice", 1)
+				#print("Added apple juice to inventory")
+			#"orange":
+				#Global.main_character.inventory.add_item("orange_juice", 1)
+				#print("Added orange juice to inventory")
+			#"grape":
+				#Global.main_character.inventory.add_item("grape_juice", 1)
+				#print("Added grape juice to inventory")
+			#_:
+				## Default case for any other juice types
+				#Global.main_character.inventory.add_item("juice", 1)
+				#print("Added generic juice to inventory")
+		#
+		## Update UI if needed
+		#if Global.main_character.has_method("update_inventory_labels"):
+			#Global.main_character.update_inventory_labels()
 	
 	# Reset the static flag so other juices can be collected
 	collection_in_progress = false
