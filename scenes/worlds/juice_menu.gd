@@ -37,3 +37,5 @@ func _process(_delta: float):
 	if Input.is_action_just_pressed("ui_accept"):
 		if goose.use_juice(selected_juice):
 			$"..".toggle_juice_menu()
+		else:
+			$Wrong_sound.play()

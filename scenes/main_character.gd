@@ -63,8 +63,6 @@ var invincible: bool = false
 var invincible_time: float = 0.0
 var color_index : int = 0
 
-var shoot_fireball: bool = false
-
 var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
 var popup_window: PopupPanel
 
@@ -197,11 +195,12 @@ func use_juice(juice: String) -> bool:
 	if inventory.get_item_count(juice + "_juice") <= 0:
 		return false
 	
-	inventory.remove_item(juice + "_juice", 1)
-	update_inventory_labels()
+	if juice_actions[juice].call():
+		inventory.remove_item(juice + "_juice", 1)
+		update_inventory_labels()
+		return true
 	
-	juice_actions[juice].call()
-	return true
+	return false
 
 func increase_score(amount: int):
 	inventory.score += amount
@@ -450,11 +449,17 @@ func toggle_helmet() -> void:
 	else:
 		printerr("Helmet node not found")
 
-func apple_juice():
+func apple_juice() -> bool:
 	SPEED *= 1.5
+	return true
 
-func orange_juice():
-	shoot_fireball = true
+func orange_juice() -> bool:
+	if gun.activated:
+		gun._reload(gun.FIREBALL, 15)
+		return true
+	
+	return false
 
 func grape_juice():
 	invincible_time += 15.0
+	return true
