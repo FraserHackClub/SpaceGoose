@@ -38,6 +38,7 @@ enemy=""
 win_zone=""
 debug=""
 weapons=""
+basket=""
 
 [input]
 

@@ -92,6 +92,15 @@ func collect() -> void:
 	var timer = get_tree().create_timer(disappear_delay)
 	timer.timeout.connect(_on_animation_complete)
 
+func start_falling(body: String = ""):
+	if body == "fireball":
+		modulate = Color.DARK_ORANGE
+		await get_tree().create_timer(0.3).timeout
+		while round(modulate.a * 100) > 10:
+			modulate.a = lerp(modulate.a, 0.0, 0.2)
+			await get_tree().create_timer(0.01).timeout
+		call_deferred("queue_free")
+
 func _on_animation_complete() -> void:
 	print("Juice animation complete")
 	

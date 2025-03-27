@@ -34,6 +34,14 @@ func start_falling(body: String = ""):
 		exploded = true
 		call_deferred("spawn_bread_explosion")
 		call_deferred("queue_free")
+	elif body == "fireball":
+		modulate = Color.DARK_ORANGE
+		await get_tree().create_timer(0.3).timeout
+		while round(modulate.a * 100) > 10:
+			modulate.a = lerp(modulate.a, 0.0, 0.2)
+			await get_tree().create_timer(0.01).timeout
+		call_deferred("queue_free")
+
 func spawn_bread_explosion():
 	# For each bread piece, spawn it at the basket's spawn offset then animate it to its final position in a line.
 	for i in range(NUM_BREAD):
