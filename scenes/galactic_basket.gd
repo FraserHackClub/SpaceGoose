@@ -36,6 +36,11 @@ func _on_body_entered(body):
 		call_deferred("spawn_juice_explosion")
 		call_deferred("queue_free")
 
+func start_falling(body: String = ""):
+	if body == "bullet":
+		exploded = true
+		call_deferred("spawn_juice_explosion")
+		call_deferred("queue_free")
 func spawn_juice_explosion():
 	for i in range(NUM_JUICE_BOXES):
 		var juice_box = juice_box_scene.instantiate()
