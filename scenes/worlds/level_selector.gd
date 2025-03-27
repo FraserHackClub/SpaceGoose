@@ -1,7 +1,7 @@
 extends Control
 
 @export var smooth_speed: float = 0.2
-@onready var pointer: AnimatedSprite2D = $pointer
+@onready var pointer: Node2D = $pointer
 @onready var main: Node = $".."
 @onready var score_label = $Score/ScoreLabel
 
@@ -32,25 +32,16 @@ func _ready() -> void:
 	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	current_index = inventory.current_level
+	pointer.action = click_action
 	pointer.position = positions[current_index]
 	score_label.text = str(inventory.score)
 
 func _process(_delta: float) -> void:
-	if clicking_phase > 0:
-		match clicking_phase:
-			1:
-				pointer.position = lerp(pointer.position, Vector2(positions[current_index].x + 32, positions[current_index].y - 32), smooth_speed)
-			2:
-				pointer.position = lerp(pointer.position, positions[current_index], smooth_speed)
-		
-		if round(pointer.position.x) == round(positions[current_index].x + 32):
-			clicking_phase = 2
-		elif round(pointer.position.x) == round(positions[current_index].x):
-			clicking_phase = 0
-	elif call_action:
+	if call_action:
 		call_action = false
 		if inventory.score >= Global.level_score_reqs[current_index]:
 			$Start_sound.play()
+			await get_tree().create_timer(0.3).timeout
 			main.load_level(current_index)
 			queue_free()
 		else:
@@ -82,9 +73,10 @@ func _process(_delta: float) -> void:
 				planet.scale = lerp(planet.scale, Vector2(1.0, 1.0), smooth_speed)
 		
 		if Input.is_action_just_pressed("ui_accept"):
-			$Click_sound.play()
-			call_action = true
-			clicking_phase = 1
+			pointer.click()
 		elif Input.is_action_just_pressed("ui_cancel"):
 			main.load_menu()
 			queue_free()
+
+func click_action() -> void:
+	call_action = true

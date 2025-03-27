@@ -46,8 +46,22 @@ func _process(_delta: float) -> void:
 	if playing_cutscene:
 		juice_menu.hide()
 		$"status-indicator".animation = "stop"
+		$"btn-container".hide()
 	elif get_tree().paused:
 		$"status-indicator".animation = "pause"
+		$"btn-container".show()
 	else:
 		$"status-indicator".animation = "default"
-	
+		$"btn-container".hide()
+
+
+func _on_exitbtn_pressed() -> void:
+	if get_node_or_null("/root/Main"):
+		level.get_tree().paused = false
+		get_node_or_null("/root/Main").load_menu()
+
+
+func _on_restartbtn_pressed() -> void:
+	if goose.game_state == 0:
+		level.get_tree().paused = false
+		Global.restart_game()
