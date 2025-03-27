@@ -33,6 +33,6 @@ func _on_area_2d_area_entered(touchedarea: Node):
 		print_verbose("Enemy detected:", touchedarea.name)
 		touchedarea.start_falling("fireball")
 	elif touchedarea and touchedarea.name == "Terrain":
-		print_verbose("Terrain detected, removbing fireball")
+		print_verbose("Terrain detected, removing fireball")
 	else:
 		print_verbose("Not an enemy. Fireball  will not trigger 'start_falling'.")
