@@ -140,10 +140,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e5lbi"]
 size = Vector2(64, 67)
 
-[node name="GalacticBasket" type="CharacterBody2D"]
+[node name="GalacticBasket" type="CharacterBody2D" groups=["basket"]]
 script = ExtResource("1_jtwic")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_f27a5")
 autoplay = "default"
