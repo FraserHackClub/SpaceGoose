@@ -68,6 +68,16 @@ func _process(delta):
 			toggle_fps_display()
 	else:
 		c_key_pressed = false
+		
+	for node in get_tree().get_nodes_in_group("CharacterBody2D"):
+		if node == null or not is_instance_valid(node):
+			continue
+		if node.get_script() == null:
+			continue
+		if node.has_method("get_rid"):
+			var rid = node.get_rid()
+			if rid == RID():
+				print("💥 Null RID on:", node.name, "(", node.get_path(), ")")
 
 func create_fps_counter():
 	# Remove any existing FPS counter first

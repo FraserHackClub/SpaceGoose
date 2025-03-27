@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 400
+var SPEED = 300
 @export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
@@ -233,7 +233,10 @@ func _physics_process(delta: float) -> void:
 	if is_disabled:
 		velocity = Vector2.ZERO
 		return  # skip movement and input
-		
+	
+	if Global.current_level_index == 4.0:
+		SPEED = 350
+	
 	if not is_on_floor():
 		var gravity_force = get_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
