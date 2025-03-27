@@ -15,5 +15,5 @@ func set_score(player_score: int, required_score: int) -> void:
 	ScoreLabel.text = str(player_score) + "/" + str(required_score)
 
 func _process(_delta: float):
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") or not visible:
 		queue_free()

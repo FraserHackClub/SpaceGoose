@@ -160,6 +160,7 @@ layout_mode = 2
 texture = ExtResource("5_x6f0p")
 
 [node name="GrapeJuiceTimer" type="HBoxContainer" parent="HUD"]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -190,6 +191,7 @@ animation = &"stop"
 autoplay = "default"
 
 [node name="btn-container" type="HBoxContainer" parent="."]
+visible = false
 offset_left = 16.0
 offset_top = 568.0
 offset_right = 56.0

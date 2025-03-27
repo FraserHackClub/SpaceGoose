@@ -15,12 +15,11 @@ const VIEWPORT_HEIGHT = 648.0
 var playing_cutscene: bool = false
 var juice_menu: PopupPanel 
 
-func toggle_pause():
+func toggle_pause(value = null):
 	if main:
-		main.toggle_pause()
+		main.toggle_pause(value)
 
 func toggle_juice_menu():
-	toggle_pause()
 	if juice_menu.visible:
 		juice_menu.hide()
 	else:
@@ -53,6 +52,8 @@ func _process(_delta: float) -> void:
 	else:
 		$"status-indicator".animation = "default"
 		$"btn-container".hide()
+	
+	toggle_pause(juice_menu.visible)
 
 
 func _on_exitbtn_pressed() -> void:

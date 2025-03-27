@@ -78,12 +78,13 @@ func _process(_delta: float):
 	if Input.is_action_just_pressed("pause") and is_level():
 		toggle_pause()
 
-func toggle_pause():
+func toggle_pause(value = null):
 	var camera = level_container.get_children()[0].get_node_or_null("Camera2D")
 	if camera:
 		if camera.playing_cutscene:
 			return
 	
-	paused = !paused
+	paused = value if value != null else !paused
+	
 	for child in level_container.get_children():
 		child.get_tree().paused = paused
