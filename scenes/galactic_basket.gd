@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var juice_box_scene = preload("res://scenes/juice.tscn")
 
-const NUM_JUICE_BOXES = 5
+const NUM_JUICE_BOXES = 3
 const SPAWN_OFFSET = Vector2(0, -50)
 const DISABLE_AUTO_DESPAWN_GROUND_Y = 10000.0
 const SPACING = 100
