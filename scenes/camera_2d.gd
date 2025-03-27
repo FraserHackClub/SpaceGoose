@@ -24,6 +24,8 @@ func toggle_juice_menu():
 		juice_menu.hide()
 	else:
 		juice_menu.show()
+	
+	toggle_pause(juice_menu.visible)
 
 func _ready():
 	juice_menu = juice_menu_scene.instantiate()
@@ -56,7 +58,6 @@ func _process(_delta: float) -> void:
 		$"status-indicator".animation = "default"
 		$"btn-container".hide()
 	
-	toggle_pause(juice_menu.visible)
 
 
 func _on_exitbtn_pressed() -> void:
