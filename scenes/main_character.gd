@@ -397,12 +397,6 @@ func _handle_animation(delta) -> String:
 	if Input.is_action_just_pressed("help"):
 		if signs:
 			signs.visible = !signs.visible
-	
-	if Input.is_action_just_pressed("restart"):
-		# Only handle restart if we're not in a game over state
-		if game_state == 0:
-			Global.restart_game()
-		return desired_anim
 
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true

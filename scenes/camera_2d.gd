@@ -41,6 +41,9 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("juice") and not playing_cutscene:
 		toggle_juice_menu()
+		
+	if Input.is_action_just_pressed("restart") and not playing_cutscene:
+		_on_restartbtn_pressed()
 	
 	if playing_cutscene:
 		juice_menu.hide()
