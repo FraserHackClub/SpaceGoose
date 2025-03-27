@@ -10,6 +10,7 @@ const SPACING = 60                          # Horizontal spacing between bread p
 const TWEEN_DURATION = 0.2                   # Faster tween duration for spawn animation
 
 var exploded: bool = false                      # Ensure the basket triggers explosion only once
+var collected: bool = true
 
 func _ready():
 	# Connect the ExplosionArea's body_entered signal.

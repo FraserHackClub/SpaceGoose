@@ -152,6 +152,7 @@ func _on_OverheadDetector_body_exited(body):
 func _on_area_body_entered(body: Node):
 	if body.is_in_group("item"):
 		collect_item(body)
+		return
 	if invincible:
 		if body.has_method("start_falling"):
 			body.start_falling("invincible")

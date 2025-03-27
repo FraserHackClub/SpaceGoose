@@ -12,6 +12,7 @@ const COLLECTION_DELAY = 0
 const JUICE_TYPES = ["apple", "orange", "grape"]
 
 var exploded: bool = false
+var collected: bool = true
 
 var juice_timers = {}
 
