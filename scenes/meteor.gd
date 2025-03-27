@@ -55,6 +55,9 @@ func _ready() -> void:
 		rotation = angle - PI/2  
 		
 		create_contact_area()
+		
+	
+	move_and_slide()
 
 func start_falling(body: String = "") -> void:
 	if body  == "fireball":
@@ -145,18 +148,19 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_clone:
 		return  
-		
-	if has_landed:
-		return
 	
 	velocity.y += gravity * delta
 	
+	if has_landed:
+		rotation = 0.0
+		move_and_slide()
+		return
+	
+	
 	velocity.y = min(velocity.y, max_fall_speed)
-	
 	velocity.x = actual_horizontal_speed
-	
 	var angle = atan2(velocity.y, abs(velocity.x))
-	rotation = angle - PI/2  
+	rotation = angle - PI/2
 	
 	move_and_slide()
 	
