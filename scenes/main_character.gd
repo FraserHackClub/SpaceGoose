@@ -196,6 +196,7 @@ func game_over(state: int):
 			change_to_next_level()
 		else:
 			printerr("Goose node not found!")
+			await get_tree().create_timer(3.0).timeout
 	else:
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before

@@ -16165,7 +16165,7 @@ scale = Vector2(1.6859, 1.84803)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 1
-Possessing_Key_ID = 1.0
+Possessing_Key_ID = 3.11
 
 [node name="key2" parent="." instance=ExtResource("16_b4vjv")]
 position = Vector2(48481, 453)
@@ -16173,7 +16173,7 @@ scale = Vector2(1.6859, 1.84803)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 1
-Possessing_Key_ID = 2.2
+Possessing_Key_ID = 3.12
 
 [node name="key3" parent="." instance=ExtResource("16_b4vjv")]
 position = Vector2(48503, -42)
@@ -16181,7 +16181,7 @@ scale = Vector2(1.6859, 1.84803)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 1
-Possessing_Key_ID = 2.1
+Possessing_Key_ID = 3.13
 
 [node name="Door2" parent="." instance=ExtResource("15_r7x7j")]
 position = Vector2(48708, -156)
@@ -16189,7 +16189,7 @@ scale = Vector2(7.26258, 7.6456)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 0
-keyid = 2.2
+keyid = 3.12
 
 [node name="Door3" parent="." instance=ExtResource("15_r7x7j")]
 position = Vector2(48708, 324)
@@ -16197,7 +16197,7 @@ scale = Vector2(7.36399, 7.70593)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 0
-keyid = 2.1
+keyid = 3.13
 
 [node name="Door" parent="." instance=ExtResource("15_r7x7j")]
 position = Vector2(12446, 518)
@@ -16205,7 +16205,7 @@ scale = Vector2(8.22431, 9.01523)
 collision_layer = 3
 collision_mask = 3
 motion_mode = 0
-keyid = 1.0
+keyid = 3.11
 
 [node name="AnimatableBody2D3" parent="." instance=ExtResource("12_r5pq2")]
 position = Vector2(35603, 591)

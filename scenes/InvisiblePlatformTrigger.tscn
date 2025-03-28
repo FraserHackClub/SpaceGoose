@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3xqq6i7xe8ff"]
+[gd_scene load_steps=5 format=3 uid="uid://dp0ugfssmy0r2"]
 
-[ext_resource type="Script" uid="uid://du48jtlgr0l6b" path="res://scenes/invisibleplatformtrigger.gd" id="1_edhff"]
-[ext_resource type="Texture2D" uid="uid://cmeannn336c4t" path="res://assets/New Piskel (6).png" id="2_qbfeo"]
+[ext_resource type="Script" uid="uid://du48jtlgr0l6b" path="res://scenes/invisibleplatformtrigger.gd" id="1_vyvik"]
+[ext_resource type="Texture2D" uid="uid://cmeannn336c4t" path="res://assets/New Piskel (6).png" id="2_ym23p"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cllja"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qbfeo")
+"texture": ExtResource("2_ym23p")
 }],
 "loop": true,
 "name": &"default",
@@ -18,7 +18,7 @@ animations = [{
 size = Vector2(253, 342.5)
 
 [node name="Teleporter" type="Node2D" groups=["teleporter"]]
-script = ExtResource("1_edhff")
+script = ExtResource("1_vyvik")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

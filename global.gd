@@ -12,6 +12,7 @@ var main_character: Node2D = null  # Stores reference to the Player
 var camera_2d: Camera2D = null
 var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 var custom_font = load("res://assets/PixeloidMono.ttf")
+var piston: CharacterBody2D = null  # Stores reference to the Player
 const default_inventory = {
 	"items": {
 		"egg": 3,
@@ -28,6 +29,8 @@ var level_paths = [
 	"res://scenes/worlds/world_1-3.tscn",
 	"res://scenes/worlds/world_2-1.tscn",
 	"res://scenes/worlds/world_2-2.tscn",
+	"res://scenes/worlds/world_2-2_5.tscn",
+	"res://scenes/worlds/world_2-3.tscn",
 	"res://scenes/worlds/world_3-1.tscn"
 ]
 
