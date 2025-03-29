@@ -11,8 +11,8 @@ var popup_window: PopupPanel
 var inventory: Inventory
 
 var current_index: int = 0
-var clicking_phase: int = 0
 var call_action: bool = false
+var sub_selector_active: bool = false  # New flag to detect if sublevel selection is active
 
 var positions = [
 	Vector2(32.0, 416.0),
@@ -39,16 +39,29 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if call_action:
 		call_action = false
-		if inventory.score >= Global.level_score_reqs[current_index]:
-			$Start_sound.play()
-			await get_tree().create_timer(0.3).timeout
-			main.load_level(current_index)
-			queue_free()
-		else:
-			$Wrong_sound.play()
-			popup_window = popup_scene.instantiate()
-			add_child(popup_window)
-			popup_window.set_score(inventory.score, Global.level_score_reqs[current_index])
+		sub_selector_active = true  # Now enter sublevel selection mode
+	elif sub_selector_active:
+		for i in range(1, 10):  # Listen for number keys 1 to 9
+			if Input.is_action_just_pressed("board_" + str(i)):
+				var sublevel_index = current_index + i - 1
+				if sublevel_index >= len(Global.level_score_reqs):
+					continue  # Ignore if it's an invalid level
+				
+				if inventory.score >= Global.level_score_reqs[sublevel_index]:
+					$Start_sound.play()
+					await get_tree().create_timer(0.3).timeout
+					main.load_level(sublevel_index)  # Load the calculated level index
+					queue_free()
+				else:
+					$Wrong_sound.play()
+					popup_window = popup_scene.instantiate()
+					add_child(popup_window)
+					popup_window.set_score(inventory.score, Global.level_score_reqs[sublevel_index])
+				sub_selector_active = false
+				return  # Exit early to prevent further input processing
+
+		if Input.is_action_just_pressed("ui_cancel"):
+			sub_selector_active = false  # Cancel the sublevel selection
 	elif get_node_or_null("Popup"):
 		pass
 	else:
@@ -56,6 +69,7 @@ func _process(_delta: float) -> void:
 			current_index  += 1
 			$Select_sound.play()
 		elif Input.is_action_just_pressed("ui_left"):
+			print("sigma sigma boy")
 			current_index  -= 1
 			$Select_sound.play()
 		
