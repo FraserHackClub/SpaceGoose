@@ -29,12 +29,14 @@ var level_paths = [
 	"res://scenes/worlds/world_1-1_2.tscn",
 	"res://scenes/worlds/world_1-1_3.tscn",
 	"res://scenes/worlds/world_1-2.tscn",
+	"res://scenes/worlds/world_1-2_2.tscn",
+	"res://scenes/worlds/world_1-2_3.tscn",
 	"res://scenes/worlds/world_1-3.tscn",
 	"res://scenes/worlds/world_1_4.tscn"
 ]
 
 var level_score_reqs = [
-	0, 0, 0, 3000, 10000, 25000
+	0, 0, 0, 3000, 3000, 0, 10000, 25000
 ]
 
 var space_level_indices = [
