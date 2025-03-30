@@ -4,44 +4,51 @@ var current_index: int = 0
 
 const JUMP_VELOCITY = -1400
 
-@onready var bread: AnimatedSprite2D = $Bread
+@onready var pointer: Node2D = $pointer
 @export var smooth_speed: float = 0.2
 @export var play: Callable
-@export var gamble: Callable
+@export var select_level: Callable
 
-
-var y_positions = [236.0, 396.0]
+var inventory: Inventory
+var y_positions = [300.0, 460.0]
 var actions: Array
 var call_action = false
 
 func _ready() -> void:
-	bread.position.y = y_positions[current_index]
-	bread.position.x = 696.0
+	inventory = preload("res://Inventory.gd").new()
+	pointer.position.y = y_positions[current_index]
+	pointer.position.x = 632.0
+	pointer.action = click_action
 	actions = [
-		play, gamble
+		play, select_level
 	]
-	
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_down"):
-		current_index  = 1
-		$Select_sound.play()
-	elif Input.is_action_just_pressed("ui_up"):
-		current_index = 0
-		$Select_sound.play()
-	
-	bread.position.y = lerp(bread.position.y, y_positions[current_index], smooth_speed)
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		$Goose/Goose.animation = "jump"
-		$Start_sound.play()
-		call_action = true
-	
+
+func _process(_delta: float) -> void:
 	if call_action:
 		if $Start_sound.playing or $Goose.position.y >= -500:
-			print($Goose.position)
 			$Goose.velocity.y = JUMP_VELOCITY
 			$Goose.move_and_slide()
 		else:
 			actions[current_index].call()
 			queue_free()
+	else:
+		if Input.is_action_just_pressed("ui_down"):
+			current_index  = 1
+			$Select_sound.play()
+		elif Input.is_action_just_pressed("ui_up"):
+			current_index = 0
+			$Select_sound.play()
+		
+		pointer.position.y = lerp(pointer.position.y, y_positions[current_index], smooth_speed)
+		
+		if Input.is_action_just_pressed("ui_accept"):
+			pointer.click()
+
+func click_action() -> void:
+	call_action = true
+	$Goose/Goose.animation = "jump"
+	$Start_sound.play()
+
+func _on_restart_pressed() -> void:
+	inventory.populate_inventory()

@@ -1,0 +1,158 @@
+[gd_scene load_steps=23 format=3 uid="uid://ckshjt84q0cep"]
+
+[ext_resource type="Script" uid="uid://2lvuk6q4yk2v" path="res://scenes/galactic_basket.gd" id="1_jtwic"]
+[ext_resource type="Texture2D" uid="uid://cw8lre26npkoi" path="res://assets/sprites/galactic.png" id="1_r63eh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtwic"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5fot"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyda2"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y13h"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2skh"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bu8or"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6ni8"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0v3pa"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3a8w"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1picv"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bud11"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tvek"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeyjx"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyojr"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hel0t"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2nwh"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfol5"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvtph"]
+atlas = ExtResource("1_r63eh")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f27a5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtwic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5fot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyda2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y13h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2skh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bu8or")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6ni8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0v3pa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e3a8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1picv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bud11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tvek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aeyjx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyojr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hel0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2nwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xfol5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvtph")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5lbi"]
+size = Vector2(64, 67)
+
+[node name="GalacticBasket" type="CharacterBody2D" groups=["basket"]]
+script = ExtResource("1_jtwic")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_f27a5")
+autoplay = "default"
+frame_progress = 0.203794
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_e5lbi")

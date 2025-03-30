@@ -1,11 +1,13 @@
 extends Camera2D
 
+
+
 # --- Exported Settings ---
 @export var smooth_speed: float = 0.8
 @export var x_smooth_speed: float = 5.0
 @export var vertical_deadzone_height: float = 500
 @export var custom_camera_offset: Vector2 = Vector2(500, -400)
-@onready var texture_rect = $HUD/TransitionSlider
+@onready var texture_rect = $TransitionSlider
 @onready var transition_in_progress := false
 # Viewport base size (before zoom)
 const VIEWPORT_WIDTH = 1152.0
@@ -14,15 +16,36 @@ const VIEWPORT_HEIGHT = 648.0
 # --- Dynamic bounds (updated via teleport) ---
 var LEVEL_LENGTH: float = 5079.0
 var LEVEL_HEIGHT: float = 1972.0
-
 # --- State ---
 var sublevel_index: float = 0.0
 var teleported_this_frame: bool = false
-
+var playing_cutscene: bool = false
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"
+@onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
+@onready var camera_2d: Camera2D = $"."
+@onready var level: Node2D = $".."
+@onready var juice_menu_scene: PackedScene = preload("res://scenes/worlds/juice_menu.tscn")
+@onready var main: Node = get_node_or_null("/root/Main")
+var juice_menu: PopupPanel 
 
-func _ready() -> void:
+func toggle_pause(value = null):
+	if main:
+		main.toggle_pause(value)
+
+func toggle_juice_menu():
+	if juice_menu.visible:
+		juice_menu.hide()
+	else:
+		juice_menu.show()
+	
+	toggle_pause(juice_menu.visible)
+
+func _ready():
+	juice_menu = juice_menu_scene.instantiate()
+	juice_menu.hide()
+	add_child(juice_menu)
+	
 	texture_rect.modulate.a = 0.0  # <-- THIS LINE ensures it starts transparent
 
 	Global.camera_2d = self
@@ -43,9 +66,27 @@ func _set_camera_start_position() -> void:
 	)
 
 func _process(delta: float) -> void:
+	grapejuice_timericon.modulate = goose.modulate
 	
 	if transition_in_progress:
 		return  # ✅ freeze camera logic during fade transitions
+	if Input.is_action_just_pressed("juice") and not playing_cutscene:
+		toggle_juice_menu()
+		
+	if Input.is_action_just_pressed("restart") and not playing_cutscene:
+		_on_restartbtn_pressed()
+	
+	if playing_cutscene:
+		juice_menu.hide()
+		$"HUD/status-indicator".animation = "stop"
+		$"HUD/btn-container".hide()
+	elif get_tree().paused:
+		$"HUD/status-indicator".animation = "pause"
+		$"HUD/btn-container".show()
+	else:
+		$"HUD/status-indicator".animation = "default"
+		$"HUD/btn-container".hide()
+	
 
 	if teleported_this_frame:
 		print("⏸️ Skipping camera logic this frame due to teleport")
@@ -143,3 +184,15 @@ func fade_out(duration := 1.0):
 	await tween.finished
 	texture_rect.hide()
 	transition_in_progress = false
+
+
+func _on_exitbtn_pressed() -> void:
+	if get_node_or_null("/root/Main"):
+		level.get_tree().paused = false
+		get_node_or_null("/root/Main").load_menu()
+
+
+func _on_restartbtn_pressed() -> void:
+	if goose.game_state == 0:
+		level.get_tree().paused = false
+		Global.restart_game()

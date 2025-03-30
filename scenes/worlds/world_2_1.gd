@@ -1,8 +1,5 @@
 extends Node2D
 
-
-
-
 const duck_scene: PackedScene = preload("res://scenes/duck.tscn")
 const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
 const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
@@ -12,6 +9,7 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 
 const LEVEL_LENGTH = 16000.0
 const TIME = 180.0
+const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()
 
@@ -45,13 +43,13 @@ func _ready() -> void:
 	var duck_spawn_locations = [Vector2(3079, 624), Vector2(22930,836), Vector2(29725,2870), Vector2(27151,-1335), Vector2(40914, 1635), Vector2(39839, 1635), Vector2(39035, 1635), Vector2(42043, 1564)]
 	var weapon_pickup_locations = [Vector2(27055, -1797)]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
 	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, inventory) # + , Jump_velosity
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
 	emit_signal("level_ready")

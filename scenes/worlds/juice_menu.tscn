@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://upe7jwb3h68w"]
+
+[ext_resource type="Texture2D" uid="uid://cdcqta3oci3g3" path="res://assets/icons/applejuice-icon.png" id="1_mkumr"]
+[ext_resource type="Script" uid="uid://brc8optjn5jyg" path="res://scenes/worlds/juice_menu.gd" id="1_q6mow"]
+[ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="2_ubjpb"]
+[ext_resource type="Texture2D" uid="uid://xhjttnvsu5bx" path="res://assets/icons/orangejuice-icon.png" id="3_q6mow"]
+[ext_resource type="Texture2D" uid="uid://byn1q12348huy" path="res://assets/icons/grapejuice-icon.png" id="4_pp58q"]
+[ext_resource type="AudioStream" uid="uid://bil2oerrtqpig" path="res://assets/audio/effects/wrong.mp3" id="6_pp58q"]
+
+[node name="juice_menu" type="PopupPanel"]
+initial_position = 2
+size = Vector2i(247, 72)
+visible = true
+script = ExtResource("1_q6mow")
+
+[node name="juice_arranger" type="HBoxContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 243.0
+offset_bottom = 68.0
+
+[node name="apple" type="HBoxContainer" parent="juice_arranger"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="apple_icon" type="TextureRect" parent="juice_arranger/apple"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_mkumr")
+
+[node name="apple_label" type="Label" parent="juice_arranger/apple"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ubjpb")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="orange" type="HBoxContainer" parent="juice_arranger"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="orange_icon" type="TextureRect" parent="juice_arranger/orange"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_q6mow")
+
+[node name="orange_label" type="Label" parent="juice_arranger/orange"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ubjpb")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="grape" type="HBoxContainer" parent="juice_arranger"]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="grape_icon" type="TextureRect" parent="juice_arranger/grape"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_pp58q")
+
+[node name="grape_label" type="Label" parent="juice_arranger/grape"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ubjpb")
+theme_override_font_sizes/font_size = 32
+text = "0"
+
+[node name="Wrong_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_pp58q")
+volume_db = -10.0
+playback_type = 1

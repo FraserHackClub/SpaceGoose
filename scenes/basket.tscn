@@ -121,27 +121,30 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 8.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbnq7"]
-size = Vector2(89, 114)
+size = Vector2(64, 64)
 
-[node name="Basket" type="CharacterBody2D"]
+[node name="Basket" type="CharacterBody2D" groups=["basket"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_kv7jm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_qtpwv")
 autoplay = "default"
-frame_progress = 0.607558
+frame = 14
+frame_progress = 0.169717
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_vbnq7")
 
 [node name="ExplosionArea" type="Area2D" parent="."]
 position = Vector2(0, 1.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
-position = Vector2(-11.5, -25.5)
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_vbnq7")

@@ -6,10 +6,12 @@ extends CharacterBody2D
 
 var direction: Vector2 = Vector2.LEFT
 var is_falling: bool = false
-var space_levels = [1, 2]  # Array of level indices that should use the space duck animation
+var space_levels = [1, 2, 3]  # Updated to include levels 1-2, 1-3, and 1-4 (indices 1, 2, 3)
 
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+@onready var goose = $"../goose"
 
 func _ready() -> void:
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
@@ -28,8 +30,8 @@ func _on_level_changed(level_index: int) -> void:
 	call_deferred("_update_animation_for_level", level_index)
 
 func _update_animation_for_level(level_index: int) -> void:
-	if level_index in Global.space_level_indices:
-		print_debug("Space level detected (index 1), playing spaceDuck animation")
+	if level_index in Global.space_level_indices or level_index in space_levels:
+		print_debug("Space level detected (index " + str(level_index) + "), playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
 		print_debug("Regular level detected (index " + str(level_index) + "), playing default animation")
@@ -52,19 +54,19 @@ func _check_scene() -> void:
 	var is_space_level = false
 	
 	# Method 1: Check scene name directly
-	# Fix the logical error in the original code
-	if current_scene.name == "1-2" or current_scene.name == "1-3":
+	# Updated to include 1-4 in the space levels
+	if current_scene.name == "1-2" or current_scene.name == "1-3" or current_scene.name == "1-4":
 		is_space_level = true
 	
 	# Method 2: Check scene filename
 	var scene_path = current_scene.scene_file_path if current_scene else ""
-	if "1-2" in scene_path or "1-3" in scene_path:
+	if "1-2" in scene_path or "1-3" in scene_path or "1-4" in scene_path:
 		is_space_level = true
 	
 	# Method 3: Check parent node names for clues
 	var parent = get_parent()
 	while parent:
-		if "1-2" in parent.name or "1-3" in parent.name:
+		if "1-2" in parent.name or "1-3" in parent.name or "1-4" in parent.name:
 			is_space_level = true
 			break
 		parent = parent.get_parent()
@@ -105,7 +107,17 @@ func _on_top_area_entered(body: Node) -> void:
 	if body.name == "goose":
 		start_falling()
 
-func start_falling() -> void:
+func start_falling(body: String = "goose") -> void:
+	if body == "bullet":
+		goose.increase_score(100)
+	if body  == "fireball":
+		goose.increase_score(150)
+		modulate = Color.RED
+	if body == "invincible":
+		goose.increase_score(500)
+	else:
+		goose.increase_score(250)
+		
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0
@@ -120,3 +132,9 @@ func start_falling() -> void:
 
 func _on_fall_timeout() -> void:
 	queue_free()
+
+
+func _on_area_2d_2_body_entered(body: Node2D) -> void:
+	if body.name == "goose":
+		if body.invincible:
+			start_falling("invincible")

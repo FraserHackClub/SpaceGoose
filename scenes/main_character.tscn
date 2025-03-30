@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=66 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" uid="uid://cpse362qabw28" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -12,7 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://cvpfshee235jj" path="res://assets/sprites/goose-walk-attempt1.png" id="10_3w85k"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="10_6bbu8"]
 [ext_resource type="AudioStream" uid="uid://ucpsofpdtpts" path="res://assets/audio/effects/collect_points.ogg" id="11_3ynm2"]
+[ext_resource type="AudioStream" uid="uid://2hphfe78y3vg" path="res://assets/audio/effects/boop.mp3" id="12_8rh4e"]
 [ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
+[ext_resource type="AudioStream" uid="uid://0ekkosyhqebb" path="res://assets/audio/effects/beeeeeeep.mp3" id="13_is85u"]
 [ext_resource type="PackedScene" uid="uid://dcly4eh4gvtio" path="res://scenes/player_gun.tscn" id="14_pvtuh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
@@ -440,6 +442,12 @@ stream = ExtResource("10_6bbu8")
 
 [node name="sfx_collect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_3ynm2")
+
+[node name="sfx_boop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_8rh4e")
+
+[node name="sfx_beep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_is85u")
 
 [node name="Blastoff" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_noefn")

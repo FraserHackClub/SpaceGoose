@@ -11,6 +11,7 @@ var current_level: int
 
 func _init():
 	inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
+	
 	if (not FileAccess.file_exists(INVENTORYFILEPATH)) or (not inventory_file.get_as_text()):
 		if inventory_file:
 			inventory_file.close()
@@ -19,17 +20,19 @@ func _init():
 		inventory_file = FileAccess.open(INVENTORYFILEPATH, FileAccess.READ_WRITE)
 		populate_inventory()
 	
-	set_inventory(JSON.parse_string(inventory_file.get_as_text()))
+	fetch_inventory()
 	
 	if get_item_count("egg") <= 0:
 		populate_inventory()
-	
-	commit_inventory()
 
 func populate_inventory():
 	set_inventory(Global.default_inventory)
 	commit_inventory()
 
+func fetch_inventory() -> void:
+	var inventory = JSON.parse_string(inventory_file.get_as_text())
+	print_debug("Fetching inventory:\n", inventory)
+	set_inventory(inventory)
 
 func get_inventory() -> Dictionary:
 	return {
@@ -44,7 +47,21 @@ func set_inventory(inventory: Dictionary) -> void:
 	current_level = inventory["current_level"]
 
 func add_item(item_id: String, count: int = 1) -> void:
+	# Ensure item_id is a valid string
+	if item_id == null or item_id == "":
+		printerr("Invalid item_id provided to add_item")
+		return
+		
+	# Convert to string just to be safe
+	item_id = str(item_id)
+	
+	# Initialize if not exists
+	if not items.has(item_id):
+		items[item_id] = 0
+		print_debug("Created new inventory entry for: " + item_id)
+	
 	items[item_id] += count
+	print_debug("Added " + str(count) + " " + item_id + ", new total: " + str(items[item_id])) 
 
 func remove_item(item_id: String, count: int = 1) -> void:
 	if items.has(item_id):
@@ -60,7 +77,12 @@ func get_all_items() -> Dictionary:
 
 func commit_inventory() -> void:
 	print_debug("Committing inventory")
+	print_debug(get_inventory())
 	inventory_file.seek(0)
 	inventory_file.resize(0)
 	inventory_file.store_string(JSON.stringify(get_inventory()))
 	inventory_file.flush()
+
+func close_inventory() -> void:
+	inventory_file.flush()
+	inventory_file.close()

@@ -7,7 +7,6 @@ const BASE_OFFSET = Vector2(840, 675)
 @onready var panel: Panel = $Panel
 @onready var texture_rect: TextureRect = $Panel/TextureRect
 @onready var sfx_die: AudioStreamPlayer = $sfx_die
-var inventory: Inventory
 
 func _ready():
 	randomize()  # Initialize random number generator.
@@ -54,6 +53,4 @@ func reset() -> void:
 		
 func _on_restart_button_pressed() -> void:
 	hide()  # ✅ Hide the death screen
-	inventory.remove_item("egg", 1)
-	inventory.commit_inventory()
 	Global.restart_game()  # ✅ Calls the global restart function

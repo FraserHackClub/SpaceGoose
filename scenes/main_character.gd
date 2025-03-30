@@ -38,21 +38,52 @@ var inventory: Inventory
 
 @onready var goose = get_node_or_null(".")
 
+@onready var main = $"/root/Main"
+var jumpcount = 0
+var game_state = 0
 
 #GUN
 
 @onready var is_disabled := false
-var jumpcount = 0
-var game_state = 0
 
+
+@export var flash_colors : Array[Color] = [
+	Color(0.3, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(1.0, 0.0, 0.9, 1),
+	Color(0.9, 0.0, 0.9, 1),
+	Color(0.8, 0.0, 0.9, 1),
+	Color(0.7, 0.0, 0.9, 1),
+	Color(0.6, 0.0, 0.9, 1),
+	Color(0.5, 0.0, 0.9, 1),
+	Color(0.4, 0.0, 0.9, 1),
+]
+var invincible: bool = false
+var invincible_time: float = 0.0
+var color_index : int = 0
+
+var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
+var popup_window: PopupPanel
+
+var delta_sum: float = 0.0
 
 # Overhead detection variables
 var overhead_count := 0
 var forced_crouch := false
 
+var grapejuice_timer_label: Label
 var timer_label: Node
 var level_changing = false
-
+var juice_actions = {
+	"apple": apple_juice,
+	"orange": orange_juice,
+	"grape": grape_juice,
+}
 
 
 func _ready():
@@ -81,6 +112,9 @@ func _ready():
 
 
 func _level_ready():
+	inventory = preload("res://Inventory.gd").new()
+	inventory.fetch_inventory()
+	
 	finish_plate = get_node_or_null("../finish")
 	if finish_plate != null:
 		finish_sprite = finish_plate.get_node_or_null("AnimatedSprite2D")
@@ -91,13 +125,16 @@ func _level_ready():
 	inventory_labels = {
 		"egg": $"../Camera2D/HUD/EggCounter/EggCountLabel",
 		"bread": $"../Camera2D/HUD/BreadCounter/BreadCountLabel",
+		"score": $"../Camera2D/HUD/Score/ScoreLabel",
+		"apple_juice": $"../Camera2D/juice_menu/juice_arranger/apple/apple_label",
+		"orange_juice": $"../Camera2D/juice_menu/juice_arranger/orange/orange_label",
+		"grape_juice": $"../Camera2D/juice_menu/juice_arranger/grape/grape_label"
 	}
 	
 	update_inventory_labels()
 	
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
-#=
-			
+	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
 func disable():
 	is_disabled = true
@@ -124,38 +161,76 @@ func _on_OverheadDetector_body_exited(body):
 	if overhead_count == 0:
 		forced_crouch = false
 
-func _on_area_body_entered(body):
+func _on_area_body_entered(body: Node):
 	if body.is_in_group("item"):
 		collect_item(body)
+		return
+	if invincible:
+		if body.has_method("start_falling"):
+			body.start_falling("invincible")
 
 
 
 
 func collect_item(item: Object):
+	if item.collected: return
+	
 	sfx_collect.play()
+
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
+		increase_score(100)
 	if item.is_in_group("bread"):
 		inventory.add_item("bread", 1)
+		increase_score(50)
+	if item.is_in_group("juice"):
+		if not item.is_collectable(): return
+		# Add juice to inventory based on type
+		if "juice_type" in item:
+			match item.juice_type:
+				"apple":
+					inventory.add_item("apple_juice", 1)
+				"orange":
+					inventory.add_item("orange_juice", 1)
+				"grape":
+					inventory.add_item("grape_juice", 1)
+				_:
+					inventory.add_item("juice", 1)
+		else:
+			inventory.add_item("juice", 1)
+	
 
-
-	if item.has_method("collect_bread"):
-		item.collect_bread()
-	elif item.has_method("collect_egg"):
-		item.collect_egg()
-	elif item.has_method("collect_weapon"):
-		item.collect_weapon()
-	elif item.has_method("collect_key"):
-		item.collect_key()
-		
+	if item.has_method("collect"):
+		item.collect()
 	else:
-		item.queue_free()  # Default behavior for other items
+		item.queue_free() 
 
+	update_inventory_labels()
+
+func use_juice(juice: String) -> bool:
+	if inventory.get_item_count(juice + "_juice") <= 0:
+		return false
+	
+	if juice_actions[juice].call():
+		inventory.remove_item(juice + "_juice", 1)
+		update_inventory_labels()
+		return true
+	
+	return false
+
+func increase_score(amount: int):
+	inventory.score += amount
+	
 	update_inventory_labels()
 
 func update_inventory_labels():
 	for item in inventory.get_all_items().keys():
-		inventory_labels[item].text = str(inventory.get_item_count(item))
+		if item in inventory_labels:
+			inventory_labels[item].text = str(inventory.get_item_count(item))
+		else:
+			print_debug("No label found for inventory item: " + item)
+	
+	inventory_labels["score"].text = str(inventory.score)
 
 func _on_hazards_body_entered(body):
 	if is_disabled:
@@ -172,7 +247,13 @@ func game_over(state: int):
 	print(level_changing)
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
-
+	
+	if invincible and state == LOSE:
+			return
+	
+	inventory.commit_inventory()
+	$"../Camera2D".playing_cutscene = true
+	
 	gun.activated = false
 	game_state = state
 	if game_state == WIN:
@@ -185,43 +266,64 @@ func game_over(state: int):
 		else:
 			printerr("Finish sprite not found!")
 		
-		inventory.commit_inventory()
-		
 		if goose:
 			goose.hide()
 			sfx_blastoff.play()
-			# Wait for the blastoff sound to play before changing level
+
 			level_changing = true
+			# Wait for the blastoff sound to play before changing level
 			await get_tree().create_timer(11.0).timeout
-			change_to_next_level()
+			level_changing = true
 		else:
 			printerr("Goose node not found!")
 			await get_tree().create_timer(3.0).timeout
+		
+		time = int(time)
+		
+		while time > 0:
+			time -= 1
+			
+			if timer_label:
+				timer_label.text = str(int(time))
+			
+			$sfx_boop.play()
+			await get_tree().create_timer(0.125).timeout
+			increase_score(25)
+			
+		inventory.commit_inventory()
+		$sfx_beep.play()
+		await get_tree().create_timer(4.0).timeout
+		
+		change_to_next_level()
 	else:
+		inventory.remove_item("egg", 1)
 		inventory.commit_inventory()
 		# For LOSE state, show game over screen as before
 		var game_over_screen: CanvasLayer = game_over_screen_scene.instantiate()
-		game_over_screen.inventory = inventory
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(state)
 		# Store the current level index in the game over screen
 		if game_over_screen.has_method("set_level_index"):
 			game_over_screen.set_level_index(Global.current_level_index)
+		await get_tree().create_timer(1.0).timeout
+			
 
 func change_to_next_level():
 	var current_level_index = Global.current_level_index
 	var next_level_index = current_level_index + 1
 	
-	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
 	if Global.has_level(next_level_index):
-		inventory.current_level = next_level_index
-		inventory.commit_inventory()
-		await Global.change_level(next_level_index)
+		if inventory.score >= Global.level_score_reqs[next_level_index]:
+			inventory.current_level = next_level_index
+			inventory.commit_inventory()
+			await Global.change_level(next_level_index)
+		else:
+			main.select_level()
 	else:
 		print_debug("No more levels! Game complete!")
-		# Show a game completion screen or return to main menu
+			# Show a game completion screen or return to main menu
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)
@@ -262,13 +364,13 @@ func _physics_process(delta: float) -> void:
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):
 			game_over(LOSE)
 	
-	var desired_anim = _handle_animation()
+	var desired_anim = _handle_animation(delta)
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
 
 func _handle_movement(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
-		if is_on_wall():
+		if is_on_wall() or invincible:
 			velocity.y = JUMP_VELOCITY * (DUCKING_MULTIPLIER if Input.is_action_pressed("down") else 1.0)
 			sfx_swoosh.play()
 			$Sprite2D2.show()
@@ -296,24 +398,33 @@ func _handle_movement(_delta: float) -> void:
 func _handle_timer(delta: float):
 	time -= delta
 	time = max(time, 0.0)
+	
+	if invincible_time > 0.0:
+		invincible = true
+		invincible_time -= delta
+		invincible_time = min(max(invincible_time, 0.0), time)
+	else:
+		invincible = false
+		
 	if timer_label:
 		timer_label.text = str(int(time))
+	
+	if grapejuice_timer_label:
+		if invincible:
+			grapejuice_timer_label.get_parent().show()
+			grapejuice_timer_label.text = str(int(invincible_time))
+		else:
+			grapejuice_timer_label.get_parent().hide()
 	
 	if time <= 0:
 		game_over(LOSE)
 
-func _handle_animation() -> String:
+func _handle_animation(delta) -> String:
 	var desired_anim = "default"
 	
 	if Input.is_action_just_pressed("help"):
 		if signs:
 			signs.visible = !signs.visible
-	
-	if Input.is_action_just_pressed("restart"):
-		# Only handle restart if we're not in a game over state
-		if game_state == 0:
-			Global.restart_game()
-		return desired_anim
 
 	if Input.is_action_pressed("down") or forced_crouch:
 		hitbox_normal.disabled = true
@@ -343,6 +454,15 @@ func _handle_animation() -> String:
 		else:
 			desired_anim = "default"
 	
+	if invincible and delta_sum >= 0.1:
+		color_index = (color_index + 1) % flash_colors.size()
+		modulate = flash_colors[color_index]
+		delta_sum -= 0.1
+	elif not invincible:
+		modulate = Color.WHITE
+	
+	delta_sum += delta
+	
 	return desired_anim
 
 func toggle_helmet() -> void:
@@ -351,3 +471,18 @@ func toggle_helmet() -> void:
 		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
 		printerr("Helmet node not found")
+
+func apple_juice() -> bool:
+	SPEED *= 1.5
+	return true
+
+func orange_juice() -> bool:
+	if gun.activated:
+		gun._reload(gun.FIREBALL, 15)
+		return true
+	
+	return false
+
+func grape_juice():
+	invincible_time += 15.0
+	return true

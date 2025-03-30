@@ -10,6 +10,7 @@ const SPACING = 60                          # Horizontal spacing between bread p
 const TWEEN_DURATION = 0.2                   # Faster tween duration for spawn animation
 
 var exploded: bool = false                      # Ensure the basket triggers explosion only once
+var collected: bool = true
 
 func _ready():
 	# Connect the ExplosionArea's body_entered signal.
@@ -27,6 +28,19 @@ func _on_body_entered(body):
 		# Spawn bread in a deferred manner.
 		call_deferred("spawn_bread_explosion")
 		# Remove the basket from the scene after spawning bread.
+		call_deferred("queue_free")
+
+func start_falling(body: String = ""):
+	if body == "bullet":
+		exploded = true
+		call_deferred("spawn_bread_explosion")
+		call_deferred("queue_free")
+	elif body == "fireball":
+		modulate = Color.DARK_ORANGE
+		await get_tree().create_timer(0.3).timeout
+		while round(modulate.a * 100) > 10:
+			modulate.a = lerp(modulate.a, 0.0, 0.2)
+			await get_tree().create_timer(0.01).timeout
 		call_deferred("queue_free")
 
 func spawn_bread_explosion():
