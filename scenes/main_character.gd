@@ -162,7 +162,7 @@ func collect_item(item: Object):
 	
 	sfx_collect.play()
 	if item.is_in_group("goldegg"):
-		inventory.add_item("goldegg", 1)
+		inventory.has_gold_egg = true
 		increase_score(100000)
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)

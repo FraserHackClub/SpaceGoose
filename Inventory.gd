@@ -6,6 +6,7 @@ var inventory_file: FileAccess
 var previous_content: String
 
 var items: Dictionary
+var has_gold_egg: bool
 var score: int
 var current_level: int
 
@@ -37,6 +38,7 @@ func fetch_inventory() -> void:
 func get_inventory() -> Dictionary:
 	return {
 		"items": items,
+		"has_gold_egg": has_gold_egg,
 		"score": score,
 		"current_level": current_level
 	}
@@ -44,6 +46,7 @@ func get_inventory() -> Dictionary:
 func set_inventory(inventory: Dictionary) -> void:
 	items = inventory["items"]
 	score = inventory["score"]
+	has_gold_egg = inventory["has_gold_egg"]
 	current_level = inventory["current_level"]
 
 func add_item(item_id: String, count: int = 1) -> void:

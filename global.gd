@@ -19,6 +19,7 @@ const default_inventory = {
 		"orange_juice": 0,
 		"grape_juice": 0
 	},
+	"has_gold_egg": false,
 	"score": 0,
 	"current_level": 0
 }
