@@ -9,6 +9,7 @@ signal boss_defeated
 
 # Health parameters
 @export var max_health: int = 500  # Total health is 500
+var minimum_health: int = 100
 var current_health: int = max_health
 @export var damage_per_hit: int = 10  # 5 damage when goose jumps on head
 @export var body_bullet_damage: int = 1  # 1 damage per bullet hit to body
@@ -405,6 +406,7 @@ func _transform_to_golden() -> void:
 	# Add 1000 health
 	max_health += 1000
 	current_health += 1000
+	minimum_health = 0
 	_update_health_bar()
 	
 	# Change color to a brighter gold
@@ -438,6 +440,7 @@ func _defeat() -> void:
 	tween.tween_callback(Callable(self, "queue_free"))
 
 func _update_health_bar() -> void:
+	current_health = max(current_health, minimum_health)
 	emit_signal("health_changed", current_health, max_health)
 
 func _change_state(new_state: State) -> void:
