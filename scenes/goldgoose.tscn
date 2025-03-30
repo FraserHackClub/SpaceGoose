@@ -1,0 +1,112 @@
+[gd_scene load_steps=17 format=3 uid="uid://cfa6d1ubkh7p3"]
+
+[ext_resource type="Script" uid="uid://ctld6scyxiwhi" path="res://scenes/goldgoose.gd" id="1_hr8v1"]
+[ext_resource type="Texture2D" uid="uid://msptnm7msulv" path="res://assets/sprites/goldgoose.png" id="1_oxhe3"]
+[ext_resource type="Texture2D" uid="uid://rffpnfq46po0" path="res://assets/sprites/goldgoose - done.png" id="2_eruo5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgvqp"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(0, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfwg5"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(256, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8gef"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(512, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hly8g"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(0, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2xe2"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(256, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bn4k"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(512, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxhe3"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(0, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkjrc"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(256, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hr8v1"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(512, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eruo5"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(0, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gtfk"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(256, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r06n3"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(512, 384, 256, 384)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jgvqp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgvqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfwg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8gef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hly8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2xe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bn4k")
+}],
+"loop": true,
+"name": &"after",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxhe3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkjrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hr8v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eruo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gtfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r06n3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[node name="Goldgoose" type="CharacterBody2D"]
+script = ExtResource("1_hr8v1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jgvqp")
+animation = &"after"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
