@@ -26,3 +26,7 @@ func collect_egg() -> void:
 
 	await get_tree().create_timer(disappear_delay).timeout  
 	queue_free()
+
+
+func start_falling(_body: String = ""):
+	pass

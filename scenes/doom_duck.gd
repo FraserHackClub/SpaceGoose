@@ -12,7 +12,7 @@ signal boss_defeated
 var current_health: int = max_health
 @export var damage_per_hit: int = 10  # 5 damage when goose jumps on head
 @export var body_bullet_damage: int = 1  # 1 damage per bullet hit to body
-@export var head_bullet_damage: int = 100 # 2 damage per bullet hit to head
+@export var head_bullet_damage: int = 3 # 3 damage per bullet hit to head
 @export var damage_cooldown: float = 0.5  # Time in seconds before taking damage again
 var can_take_damage: bool = true
 var head_hit_cooldown: bool = false  # Specific cooldown for head hits
@@ -183,17 +183,23 @@ func _on_animated_sprite_frame_changed() -> void:
 		gold_egg.position.y = positions[min(animated_sprite.frame, positions.size() - 1)]
 
 func start_falling(body: String = "") -> void:
+	var damage = 0
 	if body == "bullet":
+		damage = 1
+	elif body == "fireball":
+		damage = 5
+	
+	if damage > 0:
 		var bullet = get_tree().get_first_node_in_group("_last_bullet")
 		if bullet:
 			var local_bullet_pos = to_local(bullet.global_position)
 			
 			if local_bullet_pos.y < head_collision.position.y:
 				# Head hit - 2 damage
-				take_bullet_damage(head_bullet_damage)
+				take_bullet_damage(damage * head_bullet_damage)
 			else:
 				# Body hit - 1 damage
-				take_bullet_damage(body_bullet_damage)
+				take_bullet_damage(damage * body_bullet_damage)
 		else:
 			take_bullet_damage(body_bullet_damage)
 
