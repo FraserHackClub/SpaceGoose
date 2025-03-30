@@ -125,7 +125,9 @@ func _on_area_body_entered(body):
 
 func collect_item(item: Object):
 	sfx_collect.play()
-
+	if item.is_in_group("goldegg"):
+		inventory.add_item("goldegg", 1)
+		increase_score(100000)
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
 		increase_score(100)
@@ -262,7 +264,6 @@ func change_to_next_level():
 		var game_over_screen = game_over_screen_scene.instantiate()
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)
-
 func _physics_process(delta: float) -> void:
 	if level_changing:
 		return
