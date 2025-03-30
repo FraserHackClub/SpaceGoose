@@ -16003,6 +16003,21 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_g3kvt")
 
+[node name="TextureRect23" type="TextureRect" parent="."]
+self_modulate = Color(0.299547, 0.299547, 0.299547, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2199.0
+offset_top = 1058.0
+offset_right = 3915.0
+offset_bottom = 5351.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.301573, 0.405691)
+texture = ExtResource("2_g3kvt")
+stretch_mode = 1
+
 [node name="TextureRect7" type="TextureRect" parent="."]
 self_modulate = Color(0.299547, 0.299547, 0.299547, 1)
 anchors_preset = 15
@@ -16012,22 +16027,6 @@ offset_left = 2180.0
 offset_top = 730.0
 offset_right = 5227.0
 offset_bottom = 1541.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.301573, 0.405691)
-texture = ExtResource("2_g3kvt")
-stretch_mode = 1
-
-[node name="TextureRect7" type="TextureRect" parent="TextureRect7"]
-self_modulate = Color(0.299547, 0.299547, 0.299547, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 63.0031
-offset_top = 808.497
-offset_right = -1268.0
-offset_bottom = 5101.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.301573, 0.405691)
