@@ -39,10 +39,19 @@ func _physics_process(delta: float) -> void:
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
 			if collider is CharacterBody2D and collider != self:
-				collect_bread()
+				collect()
 				return
 
-func collect_bread() -> void:
+func start_falling(body: String = ""):
+	if body == "fireball":
+		modulate = Color.DARK_ORANGE
+		await get_tree().create_timer(0.3).timeout
+		while round(modulate.a * 100) > 10:
+			modulate.a = lerp(modulate.a, 0.0, 0.5)
+			await get_tree().create_timer(0.01).timeout
+		call_deferred("queue_free")
+
+func collect() -> void:
 	if collected:
 		return  
 

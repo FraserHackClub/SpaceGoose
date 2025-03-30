@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var juice_box_scene = preload("res://scenes/juice.tscn")
 
-const NUM_JUICE_BOXES = 5
+const NUM_JUICE_BOXES = 3
 const SPAWN_OFFSET = Vector2(0, -50)
 const DISABLE_AUTO_DESPAWN_GROUND_Y = 10000.0
 const SPACING = 100
@@ -12,6 +12,7 @@ const COLLECTION_DELAY = 0
 const JUICE_TYPES = ["apple", "orange", "grape"]
 
 var exploded: bool = false
+var collected: bool = true
 
 var juice_timers = {}
 
@@ -34,6 +35,19 @@ func _on_body_entered(body):
 				await $AnimatedSprite2D.animation_finished
 		
 		call_deferred("spawn_juice_explosion")
+		call_deferred("queue_free")
+
+func start_falling(body: String = ""):
+	if body == "bullet":
+		exploded = true
+		call_deferred("spawn_juice_explosion")
+		call_deferred("queue_free")
+	elif body == "fireball":
+		modulate = Color.DARK_ORANGE
+		await get_tree().create_timer(0.3).timeout
+		while round(modulate.a * 100) > 10:
+			modulate.a = lerp(modulate.a, 0.0, 0.2)
+			await get_tree().create_timer(0.01).timeout
 		call_deferred("queue_free")
 
 func spawn_juice_explosion():
