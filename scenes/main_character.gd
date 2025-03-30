@@ -106,6 +106,9 @@ func _ready():
 	else:
 		printerr("Error: PlayerGun not found!")
 	
+	if Global.current_level_index == 4.0:
+		SPEED = 350
+	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
 
@@ -337,8 +340,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return  # skip movement and input
 	
-	if Global.current_level_index == 4.0:
-		SPEED = 350
+	
 	
 	if not is_on_floor():
 		var gravity_force = get_gravity()
