@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://5m6n36qfi1g5"]
+[gd_scene load_steps=7 format=3 uid="uid://5m6n36qfi1g5"]
 
 [ext_resource type="Texture2D" uid="uid://3uram4aeddty" path="res://assets/sprites/nest.png" id="1_den8b"]
 [ext_resource type="Texture2D" uid="uid://2er525xk3aou" path="res://assets/sprites/eggnest.png" id="2_3y021"]
@@ -30,9 +30,16 @@ animations = [{
 "speed": 0.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3y021"]
+size = Vector2(256, 63)
+
 [node name="Nest" type="CharacterBody2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_tm8is")
 animation = &"egg"
 autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 82)
+shape = SubResource("RectangleShape2D_3y021")
