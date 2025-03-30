@@ -85,5 +85,5 @@ expand_icon = true
 [node name="sfx_die" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_d0hr4")
 
-[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/RestartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/RestartButton" to="." method="_on_restart_button_pressed"]

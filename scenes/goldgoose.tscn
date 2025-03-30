@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cfa6d1ubkh7p3"]
+[gd_scene load_steps=18 format=3 uid="uid://cfa6d1ubkh7p3"]
 
 [ext_resource type="Script" uid="uid://ctld6scyxiwhi" path="res://scenes/goldgoose.gd" id="1_hr8v1"]
 [ext_resource type="Texture2D" uid="uid://msptnm7msulv" path="res://assets/sprites/goldgoose.png" id="1_oxhe3"]
@@ -101,6 +101,10 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hr8v1"]
+radius = 66.0
+height = 218.0
+
 [node name="Goldgoose" type="CharacterBody2D"]
 script = ExtResource("1_hr8v1")
 
@@ -109,4 +113,10 @@ sprite_frames = SubResource("SpriteFrames_jgvqp")
 animation = &"after"
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-64, 90)
+shape = SubResource("CapsuleShape2D_hr8v1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_collision_shape_2d_body_entered"]
