@@ -9,10 +9,11 @@ signal boss_defeated
 
 # Health parameters
 @export var max_health: int = 500  # Total health is 500
+var minimum_health: int = 100
 var current_health: int = max_health
 @export var damage_per_hit: int = 10  # 5 damage when goose jumps on head
 @export var body_bullet_damage: int = 1  # 1 damage per bullet hit to body
-@export var head_bullet_damage: int = 100 # 2 damage per bullet hit to head
+@export var head_bullet_damage: int = 3 # 3 damage per bullet hit to head
 @export var damage_cooldown: float = 0.5  # Time in seconds before taking damage again
 var can_take_damage: bool = true
 var head_hit_cooldown: bool = false  # Specific cooldown for head hits
@@ -183,17 +184,23 @@ func _on_animated_sprite_frame_changed() -> void:
 		gold_egg.position.y = positions[min(animated_sprite.frame, positions.size() - 1)]
 
 func start_falling(body: String = "") -> void:
+	var damage = 0
 	if body == "bullet":
+		damage = 1
+	elif body == "fireball":
+		damage = 5
+	
+	if damage > 0:
 		var bullet = get_tree().get_first_node_in_group("_last_bullet")
 		if bullet:
 			var local_bullet_pos = to_local(bullet.global_position)
 			
 			if local_bullet_pos.y < head_collision.position.y:
 				# Head hit - 2 damage
-				take_bullet_damage(head_bullet_damage)
+				take_bullet_damage(damage * head_bullet_damage)
 			else:
 				# Body hit - 1 damage
-				take_bullet_damage(body_bullet_damage)
+				take_bullet_damage(damage * body_bullet_damage)
 		else:
 			take_bullet_damage(body_bullet_damage)
 
@@ -399,6 +406,7 @@ func _transform_to_golden() -> void:
 	# Add 1000 health
 	max_health += 1000
 	current_health += 1000
+	minimum_health = 0
 	_update_health_bar()
 	
 	# Change color to a brighter gold
@@ -432,6 +440,7 @@ func _defeat() -> void:
 	tween.tween_callback(Callable(self, "queue_free"))
 
 func _update_health_bar() -> void:
+	current_health = max(current_health, minimum_health)
 	emit_signal("health_changed", current_health, max_health)
 
 func _change_state(new_state: State) -> void:
