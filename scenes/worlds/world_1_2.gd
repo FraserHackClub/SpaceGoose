@@ -38,7 +38,7 @@ func _ready() -> void:
 		Vector2(9892, 460),
 		Vector2(10658, 486)
 	]
-	var weapon_pickup_locations = [Vector2(8670, -851)]
+	var weapon_pickup_locations = [Vector2(8670, -851), Vector2(614, 436)]
 	rng.randomize()
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var duck_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]

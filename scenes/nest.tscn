@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://5m6n36qfi1g5"]
+
+[ext_resource type="Texture2D" uid="uid://3uram4aeddty" path="res://assets/sprites/nest.png" id="1_den8b"]
+[ext_resource type="Texture2D" uid="uid://2er525xk3aou" path="res://assets/sprites/eggnest.png" id="2_3y021"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y021"]
+atlas = ExtResource("1_den8b")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm8is"]
+atlas = ExtResource("2_3y021")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tm8is"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y021")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tm8is")
+}],
+"loop": false,
+"name": &"egg",
+"speed": 0.0
+}]
+
+[node name="Nest" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tm8is")
+autoplay = "default"
