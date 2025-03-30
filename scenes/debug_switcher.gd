@@ -1,7 +1,7 @@
 extends Node
 
 @onready var global = get_node("/root/Global")  # Correct reference to Global
-
+@onready var main = get_node_or_null("/root/Main")
 
 func _ready():
 	print("DEBUG SCRIPT LOADED!")  # <-- If this doesn't print, the script isn't in the scene tree.
@@ -23,9 +23,9 @@ func _input(event):
 				next_index = 0  # Loop back to the first level
 
 			print("Skipping to level:", next_index)
-			var success = Global.change_level(next_index)
+			main.load_level(next_index)
 
-			if success:
-				print("Level changed successfully to:", next_index)
-			else:
-				print("Failed to switch levels.")
+			#if success:
+				#print("Level changed successfully to:", next_index)
+			#else:
+				#print("Failed to switch levels.")
