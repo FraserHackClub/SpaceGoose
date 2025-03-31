@@ -1,8 +1,5 @@
 extends Node2D
 
-
-
-
 const duck_scene: PackedScene = preload("res://scenes/duck.tscn")
 const bread_scene: PackedScene = preload("res://scenes/bread.tscn")
 const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
@@ -15,47 +12,84 @@ const TIME = 600.0
 const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()
-
 signal level_ready
 
 @onready var current_scene = self
 @onready var inventory = preload("res://Inventory.gd").new()
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	
-	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 4
+	# DEBUGGING - Resetting Global level index for debug purposes
+	Global.current_level_index = 6
+	print_debug("Starting level setup for level index: ", Global.current_level_index)
 	
 	rng.randomize()
-	var possible_bread_spawn_locations = [
-		Vector2(768, 528),
-		Vector2(1600, 336),
-		Vector2(1600, 528),
-		Vector2(2496, 528),
-		Vector2(2816, 528),
-		Vector2(2976, 528),
-		Vector2(5024, 208),
-		Vector2(4705, 208),
-		Vector2(4512, 208),
-		Vector2(4448, 272),
-		Vector2(4384, 336),
-	]
-	#var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
-	#var egg_spawn_locations = [Vector2(1650, 526), Vector2(4640, 526), Vector2(27008, -1616), Vector2(2440, 1007), Vector2(11010, 563), Vector2(28992, 1094), Vector2(39661, 1377), Vector2(40157, 897), Vector2(40406, 1376), Vector2(42097, 1519)]
-	#var duck_spawn_locations = [Vector2(3079, 624), Vector2(22930,836), Vector2(29725,2870), Vector2(27151,-1335), Vector2(40914, 1635), Vector2(39839, 1635), Vector2(39035, 1635), Vector2(42043, 1564)]
-	#var weapon_pickup_locations = [Vector2(27055, -1797)]
-	#var weapon_pickup_locations = [Vector2(1328, 496)]
-	#Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
-	#Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	#Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
-	#Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY) # + , Jump_velosity
+	
+	# Initialize player first
+	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY)
+	print_debug("Player spawned and Global.main_character set: ", str(Global.main_character))
+	
+	# Ensure player is properly set before proceeding
+	if Global.main_character == null:
+		print_debug("Error: Global.main_character is not set before spawning enemies!")
+		return
+
+	# Spawn camera after player
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
-	#Global.update_helmet_visibility()
+	print_debug("Camera spawned with level length: ", LEVEL_LENGTH)
+	
+	# Spawn eggs
+	var egg_spawn_locations = [Vector2(59752, 1801), Vector2(63811, 1785), Vector2(63911, 1785), Vector2(64336, 1807), Vector2(64633, 1860), Vector2(66692, 1194), Vector2(67444, 1207), Vector2(60036, 1842), Vector2(54136, -300), Vector2(67490, 1001), Vector2(68021, 1234)]
+	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
+	print_debug("Eggs spawned at positions: ", egg_spawn_locations)
+	
+	# Spawn weapon pickups
+	var weapon_pickup_locations = [Vector2(575, 615)]
+	Global.spawn_items(weaponpickup_scene, current_scene, weapon_pickup_locations)
+	print_debug("Weapon pickups spawned at positions: ", weapon_pickup_locations)
+	
+	# Spawn enemies (Ducks) after everything else
+	var duck_spawn_locations = [Vector2(57770, -1640),
+
+		Vector2(60770, -1640),
+
+		Vector2(63770, -1640),
+		Vector2(65270, -1640),
+		Vector2(66770, -1640),
+		Vector2(68270, -1640),
+		Vector2(69770, -1640),
+		
+		Vector2(72770, -1640),
+		Vector2(74270, -1640),
+	
+		Vector2(77270, -1640),
+		Vector2(78770, -1640),
+		Vector2(80270, -1640),
+
+		# Starting at 52423 and incrementing by 1500
+		Vector2(52423, -1239),
+
+		Vector2(55423, -1239),
+		Vector2(56923, -1239),
+		Vector2(58423, -1239),
+		Vector2(59923, -1239),
+		Vector2(61423, -1239),
+	
+		Vector2(65923, -1239),
+		Vector2(67423, -1239),
+		Vector2(68923, -1239),
+		Vector2(70423, -1239),
+		Vector2(71923, -1239),
+		Vector2(73423, -1239),
+	
+	
+		Vector2(77923, -1239),
+	
+		Vector2(80923, -1239)
+	]
+
+	
+	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	print_debug("Ducks spawned at positions: ", duck_spawn_locations)
+	
 	emit_signal("level_ready")
-	
-#func _process(delta: float) -> void:
-	#pass#print(Global.main_character.global_position)
-	
+	print_debug("Level setup completed and signal 'level_ready' emitted.")

@@ -21,26 +21,105 @@ signal level_ready
 func _ready() -> void:
 	
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 3
+	Global.current_level_index = 4
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
-		Vector2(768, 528),
-		Vector2(1600, 336),
-		Vector2(1600, 528),
-		Vector2(2496, 528),
-		Vector2(2816, 528),
-		Vector2(2976, 528),
-		Vector2(5024, 208),
-		Vector2(4705, 208),
-		Vector2(4512, 208),
-		Vector2(4448, 272),
-		Vector2(4384, 336),
+		#Vector2(768, 528),
+
 		
 	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
-	var egg_spawn_locations = [Vector2(1650, 526), Vector2(4640, 526), Vector2(27008, -1616), Vector2(2440, 1007), Vector2(11010, 563), Vector2(28992, 1094), Vector2(39661, 1377), Vector2(40157, 897), Vector2(40406, 1376), Vector2(42097, 1519)]
-	var duck_spawn_locations = [Vector2(3079, 624), Vector2(22930,836), Vector2(29725,2870), Vector2(27151,-1335), Vector2(40914, 1635), Vector2(39839, 1635), Vector2(39035, 1635), Vector2(42043, 1564)]
+	var egg_spawn_locations = [	Vector2(8895, 609),
+	Vector2(8995, 609),
+	Vector2(9137, 609),
+	Vector2(9237, 609),
+	Vector2(10904, 609),
+	Vector2(11904, 609),
+
+	Vector2(12150, 609),
+	Vector2(12250, 609),
+
+	Vector2(26997, -1578),
+	Vector2(27099, 90),
+	Vector2(30327, 1209),
+	Vector2(29068, -922),
+	Vector2(40406, 1360),
+	Vector2(39672, 1360),
+	Vector2(40151, 889),
+	Vector2(38991, 1097),
+
+	Vector2(41979, 1432),
+	Vector2(42048, 1432),
+	Vector2(42117, 1432),
+	Vector2(42186, 1432),
+	Vector2(42255, 1432),
+	Vector2(42324, 1432),
+	Vector2(42393, 1432),
+	Vector2(27081, -1881),
+	
+	]
+	var duck_spawn_locations = [Vector2(767, 634),
+		Vector2(1000, 634),
+
+		Vector2(1767, 634),
+
+		Vector2(8200, 634),
+		Vector2(7900, 634),
+
+		Vector2(9200, 634),
+		Vector2(10000, 634),
+
+		Vector2(11717, 634),
+		
+		
+		
+		
+		
+		
+		
+		Vector2(22545, 889),
+		Vector2(22755, 889),
+		Vector2(22965, 889),
+		Vector2(23175, 889),
+		Vector2(23385, 889),
+		
+		
+		Vector2(30819, 650),
+	
+		Vector2(31239, 650),
+	
+		Vector2(31659, 650),
+
+		Vector2(32079, 650),
+
+		Vector2(32499, 650),
+
+		Vector2(33129, 650),
+
+
+		Vector2(33759, 650),
+
+		Vector2(34179, 650),
+		Vector2(34389, 650),
+	
+	
+		Vector2(35019, 650),
+		Vector2(35229, 650),
+		Vector2(35439, 650),
+
+
+		Vector2(36069, 650),
+		Vector2(36279, 650),
+
+		Vector2(36909, 650),
+		
+		Vector2(41495, 1640),
+		Vector2(40610, 1640),
+		Vector2(38868, 1640)
+	
+
+		]
 	var weapon_pickup_locations = [Vector2(27055, -1797)]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY)

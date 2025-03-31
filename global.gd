@@ -43,13 +43,13 @@ var level_score_reqs = [
 ]
 
 var space_level_indices = [
-	1, 2
+	1, 2, 3, 4, 5, 6
 ]
 
 var current_level_index = -1
 var current_level = null
 
-var helmet_visible_levels = [1,2,3]
+var helmet_visible_levels = [1,2,3,4,5, 6]
 
 # Chunk management
 var terrain_chunk_manager = null

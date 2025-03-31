@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d3xqq6i7xe8ff"]
 
-[ext_resource type="Script" uid="uid://du48jtlgr0l6b" path="res://scenes/invisibleplatformtrigger.gd" id="1_edhff"]
+[ext_resource type="Script" uid="uid://dv0365sy8uur2" path="res://scenes/teleporter.gd" id="1_edhff"]
 [ext_resource type="Texture2D" uid="uid://cmeannn336c4t" path="res://assets/New Piskel (6).png" id="2_qbfeo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cllja"]
