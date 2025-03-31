@@ -48,74 +48,72 @@ func _ready() -> void:
 	print_debug("Weapon pickups spawned at positions: ", weapon_pickup_locations)
 	
 	# Spawn enemies (Ducks) after everything else
-	var duck_spawn_locations = [Vector2(57770, -1640),
-
-		Vector2(60770, -1640),
-
-		Vector2(63770, -1640),
-		Vector2(65270, -1640),
-		Vector2(66770, -1640),
-		Vector2(68270, -1640),
-		Vector2(69770, -1640),
+	var duck_spawn_locations = [Vector2(57770, -1650),
+		Vector2(60770, -1650),
+		Vector2(63770, -1650),
+		Vector2(65270, -1650),
+		Vector2(66770, -1650),
+		Vector2(68270, -1650),
+		Vector2(69770, -1650),
 		
-		Vector2(72770, -1640),
-		Vector2(74270, -1640),
-	
-		Vector2(77270, -1640),
-		Vector2(78770, -1640),
-		Vector2(80270, -1640),
+		Vector2(72770, -1650),
+		Vector2(74270, -1650),
+		
+		Vector2(77270, -1650),
+		Vector2(78770, -1650),
+		Vector2(80270, -1650),
 
 		# Starting at 52423 and incrementing by 1500
-		Vector2(52423, -1239),
+		Vector2(52423, -1249),
 
-		Vector2(55423, -1239),
-		Vector2(56923, -1239),
-		Vector2(58423, -1239),
-		Vector2(59923, -1239),
-		Vector2(61423, -1239),
-	
-		Vector2(65923, -1239),
-		Vector2(67423, -1239),
-		Vector2(68923, -1239),
-		Vector2(70423, -1239),
-		Vector2(71923, -1239),
-		Vector2(73423, -1239),
-	
-	
-		Vector2(77923, -1239),
-	
-		Vector2(80923, -1239),
+		Vector2(55423, -1249),
+		Vector2(56923, -1249),
+		Vector2(58423, -1249),
+		Vector2(59923, -1249),
+		Vector2(61423, -1249),
 		
-		Vector2(52777, 1225), #CHECK AGAIN?
-		Vector2(54000, 1225),
+		Vector2(65923, -1249),
+		Vector2(67423, -1249),
+		Vector2(68923, -1249),
+		Vector2(70423, -1249),
+		Vector2(71923, -1249),
+		Vector2(73423, -1249),
 		
-		Vector2(55107, 904),
-		Vector2(56800, 904),
+		Vector2(77923, -1249),
 		
-		Vector2(52484, 785),
+		Vector2(80923, -1249),
 		
-		Vector2(54672, -191),
-		Vector2(56000, -191),
+		Vector2(52777, 1215),  # CHECK AGAIN?
+		Vector2(54000, 1215),
 		
-		Vector2(53560, -965),
-		Vector2(57000, -965),
-		Vector2(59000, -965),
-		Vector2(62000, -965),
-		Vector2(64000, -965),
-		Vector2(66000, -965),
-		Vector2(69000, -965),
+		Vector2(55107, 894),
+		Vector2(56800, 894),
 		
-		Vector2(58594, 745), #CHECK AGAIN?!
+		Vector2(52484, 775),
 		
-		Vector2(57756, 1313),
+		Vector2(54672, -201),
+		Vector2(56000, -201),
 		
-		Vector2(74400, 1879),
-		Vector2(76000, 1879),
-		Vector2(78000, 1879),
-		Vector2(80000, 1879),
+		Vector2(53560, -976),
+		Vector2(57000, -976),
+		Vector2(59000, -976),
+		Vector2(62000, -976),
+		Vector2(64000, -976),
+		Vector2(66000, -976),
+		Vector2(69000, -976),
 		
-		Vector2(68626, 525)
+		Vector2(58594, 735),  # CHECK AGAIN?!
+		
+		Vector2(57756, 1303),
+		
+		Vector2(74400, 1869),
+		Vector2(76000, 1869),
+		Vector2(78000, 1869),
+		Vector2(80000, 1869),
+		
+		Vector2(68626, 515)
 	]
+
 
 	
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)

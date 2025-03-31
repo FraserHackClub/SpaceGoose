@@ -16244,7 +16244,7 @@ texture = SubResource("GradientTexture2D_eguwo")
 metadata/_edit_lock_ = true
 
 [node name="AnimatableBody2D" parent="." instance=ExtResource("14_2cibx")]
-position = Vector2(51793, 676)
+position = Vector2(35928, 5338)
 move_offset = Vector2(1395, -1644)
 wait_time = 0.0
 
