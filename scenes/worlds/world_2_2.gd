@@ -19,7 +19,7 @@ signal level_ready
 
 func _ready() -> void:
 	# DEBUGGING - Resetting Global level index for debug purposes
-	Global.current_level_index = 6
+	Global.current_level_index = 5
 	print_debug("Starting level setup for level index: ", Global.current_level_index)
 	
 	rng.randomize()
@@ -84,7 +84,37 @@ func _ready() -> void:
 	
 		Vector2(77923, -1239),
 	
-		Vector2(80923, -1239)
+		Vector2(80923, -1239),
+		
+		Vector2(52777, 1225), #CHECK AGAIN?
+		Vector2(54000, 1225),
+		
+		Vector2(55107, 904),
+		Vector2(56800, 904),
+		
+		Vector2(52484, 785),
+		
+		Vector2(54672, -191),
+		Vector2(56000, -191),
+		
+		Vector2(53560, -965),
+		Vector2(57000, -965),
+		Vector2(59000, -965),
+		Vector2(62000, -965),
+		Vector2(64000, -965),
+		Vector2(66000, -965),
+		Vector2(69000, -965),
+		
+		Vector2(58594, 745), #CHECK AGAIN?!
+		
+		Vector2(57756, 1313),
+		
+		Vector2(74400, 1879),
+		Vector2(76000, 1879),
+		Vector2(78000, 1879),
+		Vector2(80000, 1879),
+		
+		Vector2(68626, 525)
 	]
 
 	

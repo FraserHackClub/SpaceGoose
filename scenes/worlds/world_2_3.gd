@@ -24,7 +24,7 @@ signal level_ready
 func _ready() -> void:
 	
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 6
+	Global.current_level_index = 7
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
