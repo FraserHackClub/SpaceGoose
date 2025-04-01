@@ -22,10 +22,7 @@ func _on_area_2d_area_entered(touchedarea: Node):
 	print_debug("Fireball hit something:", touchedarea.name, "\nGroups:", touchedarea.get_groups())
 
 	var enemy: Node = touchedarea.get_parent()  # Get the parent node (the full entity)
-	
-	if not (touchedarea.has_method("start_falling") or enemy.has_method("start_method")):
-		return
-	
+
 	if enemy:
 		print_verbose("Parent detected:", enemy.name, " | Groups:", enemy.get_groups())
 

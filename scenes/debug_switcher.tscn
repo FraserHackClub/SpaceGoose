@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddqf27icwand4"]
-
-[ext_resource type="Script" uid="uid://x6sqrqbrgx51" path="res://scenes/debug_switcher.gd" id="1_ipgav"]
-
-[node name="DebugSwitcher" type="Node"]
-script = ExtResource("1_ipgav")

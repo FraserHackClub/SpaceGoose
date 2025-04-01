@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=66 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" uid="uid://cpse362qabw28" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -16,8 +16,6 @@
 [ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
 [ext_resource type="AudioStream" uid="uid://0ekkosyhqebb" path="res://assets/audio/effects/beeeeeeep.mp3" id="13_is85u"]
 [ext_resource type="PackedScene" uid="uid://dcly4eh4gvtio" path="res://scenes/player_gun.tscn" id="14_pvtuh"]
-[ext_resource type="AudioStream" uid="uid://b2uwnga3bu5id" path="res://assets/audio/spacegoose-overture-8bit-final.mp3" id="17_o67j2"]
-[ext_resource type="AudioStream" uid="uid://bb41uf5n4bjmv" path="res://assets/audio/spacegoose-invincible.mp3" id="18_lotbi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jw0de"]
 atlas = ExtResource("2_b6xk7")
@@ -388,7 +386,7 @@ size = Vector2(29, 70)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2pwf"]
 size = Vector2(64, 64)
 
-[node name="goose" type="CharacterBody2D" groups=["player"]]
+[node name="goose" type="CharacterBody2D"]
 texture_filter = 1
 script = ExtResource("1_tcf3c")
 
@@ -420,7 +418,7 @@ shape = SubResource("RectangleShape2D_1e7ql")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(2, -1)
-polygon = PackedVector2Array(212, -253, 212, -242, 212, -236, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
+polygon = PackedVector2Array(213, -253, 212, -242, 210, -234, 190, -178, 190, -138, 175, -78, 116, -78, 87, -150, 87, -162, 131, -162, 140, -177, 143, -258, 158, -270, 183, -270)
 
 [node name="OverheadDetector" type="Area2D" parent="."]
 
@@ -461,16 +459,6 @@ texture = ExtResource("9_4r58p")
 [node name="PlayerGun" parent="." instance=ExtResource("14_pvtuh")]
 position = Vector2(136, -125)
 scale = Vector2(0.655295, 0.655295)
-
-[node name="main_theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("17_o67j2")
-volume_db = -5.0
-parameters/looping = true
-
-[node name="invincible_theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("18_lotbi")
-volume_db = -5.0
-parameters/looping = true
 
 [connection signal="body_entered" from="OverheadDetector" to="." method="_on_overhead_detector_body_entered"]
 [connection signal="body_exited" from="OverheadDetector" to="." method="_on_overhead_detector_body_exited"]

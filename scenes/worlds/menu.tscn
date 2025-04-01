@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://du5m0ehrpsm7i"]
+[gd_scene load_steps=32 format=3 uid="uid://du5m0ehrpsm7i"]
 
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_kxoy0"]
 [ext_resource type="Script" uid="uid://b5s7mf38ackjv" path="res://scenes/worlds/menu.gd" id="1_vojhl"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://crjn18reqwst4" path="res://scenes/pointer.tscn" id="7_4v0ps"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="9_mt224"]
 [ext_resource type="Texture2D" uid="uid://dq0t0qlb0dow5" path="res://assets/icons/restart_inventory.png" id="10_4v0ps"]
-[ext_resource type="AudioStream" uid="uid://b2uwnga3bu5id" path="res://assets/audio/spacegoose-overture-8bit-final.mp3" id="11_41ah7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4v0ps"]
 texture = ExtResource("1_kxoy0")
@@ -3133,10 +3132,5 @@ offset_top = 16.0
 offset_right = 1136.0
 offset_bottom = 88.0
 icon = ExtResource("10_4v0ps")
-
-[node name="main_theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_41ah7")
-volume_db = -5.0
-parameters/looping = true
 
 [connection signal="pressed" from="restart" to="." method="_on_restart_pressed"]

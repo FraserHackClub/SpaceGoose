@@ -43,8 +43,6 @@ func is_level():
 func remove_levels():
 	for child in level_container.get_children():
 		child.queue_free()
-	await get_tree().process_frame
-
 
 func play() -> void:
 	inventory.fetch_inventory()
@@ -62,12 +60,11 @@ func load_level(level_index):
 	# Clear existing level
 	if is_level():
 		remove_levels()
-		await get_tree().process_frame
+	
 	# Load new level
 	var level_scene = load(Global.level_paths[level_index])
 	if level_scene:
 		current_level = level_scene.instantiate()
-		await get_tree().process_frame
 		level_container.call_deferred("add_child", current_level)
 		Global.current_level_index = level_index
 		inventory.current_level = level_index

@@ -1,6 +1,4 @@
-
-[gd_scene load_steps=17 format=3 uid="uid://c50nj6eoif7n3"]
-
+[gd_scene load_steps=16 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
@@ -13,10 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="8_hgln0"]
 [ext_resource type="AudioStream" uid="uid://bil2oerrtqpig" path="res://assets/audio/effects/wrong.mp3" id="10_05854"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="10_e0il0"]
-[ext_resource type="AudioStream" uid="uid://ccsi67jivnh3o" path="res://assets/audio/spacegoose-select-level.mp3" id="10_iguuw"]
 [ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="11_05854"]
 [ext_resource type="PackedScene" uid="uid://crjn18reqwst4" path="res://scenes/pointer.tscn" id="11_iguuw"]
-[ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="13_iguuw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ss6ea"]
 texture = ExtResource("1_24b0a")
@@ -350,11 +346,6 @@ stream = ExtResource("10_05854")
 volume_db = -10.0
 playback_type = 1
 
-[node name="levelselect_theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_iguuw")
-volume_db = -6.0
-parameters/looping = true
-
 [node name="pointer" parent="." instance=ExtResource("11_iguuw")]
 
 [node name="Score" type="HBoxContainer" parent="."]
@@ -380,9 +371,3 @@ text = "0"
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("11_05854")
-
-[node name="Spaceship_PLACEHOLDER" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("13_iguuw")
