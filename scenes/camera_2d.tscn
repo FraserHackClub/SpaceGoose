@@ -54,18 +54,17 @@ animations = [{
 [node name="Camera2D" type="Camera2D"]
 process_mode = 3
 offset = Vector2(576, 324)
+zoom = Vector2(0.75, 0.75)
 script = ExtResource("1_fs0qw")
 custom_camera_offset = Vector2(500, 0)
 
-[node name="TransitionSlider" type="TextureRect" parent="."]
-self_modulate = Color(0, 0, 0, 1)
-offset_left = -1149.0
-offset_top = -664.0
-offset_right = 1163.0
-offset_bottom = 650.0
-texture = ExtResource("7_w01ff")
-
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TransitionSlider" type="TextureRect" parent="HUD"]
+self_modulate = Color(0, 0, 0, 1)
+offset_right = 1716.0
+offset_bottom = 768.0
+texture = ExtResource("7_w01ff")
 
 [node name="EggCounter" type="HBoxContainer" parent="HUD"]
 offset_right = 95.0

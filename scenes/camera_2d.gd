@@ -7,7 +7,7 @@ extends Camera2D
 @export var x_smooth_speed: float = 5.0
 @export var vertical_deadzone_height: float = 500
 @export var custom_camera_offset: Vector2 = Vector2(500, -400)
-@onready var texture_rect = $TransitionSlider
+@onready var texture_rect = $HUD/TransitionSlider
 @onready var transition_in_progress := false
 # Viewport base size (before zoom)
 const VIEWPORT_WIDTH = 1152.0

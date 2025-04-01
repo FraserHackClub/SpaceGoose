@@ -14,6 +14,9 @@ func _ready():
 
 
 func _input(event):
+	if not main.is_level():
+		return
+
 	if event is InputEventKey or event is InputEventMouseButton or event is InputEventJoypadButton:
 		if event.is_action_pressed("skip"):  # "skip" must be in Input Map
 			print("Skip key pressed!")

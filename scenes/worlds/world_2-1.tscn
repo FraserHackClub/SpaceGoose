@@ -16414,7 +16414,7 @@ camera_section_length = 20000.0
 camera_section_height = 150000.0
 
 [node name="Teleporter3" parent="." instance=ExtResource("12_qaygo")]
-position = Vector2(734, 523)
+position = Vector2(808, -237)
 teleport_destination = Vector2(31051, 316)
 camera_section_length = 20000.0
 camera_section_height = 150000.0

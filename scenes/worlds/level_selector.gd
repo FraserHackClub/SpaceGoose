@@ -20,10 +20,6 @@ var positions = [
 	Vector2(384.0, 508.0),
 	Vector2(592.0, 376.0),
 	Vector2(53.0, 63.0),
-	Vector2(53.0, 63.0),
-	Vector2(53.0, 63.0),
-	Vector2(53.0, 63.0),
-	Vector2(53.0, 63.0),
 ]
 
 @onready var planets = [
@@ -31,16 +27,19 @@ var positions = [
 	$Moon,
 	$Mars,
 	$Asteroids,
-	$Spaceship_PLACEHOLDER,
-	$Spaceship_PLACEHOLDER,
-	$Spaceship_PLACEHOLDER,
-	$Spaceship_PLACEHOLDER,
+	$Spaceship_PLACEHOLDER
 ]
 
 func _ready() -> void:
 	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	current_index = inventory.current_level
+	
+	if current_index >= positions.size():
+		current_index = -1
+	elif current_index < 0:
+		current_index = 0
+	
 	pointer.action = click_action
 	pointer.position = positions[current_index]
 	score_label.text = str(inventory.score)
@@ -69,7 +68,7 @@ func _process(_delta: float) -> void:
 			$Select_sound.play()
 		
 		if current_index >= positions.size():
-			current_index = positions.size() - 1
+			current_index = -1
 		elif current_index < 0:
 			current_index = 0
 		
