@@ -14,8 +14,8 @@ const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
 # --- Dynamic bounds (changed IF updated via teleport) ---
-var LEVEL_LENGTH: float = 5079.0
-var LEVEL_HEIGHT: float = 10000.0
+var LEVEL_LENGTH: float = 500000.0
+var LEVEL_HEIGHT: float = 100000
 # --- State ---
 var sublevel_index: float = 0.0
 var teleported_this_frame: bool = false
@@ -25,8 +25,9 @@ var playing_cutscene: bool = false
 var level_camera_settings = {
 	
 	1: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
-}
+	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	9: { "LEVEL_LENGTH": 90000.0, "LEVEL_HEIGHT": 50000.0, "custom_camera_offset": Vector2(600,0) }
+}	
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"
 @onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
@@ -134,7 +135,7 @@ func _process(delta: float) -> void:
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8:
+	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2

@@ -11,8 +11,8 @@ const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
-const LEVEL_LENGTH = 14000.0
-const TIME = 180.0
+const LEVEL_LENGTH = 200000
+const TIME = 1000
 const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()

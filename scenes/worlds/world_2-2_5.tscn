@@ -5283,7 +5283,7 @@ texture = ExtResource("9_k0y1h")
 [sub_resource type="TileSet" id="TileSet_rlx2l"]
 sources/0 = SubResource("TileSetAtlasSource_rirh2")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mb0a"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pvcau"]
 texture = ExtResource("15_hxvij")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -10650,7 +10650,7 @@ texture = ExtResource("15_hxvij")
 17:53/0 = 0
 17:53/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qaygo"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ldx7y"]
 texture = ExtResource("16_rmfdn")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -15984,8 +15984,8 @@ texture = ExtResource("16_rmfdn")
 [sub_resource type="TileSet" id="TileSet_cm6nd"]
 physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
-sources/7 = SubResource("TileSetAtlasSource_2mb0a")
-sources/9 = SubResource("TileSetAtlasSource_qaygo")
+sources/7 = SubResource("TileSetAtlasSource_pvcau")
+sources/9 = SubResource("TileSetAtlasSource_ldx7y")
 
 [node name="Node2D2" type="Node2D"]
 script = ExtResource("1_ldx7y")
