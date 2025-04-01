@@ -27,19 +27,26 @@ const default_inventory = {
 
 # Array containing paths to the level scenes in order
 var level_paths = [
+
 	"res://scenes/worlds/world_1-1.tscn", #0
-	"res://scenes/worlds/world_1-2.tscn", #1
-	"res://scenes/worlds/world_1-3.tscn", #2
-	"res://scenes/worlds/world_1_4.tscn", #3
-	"res://scenes/worlds/world_2-1.tscn", #4
-	"res://scenes/worlds/world_2-2.tscn", #5
-	"res://scenes/worlds/world_2-2_5.tscn", #6
-	"res://scenes/worlds/world_2-3.tscn", #7
-	"res://scenes/worlds/world_3-1.tscn" #8
+	"res://scenes/worlds/world_1-1_2.tscn", #1
+	"res://scenes/worlds/world_1-1_3.tscn", #2
+	"res://scenes/worlds/world_1-2.tscn", #3
+	"res://scenes/worlds/world_1-2_2.tscn", #4
+	"res://scenes/worlds/world_1-2_3.tscn", #5
+	"res://scenes/worlds/world_1-3.tscn", #6
+  "res://scenes/worlds/world_1-3_2.tscn", #7
+	"res://scenes/worlds/world_1_4.tscn" #8
+  "res://scenes/worlds/world_2-1.tscn", #9
+	"res://scenes/worlds/world_2-2.tscn", #10
+	"res://scenes/worlds/world_2-2_5.tscn", #11
+	"res://scenes/worlds/world_2-3.tscn", #12
+	"res://scenes/worlds/world_3-1.tscn" #13
 ]
 
 var level_score_reqs = [
-	0, 3000, 10000, 25000, 40000, 0, 0, 0, 0,
+	0, 0, 0, 3000, 3000, 3000, 7000, 7000, 10000, 15000, 15000, 15000, 15000, 25000, 30000
+
 ]
 
 var space_level_indices = [

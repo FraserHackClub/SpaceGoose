@@ -1,4 +1,6 @@
+
 [gd_scene load_steps=17 format=3 uid="uid://c50nj6eoif7n3"]
+
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
@@ -7,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://i1dx3qeuqenn" path="res://assets/planets/mars.png" id="4_8owdg"]
 [ext_resource type="Texture2D" uid="uid://bd4jl322xprxs" path="res://assets/planets/asteroids.png" id="6_iguuw"]
 [ext_resource type="AudioStream" uid="uid://dcsd01y3fmyon" path="res://assets/audio/effects/swoosh.ogg" id="7_i1yxt"]
+[ext_resource type="Texture2D" uid="uid://bfb5ew8g2sfxl" path="res://assets/sprites/Spaceship.png" id="7_iguuw"]
 [ext_resource type="AudioStream" uid="uid://xe0qb5yqjstl" path="res://assets/audio/effects/goose_jump.ogg" id="8_hgln0"]
 [ext_resource type="AudioStream" uid="uid://bil2oerrtqpig" path="res://assets/audio/effects/wrong.mp3" id="10_05854"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="10_e0il0"]
@@ -322,6 +325,17 @@ offset_left = 468.0
 offset_right = 792.0
 offset_bottom = 648.0
 texture = ExtResource("6_iguuw")
+
+[node name="Spaceship" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 850.0
+offset_top = 600.0
+offset_right = 914.0
+offset_bottom = 664.0
+rotation = -2.8452
+scale = Vector2(1.95295, 1.95295)
+texture = ExtResource("7_iguuw")
 
 [node name="Select_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_i1yxt")
