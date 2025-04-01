@@ -5,6 +5,7 @@ var current_index: int = 0
 const JUMP_VELOCITY = -1400
 
 @onready var pointer: Node2D = $pointer
+@onready var main_theme: AudioStreamPlayer = $main_theme
 @export var smooth_speed: float = 0.2
 @export var play: Callable
 @export var select_level: Callable
@@ -15,6 +16,8 @@ var actions: Array
 var call_action = false
 
 func _ready() -> void:
+	main_theme.play()
+	
 	inventory = preload("res://Inventory.gd").new()
 	pointer.position.y = y_positions[current_index]
 	pointer.position.x = 632.0

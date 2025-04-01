@@ -27,6 +27,9 @@ const LOSE = 2
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 @onready var sfx_blastoff: AudioStreamPlayer = $Blastoff
 
+@onready var main_theme: AudioStreamPlayer = $main_theme
+@onready var invincible_theme: AudioStreamPlayer = $invincible_theme
+
 #GUN
 @onready var gun: Node2D = $PlayerGun
 
@@ -136,6 +139,9 @@ func _level_ready():
 	
 	update_inventory_labels()
 	
+	main_theme.play()
+	invincible_theme.play()
+	invincible_theme.stream_paused = true
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
@@ -252,10 +258,12 @@ func game_over(state: int):
 		return  # Prevent multiple game_over triggers
 	
 	if invincible and state == LOSE:
-			return
+		return
 	
 	inventory.commit_inventory()
 	$"../Camera2D".playing_cutscene = true
+	invincible_theme.stop()
+	main_theme.stop()
 	
 	gun.activated = false
 	game_state = state
@@ -342,6 +350,15 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
+	
+	if invincible and not main_theme.stream_paused:
+		main_theme.stream_paused = true
+		invincible_theme.stream_paused = false
+	elif (not invincible_theme.stream_paused) and (not invincible):
+		main_theme.stream_paused = false
+		invincible_theme.stream_paused = true
+	
+		
 	if not is_on_floor():
 		var gravity_force = get_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
@@ -358,7 +375,7 @@ func _physics_process(delta: float) -> void:
 	if game_state == 0:
 		_handle_timer(delta)
 		_handle_movement(delta)
-		move_and_slide()	
+		move_and_slide()
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset
