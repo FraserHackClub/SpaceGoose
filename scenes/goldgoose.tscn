@@ -1,10 +1,17 @@
-[gd_scene load_steps=21 format=3 uid="uid://cfa6d1ubkh7p3"]
+[gd_scene load_steps=23 format=3 uid="uid://cfa6d1ubkh7p3"]
 
 [ext_resource type="Script" uid="uid://ctld6scyxiwhi" path="res://scenes/goldgoose.gd" id="1_hr8v1"]
 [ext_resource type="Texture2D" uid="uid://msptnm7msulv" path="res://assets/sprites/goldgoose.png" id="1_oxhe3"]
 [ext_resource type="Texture2D" uid="uid://rffpnfq46po0" path="res://assets/sprites/goldgoose - done.png" id="2_eruo5"]
+[ext_resource type="Shader" uid="uid://da01oqprp454u" path="res://scenes/gold_shimmer.gdshader" id="2_r06n3"]
 [ext_resource type="AudioStream" uid="uid://c5qf7l1s1daci" path="res://assets/audio/effects/canada-goose-honk.mp3" id="4_3gtfk"]
 [ext_resource type="AudioStream" uid="uid://nsqtalmo6hn4" path="res://assets/audio/effects/honk-h1.mp3" id="5_r06n3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgvqp"]
+shader = ExtResource("2_r06n3")
+shader_parameter/sparkle_strength = 0.5
+shader_parameter/sparkle_speed = 1.0
+shader_parameter/white_threshold = 0.95
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jgvqp"]
 atlas = ExtResource("2_eruo5")
@@ -115,6 +122,7 @@ height = 186.0
 script = ExtResource("1_hr8v1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_jgvqp")
 sprite_frames = SubResource("SpriteFrames_jgvqp")
 animation = &"after"
 autoplay = "default"

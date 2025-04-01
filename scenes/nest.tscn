@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://5m6n36qfi1g5"]
+[gd_scene load_steps=8 format=3 uid="uid://5m6n36qfi1g5"]
 
 [ext_resource type="Texture2D" uid="uid://3uram4aeddty" path="res://assets/sprites/nest.png" id="1_den8b"]
 [ext_resource type="Texture2D" uid="uid://2er525xk3aou" path="res://assets/sprites/eggnest.png" id="2_3y021"]
+[ext_resource type="Texture2D" uid="uid://cvhsjeq3nybmo" path="res://assets/sprites/flame.png" id="4_0c7o3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3y021"]
 atlas = ExtResource("1_den8b")
@@ -43,3 +44,6 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 82)
 shape = SubResource("RectangleShape2D_3y021")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture = ExtResource("4_0c7o3")
