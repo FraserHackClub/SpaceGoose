@@ -1,7 +1,7 @@
 extends Node
 
 signal level_changed(level_index)
-#THIS WAS ADDED TO MAKE GITHUB RECOGNISE MY CHANGES
+
 const Camera2d: PackedScene = preload("res://scenes/camera_2d.tscn")
 const MainCharacter: PackedScene = preload("res://scenes/main_character.tscn")
 
