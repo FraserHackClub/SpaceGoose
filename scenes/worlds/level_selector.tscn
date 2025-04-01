@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c50nj6eoif7n3"]
+[gd_scene load_steps=17 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
