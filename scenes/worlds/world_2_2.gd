@@ -33,9 +33,6 @@ func _ready() -> void:
 		print_debug("Error: Global.main_character is not set before spawning enemies!")
 		return
 
-	# Spawn camera after player
-	Global.spawn_camera(current_scene, LEVEL_LENGTH)
-	print_debug("Camera spawned with level length: ", LEVEL_LENGTH)
 	
 	# Spawn eggs
 	var egg_spawn_locations = [Vector2(59752, 1801), Vector2(63811, 1785), Vector2(63911, 1785), Vector2(64336, 1807), Vector2(64633, 1860), Vector2(66692, 1194), Vector2(67444, 1207), Vector2(60036, 1842), Vector2(54136, -300), Vector2(67490, 1001), Vector2(68021, 1234)]
@@ -118,6 +115,10 @@ func _ready() -> void:
 	
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	print_debug("Ducks spawned at positions: ", duck_spawn_locations)
+	
+	# Spawn camera after player
+	Global.spawn_camera(current_scene, LEVEL_LENGTH)
+	print_debug("Camera spawned with level length: ", LEVEL_LENGTH)
 	
 	emit_signal("level_ready")
 	print_debug("Level setup completed and signal 'level_ready' emitted.")
