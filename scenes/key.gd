@@ -17,9 +17,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func collect() -> void:
-	print_debug("goose goose collected me hehehehehhe")
 	if collected:
-		return  
+		return
 	Global.KeyID = Possessing_Key_ID
 	Global.Collected_Keys.append(Possessing_Key_ID)
 	collected = true
