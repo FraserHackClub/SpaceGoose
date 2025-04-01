@@ -4,6 +4,7 @@ extends Control
 @onready var pointer: Node2D = $pointer
 @onready var main: Node = $".."
 @onready var score_label = $Score/ScoreLabel
+@onready var levelselect_theme: AudioStreamPlayer = $levelselect_theme
 
 var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
 var popup_window: PopupPanel
@@ -19,7 +20,9 @@ var positions = [
 	Vector2(288.0, 272.0),
 	Vector2(384.0, 508.0),
 	Vector2(592.0, 376.0),
+
 	Vector2(802.0, 542.0)
+
 ]
 
 @onready var planets = [
@@ -27,7 +30,9 @@ var positions = [
 	$Moon,
 	$Mars,
 	$Asteroids,
+
 	$Spaceship
+
 ]
 
 # Dictionary to map planets to their respective sublevels
@@ -40,9 +45,16 @@ var planet_sublevels = {
 }
 
 func _ready() -> void:
+	levelselect_theme.play()
 	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	current_index = inventory.current_level
+	
+	if current_index >= positions.size():
+		current_index = -1
+	elif current_index < 0:
+		current_index = 0
+	
 	pointer.action = click_action
 	pointer.position = positions[current_index]
 	score_label.text = str(inventory.score)
@@ -91,9 +103,15 @@ func _process(_delta: float) -> void:
 				current_index  += 1
 				$Select_sound.play()
 		elif Input.is_action_just_pressed("ui_left"):
-			if current_index > 0:
-				current_index  -= 1
-				$Select_sound.play()
+
+			current_index  -= 1
+			$Select_sound.play()
+		
+		if current_index >= positions.size():
+			current_index = -1
+		elif current_index < 0:
+			current_index = 0
+
 		
 		pointer.position = lerp(pointer.position, positions[current_index], smooth_speed)
 		

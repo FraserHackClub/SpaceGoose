@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://kqrvys6ca76t"]
+[gd_scene load_steps=16 format=3 uid="uid://kqrvys6ca76t"]
 
 [ext_resource type="Script" uid="uid://bwuejtxptu3ah" path="res://scenes/camera_2d.gd" id="1_fs0qw"]
 [ext_resource type="Texture2D" uid="uid://bx8qk1g7qvj1v" path="res://assets/icons/egg.png" id="2_cqogg"]
 [ext_resource type="FontFile" uid="uid://8xxe121wmkiu" path="res://assets/PixeloidMono.ttf" id="3_40275"]
 [ext_resource type="Texture2D" uid="uid://smtjjrcixid4" path="res://assets/icons/bread.png" id="4_pgd1c"]
 [ext_resource type="Texture2D" uid="uid://doipiex75ckw6" path="res://assets/icons/clock.png" id="5_x6f0p"]
+[ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="6_1v1uw"]
 [ext_resource type="Texture2D" uid="uid://c3gwqwkia5cjb" path="res://assets/sprites/Solar-Fragment.png" id="6_fqqy3"]
-[ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="7_w01ff"]
+[ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="7_w01ff"]
 [ext_resource type="Texture2D" uid="uid://djokx5pu6qt8p" path="res://assets/icons/play-pause.png" id="8_f0hb1"]
 [ext_resource type="Texture2D" uid="uid://naec7ku2x7s4" path="res://assets/icons/exit.png" id="9_jr2ee"]
 [ext_resource type="Texture2D" uid="uid://8usbafolwy8q" path="res://assets/icons/restart.png" id="10_urtc0"]
@@ -53,10 +54,19 @@ animations = [{
 [node name="Camera2D" type="Camera2D"]
 process_mode = 3
 offset = Vector2(576, 324)
-zoom = Vector2(0.5, 0.5)
+
+zoom = Vector2(0.75, 0.75)
+
 script = ExtResource("1_fs0qw")
+custom_camera_offset = Vector2(500, 0)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TransitionSlider" type="TextureRect" parent="HUD"]
+self_modulate = Color(0, 0, 0, 1)
+offset_right = 1716.0
+offset_bottom = 768.0
+texture = ExtResource("7_w01ff")
 
 [node name="EggCounter" type="HBoxContainer" parent="HUD"]
 offset_right = 95.0
@@ -135,7 +145,7 @@ text = "0"
 [node name="ScoreIcon" type="TextureRect" parent="HUD/Score"]
 texture_filter = 1
 layout_mode = 2
-texture = ExtResource("7_w01ff")
+texture = ExtResource("6_1v1uw")
 
 [node name="Timer" type="HBoxContainer" parent="HUD"]
 anchors_preset = 1
@@ -184,30 +194,29 @@ texture_filter = 1
 layout_mode = 2
 texture = ExtResource("5_x6f0p")
 
-[node name="status-indicator" type="AnimatedSprite2D" parent="."]
+[node name="status-indicator" type="AnimatedSprite2D" parent="HUD"]
 texture_filter = 1
 position = Vector2(1104, 600)
 sprite_frames = SubResource("SpriteFrames_jr2ee")
 animation = &"stop"
 autoplay = "default"
 
-[node name="btn-container" type="HBoxContainer" parent="."]
-visible = false
+[node name="btn-container" type="HBoxContainer" parent="HUD"]
 offset_left = 16.0
 offset_top = 568.0
-offset_right = 56.0
-offset_bottom = 608.0
+offset_right = 160.0
+offset_bottom = 632.0
 theme_override_constants/separation = 16
 
-[node name="exit-btn" type="TextureButton" parent="btn-container"]
+[node name="exit-btn" type="TextureButton" parent="HUD/btn-container"]
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("9_jr2ee")
 
-[node name="restart-btn" type="TextureButton" parent="btn-container"]
+[node name="restart-btn" type="TextureButton" parent="HUD/btn-container"]
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("10_urtc0")
 
-[connection signal="pressed" from="btn-container/exit-btn" to="." method="_on_exitbtn_pressed"]
-[connection signal="pressed" from="btn-container/restart-btn" to="." method="_on_restartbtn_pressed"]
+[connection signal="pressed" from="HUD/btn-container/exit-btn" to="." method="_on_exitbtn_pressed"]
+[connection signal="pressed" from="HUD/btn-container/restart-btn" to="." method="_on_restartbtn_pressed"]
