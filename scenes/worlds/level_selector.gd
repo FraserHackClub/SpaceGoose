@@ -4,6 +4,7 @@ extends Control
 @onready var pointer: Node2D = $pointer
 @onready var main: Node = $".."
 @onready var score_label = $Score/ScoreLabel
+@onready var levelselect_theme: AudioStreamPlayer = $levelselect_theme
 
 var popup_scene: PackedScene = preload("res://scenes/insufficient_score_popup.tscn")
 var popup_window: PopupPanel
@@ -29,6 +30,7 @@ var positions = [
 ]
 
 func _ready() -> void:
+	levelselect_theme.play()
 	inventory = preload("res://Inventory.gd").new()
 	inventory.fetch_inventory()
 	current_index = inventory.current_level
