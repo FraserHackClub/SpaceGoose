@@ -16311,6 +16311,7 @@ energy = 0.39
 texture = SubResource("GradientTexture2D_o44i0")
 script = ExtResource("18_xn7qo")
 keyid = 2.24
+metadata/_edit_lock_ = true
 
 [node name="FirstRoomDarkOverlay" type="PointLight2D" parent="."]
 position = Vector2(60909.5, 1489.5)
@@ -16434,4 +16435,4 @@ blend_mode = 1
 
 [node name="InterfaceRocket" parent="." instance=ExtResource("20_ut361")]
 position = Vector2(50625, 3544)
-camera_section_height = 10000.0
+camera_section_height = 50000.0

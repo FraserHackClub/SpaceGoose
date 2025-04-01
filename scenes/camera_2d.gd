@@ -3,9 +3,9 @@ extends Camera2D
 
 
 # --- Exported Settings ---
-@export var smooth_speed: float = 0.8
+@export var smooth_speed: float = 0.9
 @export var x_smooth_speed: float = 5.0
-@export var vertical_deadzone_height: float = 500
+@export var vertical_deadzone_height: float = 300
 @export var custom_camera_offset: Vector2 = Vector2(500, -400)
 @onready var texture_rect = $HUD/TransitionSlider
 @onready var transition_in_progress := false
@@ -13,13 +13,20 @@ extends Camera2D
 const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
-# --- Dynamic bounds (updated via teleport) ---
+# --- Dynamic bounds (changed IF updated via teleport) ---
 var LEVEL_LENGTH: float = 5079.0
-var LEVEL_HEIGHT: float = 1972.0
+var LEVEL_HEIGHT: float = 10000.0
 # --- State ---
 var sublevel_index: float = 0.0
 var teleported_this_frame: bool = false
 var playing_cutscene: bool = false
+
+# --- Level-specific Camera Configuration ---
+var level_camera_settings = {
+	
+	1: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
+}
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"
 @onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
@@ -53,6 +60,9 @@ func _ready():
 
 	offset = custom_camera_offset
 
+	# Apply settings for the current level if available
+	if Global.current_level_index in level_camera_settings:
+		apply_level_settings(Global.current_level_index)  # Call new function here
 
 	if is_instance_valid(goose):
 		_set_camera_start_position()
@@ -118,13 +128,13 @@ func _process(delta: float) -> void:
 	#print("📐 Level Bounds: ", LEVEL_LENGTH, LEVEL_HEIGHT)
 
 	# --- Level 0 & 1: Horizontal only ---
-	if Global.current_level_index == 0 or Global.current_level_index == 1 or Global.current_level_index == 2:
-		custom_camera_offset = Vector2(500, 0)
+	if Global.current_level_index == 0:
+		custom_camera_offset = Vector2(500, 250)
 		position.x = lerp(position.x, target_x, x_smooth_speed * delta)
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8:
+	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2
@@ -148,8 +158,17 @@ func _process(delta: float) -> void:
 		position.y = lerp(position.y, target_y, smooth_speed * delta)
 	
 
+func apply_level_settings(level_index: int) -> void:
+	var settings = level_camera_settings.get(level_index, null)
+	if settings:
+		LEVEL_LENGTH = settings.get("LEVEL_LENGTH", LEVEL_LENGTH)
+		LEVEL_HEIGHT = settings.get("LEVEL_HEIGHT", LEVEL_HEIGHT)
+		custom_camera_offset = settings.get("custom_camera_offset", custom_camera_offset)
+
+
+
+
 func teleport_to_section(destination: Vector2, new_bounds: Vector2, new_offset: Vector2, new_sublevel_index: float) -> void:
-	#print("🚀 TELEPORTING CAMERA")
 	print("New Bounds: ", new_bounds)
 	print("New Offset: ", new_offset)
 	print("Teleport Destination: ", destination)
@@ -158,11 +177,16 @@ func teleport_to_section(destination: Vector2, new_bounds: Vector2, new_offset: 
 	await fade_in(1.0)  # wait for fade to black
 	
 	await get_tree().create_timer(2.0).timeout
-	# These bounds are now in *world-space*
+
+	# Update bounds and offset as usual
 	LEVEL_LENGTH = destination.x + new_bounds.x
 	LEVEL_HEIGHT = destination.y + new_bounds.y
 	custom_camera_offset = new_offset
 	sublevel_index = new_sublevel_index
+
+	# Check if the new sublevel has specific settings
+	if Global.current_level_index in level_camera_settings:
+		apply_level_settings(Global.current_level_index)  # Make sure to apply them here too
 
 	position = destination - custom_camera_offset
 	teleported_this_frame = true

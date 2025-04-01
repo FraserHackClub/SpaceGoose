@@ -16096,3 +16096,4 @@ move_offset = Vector2(0, 2427)
 
 [node name="InterfaceRocket" parent="." instance=ExtResource("12_ldx7y")]
 position = Vector2(1721, 3043)
+camera_section_height = 10000.0

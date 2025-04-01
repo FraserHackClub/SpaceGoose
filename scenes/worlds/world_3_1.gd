@@ -23,9 +23,9 @@ signal level_ready
 @onready var inventory = preload("res://Inventory.gd").new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
+	Global.KeyID = 0.0
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 7
+	Global.current_level_index = 8
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
@@ -43,10 +43,22 @@ func _ready() -> void:
 		
 	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
-	var egg_spawn_locations = [Vector2(33584, 427)] #Vector2(9844, -171), Vector2(9844, -171), Vector2(11268, 67)
-	var duck_spawn_locations = [Vector2(1462, 591), Vector2(4893,559), Vector2(34122,550)]
+	var egg_spawn_locations = [
+		
+		Vector2(46420, 335),
+		Vector2(47564, 378),
+		Vector2(43374, -374),
+		Vector2(41113, -57),
+		Vector2(34741, 291),
+		Vector2(28829, -174),
+		Vector2(26148, 160),
+		Vector2(9691, -150),
+		Vector2(11215, 126),
+		
+		] #Vector2(9844, -171), Vector2(9844, -171), Vector2(11268, 67)
+	var duck_spawn_locations = [Vector2(34122,550)]
 	#var weapon_pickup_locations = [Vector2(27055, -1797)]
-	#var cameramen_spawn_locations = [Vector2(1462, 530), Vector2(4893,530)] #, Vector2(34122,567),
+	var cameramen_spawn_locations = [Vector2(1462, 530), Vector2(4893,530)] #, Vector2(34122,567),
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY) # + , Jump_velosity
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
@@ -56,8 +68,8 @@ func _ready() -> void:
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 
-	#Global.spawn_enemies(cameramen_scene, current_scene, cameramen_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
+	Global.spawn_enemies(cameramen_scene, current_scene, cameramen_spawn_locations)
+	#Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
 	emit_signal("level_ready")

@@ -128,7 +128,7 @@ func _ready() -> void:
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
+	#Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
 	emit_signal("level_ready")
