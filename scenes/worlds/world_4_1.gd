@@ -28,47 +28,44 @@ func _ready() -> void:
 	Global.current_level_index = 9
 	
 	rng.randomize()
-	var possible_bread_spawn_locations = [
-		Vector2(10500, 189),
-		Vector2(6057, 190),
-		Vector2(6454, 347),
-		Vector2(7420, 185),
-		Vector2(9090, -134),
-		Vector2(1735, -120),
-		Vector2(2460, 301),
-		Vector2(11259, -100),
-		Vector2(4113, 380),
-		Vector2(4448, 272),
-		Vector2(4384, 336),
+	#var possible_bread_spawn_locations = [
+
+
 		
-	]
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
+	#]
+	#var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 20)
 	var egg_spawn_locations = [
 		
-		Vector2(46420, 335),
-		Vector2(47564, 378),
-		Vector2(43374, -374),
-		Vector2(41113, -57),
-		Vector2(34741, 291),
-		Vector2(28829, -174),
-		Vector2(26148, 160),
-		Vector2(9691, -150),
-		Vector2(11215, 126),
+		Vector2(12220, 732),
+		Vector2(13410, 730),
+		Vector2(14659, 711),
+		Vector2(15867, 540),
+		Vector2(16636, 675),
+		Vector2(18768, 320),
+		Vector2(20024, 512),
+		Vector2(20026, 675),
+		Vector2(64126, 1271),
+		Vector2(64925, 1268),
+		Vector2(63294, 1144),
+		Vector2(62599, 1214),
+		Vector2(63487, 1631),
+		Vector2(64570, 741),
+		Vector2(65201, 1139),
 		
 		] #Vector2(9844, -171), Vector2(9844, -171), Vector2(11268, 67)
-	var duck_spawn_locations = [Vector2(34122,550)]
+	#var duck_spawn_locations = [Vector2(34122,550)]
 	#var weapon_pickup_locations = [Vector2(27055, -1797)]
-	var cameramen_spawn_locations = [Vector2(1462, 530), Vector2(4893,530)] #, Vector2(34122,567),
-	#var weapon_pickup_locations = [Vector2(1328, 496)]
+	#var cameramen_spawn_locations = [Vector2(1462, 530), Vector2(4893,530)] #, Vector2(34122,567),
+	var weapon_pickup_locations = [Vector2(84342, 2565)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 638), TIME, JUMP_VELOCITY) # + , Jump_velosity
-	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
+	#Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
+	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	#Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 
-	Global.spawn_enemies(cameramen_scene, current_scene, cameramen_spawn_locations)
+	#Global.spawn_enemies(cameramen_scene, current_scene, cameramen_spawn_locations)
 	#Global.spawn_entity(finish_scene, current_scene, Vector2(4862, 900), "win_zone")
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()
