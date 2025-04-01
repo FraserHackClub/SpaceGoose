@@ -60,6 +60,7 @@ var fps_label = null
 var show_fps = false
 var c_key_pressed = false
 @onready var KeyID: float = 0.0
+@onready var Collected_Keys: Array = []
 func _ready():
 	KeyID = 0.0
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))

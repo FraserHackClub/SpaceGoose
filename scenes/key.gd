@@ -16,10 +16,12 @@ func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	move_and_slide()
 
-func collect_key() -> void:
+func collect() -> void:
+	print_debug("goose goose collected me hehehehehhe")
 	if collected:
 		return  
 	Global.KeyID = Possessing_Key_ID
+	Global.Collected_Keys.append(Possessing_Key_ID)
 	collected = true
 	
 	set_deferred("collision_layer", 0)  

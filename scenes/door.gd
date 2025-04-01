@@ -6,7 +6,7 @@ func _ready():
 	$Sprite2D.visible = true
 func _process(delta):
 
-	if Global.KeyID == self.keyid:
+	if self.keyid in Global.Collected_Keys:
 		$CollisionShape2D.disabled = true
 		print("Door on level 3_1 disabled!")
 		$Sprite2D.visible = false
