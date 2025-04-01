@@ -21,24 +21,45 @@ signal level_ready
 
 func _ready() -> void:
 	var possible_bread_spawn_locations = [
-		Vector2(530, -1000),
+		Vector2(530, 400),
+		Vector2(1480, 512),
+		Vector2(2150,400),
+		Vector2(2760, 400),
+		Vector2(3272, 180),
+		Vector2(4090, 294),
+		Vector2(4484, 510),
+		Vector2(4877, 291),
+		Vector2(5540, 400),
+		Vector2(5910, 176),
+		Vector2(6474, 320),
+		Vector2(7314,394),
+		Vector2(8614, 456),
+		Vector2(9254, 380),
+		Vector2(9892, 460),
+		Vector2(10658, 486)
 	]
-	#var weapon_pickup_locations = [Vector2(8670, -851)]
+	var weapon_pickup_locations = [Vector2(8670, -851)]
 	rng.randomize()
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
-	#var duck_spawn_locations = [Vector2(3172,400),]
-	var egg_spawn_locations = [Vector2(17690,11014), 
+	var duck_spawn_locations = [Vector2(3172,400),
+	
+	Vector2(23283,-17204),
+	Vector2(34808,-17204),
+	
+	Vector2(37493,-13241),
+	Vector2(41251,-13241),
 	
 	]
-	var basket_spawn_locations = [Vector2(17683,11110), Vector2(17883, 11110), Vector2(18155, 11110)]
-	#var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
+	var egg_spawn_locations = [Vector2(3172,400), Vector2(8390,384), Vector2(10416,384)]
+	#var basket_spawn_locations = [Vector2(810,430), Vector2(7444, 416), Vector2(7864, -65)]
+	var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(42642, 240), "win_zone")
-	#Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	Global.spawn_entity(finish_scene, current_scene, Vector2(52098, -913), "win_zone")
+	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	#Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded

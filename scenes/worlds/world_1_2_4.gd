@@ -26,7 +26,15 @@ func _ready() -> void:
 	#var weapon_pickup_locations = [Vector2(8670, -851)]
 	rng.randomize()
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
-	#var duck_spawn_locations = [Vector2(3172,400),]
+	var duck_spawn_locations = [Vector2(23283,-17204),
+	Vector2(34808,-17204),
+	
+	Vector2(37493,-13241),
+	Vector2(41251,-13241),
+	
+	
+	
+	]
 	var egg_spawn_locations = [Vector2(17690,11014), 
 	
 	]
@@ -37,8 +45,8 @@ func _ready() -> void:
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(42642, 240), "win_zone")
-	#Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	Global.spawn_entity(finish_scene, current_scene, Vector2(52098, -913), "win_zone")
+	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	#Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded

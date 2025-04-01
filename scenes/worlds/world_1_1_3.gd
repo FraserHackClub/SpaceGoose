@@ -37,8 +37,31 @@ func _ready() -> void:
 		Vector2(4384, 336)
 	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 5)
-	var egg_spawn_locations = [Vector2(1650, 526), Vector2(4640, 526)]
-	var duck_spawn_locations = [Vector2(1570, 496), Vector2(4550, 496)]
+	var egg_spawn_locations = [Vector2(13182, 294), 
+	
+	Vector2(14466, 239),
+	Vector2(17586, 1),
+	Vector2(23057, 224),
+	Vector2(24177, 965),
+	Vector2(28293, -433),
+	
+	
+	]
+	var duck_spawn_locations = [Vector2(23719, 913), 
+	
+	Vector2(28070, 460),
+	Vector2(28533, 460),
+	
+	Vector2(28271, -115),
+	
+	Vector2(24101, 985), #CHECK AGAIN?! or 29101
+	
+	Vector2(17005, 763),
+	Vector2(18134, 763),
+	
+	Vector2(17587, 283),
+	
+	]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
