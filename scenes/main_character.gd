@@ -206,7 +206,7 @@ func collect_item(item: Object):
 	if item.has_method("collect"):
 		item.collect()
 	else:
-		item.queue_free() 
+		item.queue_free()
 
 	update_inventory_labels()
 

@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 
 func collect() -> void:
 	if collected:
-		return  
+		return
 	Global.KeyID = Possessing_Key_ID
 	Global.Collected_Keys.append(Possessing_Key_ID)
 	collected = true
