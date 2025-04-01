@@ -19,7 +19,11 @@ var positions = [
 	Vector2(288.0, 272.0),
 	Vector2(384.0, 508.0),
 	Vector2(592.0, 376.0),
-	Vector2(53.0, 63.0)
+	Vector2(53.0, 63.0),
+	Vector2(53.0, 63.0),
+	Vector2(53.0, 63.0),
+	Vector2(53.0, 63.0),
+	Vector2(53.0, 63.0),
 ]
 
 @onready var planets = [
@@ -27,7 +31,10 @@ var positions = [
 	$Moon,
 	$Mars,
 	$Asteroids,
-	$Spaceship_PLACEHOLDER
+	$Spaceship_PLACEHOLDER,
+	$Spaceship_PLACEHOLDER,
+	$Spaceship_PLACEHOLDER,
+	$Spaceship_PLACEHOLDER,
 ]
 
 func _ready() -> void:

@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var SPEED = 300
+var SPEED = 400
 @export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
