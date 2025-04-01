@@ -16429,13 +16429,6 @@ keyid = 2.11
 position = Vector2(36803, 514)
 scale = Vector2(1.11035, 1.29502)
 
-[node name="InterfaceTeleporter2" parent="." instance=ExtResource("15_gpw8l")]
-position = Vector2(40049, -830)
-scale = Vector2(1.11035, 1.29502)
-teleport_destination = Vector2(2871, 1000)
-camera_section_length = 17500.0
-camera_section_height = 10000.0
-
 [node name="Door3" parent="." instance=ExtResource("14_resbv")]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(41903, 1308)
