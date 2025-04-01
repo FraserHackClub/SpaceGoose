@@ -29864,3 +29864,7 @@ scale = Vector2(0.620337, 0.293626)
 speed = 900.0
 move_offset = Vector2(0, 1336)
 wait_time = 0.0
+
+[node name="CharacterBody2D3" parent="." instance=ExtResource("22_mc21r")]
+position = Vector2(98220, 12165)
+move_offset = Vector2(0, -10318)
