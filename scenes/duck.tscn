@@ -154,6 +154,7 @@ size = Vector2(72, 17)
 size = Vector2(95, 115)
 
 [node name="Duck" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
 script = ExtResource("1_tqw0h")
 
 [node name="CollisionShape2D_side" type="CollisionShape2D" parent="."]

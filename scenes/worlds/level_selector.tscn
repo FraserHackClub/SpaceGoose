@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://ccsi67jivnh3o" path="res://assets/audio/spacegoose-select-level.mp3" id="10_iguuw"]
 [ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="11_05854"]
 [ext_resource type="PackedScene" uid="uid://crjn18reqwst4" path="res://scenes/pointer.tscn" id="11_iguuw"]
+[ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="13_iguuw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ss6ea"]
 texture = ExtResource("1_24b0a")
@@ -365,3 +366,9 @@ text = "0"
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("11_05854")
+
+[node name="Spaceship_PLACEHOLDER" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("13_iguuw")
