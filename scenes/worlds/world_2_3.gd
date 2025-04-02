@@ -24,7 +24,7 @@ signal level_ready
 func _ready() -> void:
 	
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 7
+	Global.current_level_index = 13
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
@@ -215,10 +215,10 @@ func _ready() -> void:
 		
 		
 		]
-	#var weapon_pickup_locations = [Vector2(27055, -1797)]
+	var weapon_pickup_locations = [Vector2(954, 567)]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	#Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
+	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)

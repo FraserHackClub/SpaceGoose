@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bfanbsn7oj432"]
+[gd_scene load_steps=28 format=3 uid="uid://bfanbsn7oj432"]
 
 [ext_resource type="Script" path="res://scenes/worlds/world_2_1.gd" id="1_d2mjh"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="2_g3kvt"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://diu17hgcue5p0" path="res://scenes/door.tscn" id="14_resbv"]
 [ext_resource type="PackedScene" uid="uid://c5k87x02ppv4j" path="res://scenes/Interface_Rocket.tscn" id="15_gpw8l"]
 [ext_resource type="PackedScene" uid="uid://cl4nyxp6jx84f" path="res://scenes/key.tscn" id="15_ul2cm"]
+[ext_resource type="PackedScene" uid="uid://tkobrqck7au0" path="res://scenes/Interface_Teleporter.tscn" id="17_gpw8l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0sm1q"]
 texture = ExtResource("6_3yvt0")
@@ -16406,12 +16407,14 @@ scale = Vector2(0.997125, 1.2732)
 teleport_destination = Vector2(39969, -207)
 camera_section_length = 10000.0
 camera_section_height = 10000.0
+camera_offset = Vector2(800, -1800)
 
 [node name="Teleporter" parent="." instance=ExtResource("12_qaygo")]
 position = Vector2(14187, 614)
 teleport_destination = Vector2(21398, 595)
 camera_section_length = 20000.0
 camera_section_height = 150000.0
+camera_offset = Vector2(800, -1800)
 
 [node name="Teleporter3" parent="." instance=ExtResource("12_qaygo")]
 position = Vector2(808, -237)
@@ -16430,7 +16433,7 @@ position = Vector2(36803, 514)
 scale = Vector2(1.11035, 1.29502)
 
 [node name="InterfaceTeleporter2" parent="." instance=ExtResource("15_gpw8l")]
-position = Vector2(40049, -830)
+position = Vector2(43573, -2305)
 scale = Vector2(1.11035, 1.29502)
 teleport_destination = Vector2(2871, 1000)
 camera_section_length = 17500.0
@@ -16449,3 +16452,10 @@ Possessing_Key_ID = 2.11
 [node name="key2" parent="." instance=ExtResource("15_ul2cm")]
 position = Vector2(11251, 602)
 Possessing_Key_ID = 2.12
+
+[node name="InterfaceTeleporter3" parent="." instance=ExtResource("17_gpw8l")]
+position = Vector2(40036, -868)
+teleport_destination = Vector2(2711, 992)
+camera_section_length = 100000.0
+camera_section_height = 100000.0
+camera_offset = Vector2(800, -1800)

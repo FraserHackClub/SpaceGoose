@@ -112,6 +112,12 @@ func _on_top_area_entered(body: Node) -> void:
 		start_falling()
 
 func start_falling(body: String = "goose") -> void:
+	var goose = Global.main_character  # Fetch the goose reference directly
+
+	if goose == null:
+		print_debug("Error: Goose reference is null. Cannot increase score.")
+		return
+
 	if body == "bullet":
 		goose.increase_score(100)
 	if body  == "fireball":

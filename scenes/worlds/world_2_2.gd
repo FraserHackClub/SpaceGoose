@@ -19,7 +19,7 @@ signal level_ready
 
 func _ready() -> void:
 	# DEBUGGING - Resetting Global level index for debug purposes
-	Global.current_level_index = 5
+	Global.current_level_index = 11
 	print_debug("Starting level setup for level index: ", Global.current_level_index)
 	
 	rng.randomize()

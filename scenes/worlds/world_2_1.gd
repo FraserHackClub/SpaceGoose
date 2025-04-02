@@ -8,7 +8,7 @@ const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 const LEVEL_LENGTH = 16000.0
-const TIME = 450.0
+const TIME = 600.0
 const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()
@@ -21,7 +21,7 @@ signal level_ready
 func _ready() -> void:
 	
 	#GLOBAL RESET DEBUGGING SCRIPT!
-	Global.current_level_index = 4
+	Global.current_level_index = 10
 	
 	rng.randomize()
 	var possible_bread_spawn_locations = [
@@ -59,64 +59,43 @@ func _ready() -> void:
 	Vector2(27081, -1881),
 	
 	]
-	var duck_spawn_locations = [Vector2(767, 634),
-		Vector2(1000, 634),
+	var duck_spawn_locations = [#Vector2(767, 634),
+		Vector2(1000, 644),
+		Vector2(1767, 644),
+		Vector2(8200, 644),
+		Vector2(7900, 644),
+		Vector2(9200, 644),
+		Vector2(10000, 644),
+		#Vector2(11717, 644),
 
-		Vector2(1767, 634),
+		Vector2(22545, 899),
+		Vector2(22755, 899),
+		Vector2(22965, 899),
+		Vector2(23175, 899),
+		Vector2(23385, 899),
 
-		Vector2(8200, 634),
-		Vector2(7900, 634),
+		Vector2(30819, 660),
+		Vector2(31239, 660),
+		Vector2(31659, 660),
+		Vector2(32079, 660),
+		Vector2(32499, 660),
+		Vector2(33129, 660),
 
-		Vector2(9200, 634),
-		Vector2(10000, 634),
+		Vector2(33759, 660),
+		Vector2(34179, 660),
+		Vector2(34389, 660),
 
-		Vector2(11717, 634),
+		Vector2(35019, 660),
+		Vector2(35229, 660),
+		Vector2(35439, 660),
+
+		Vector2(36069, 660),
+		Vector2(36279, 660),
+		Vector2(36909, 660),
 		
-		
-		
-		
-		
-		
-		
-		Vector2(22545, 889),
-		Vector2(22755, 889),
-		Vector2(22965, 889),
-		Vector2(23175, 889),
-		Vector2(23385, 889),
-		
-		
-		Vector2(30819, 650),
-	
-		Vector2(31239, 650),
-	
-		Vector2(31659, 650),
-
-		Vector2(32079, 650),
-
-		Vector2(32499, 650),
-
-		Vector2(33129, 650),
-
-
-		Vector2(33759, 650),
-
-		Vector2(34179, 650),
-		Vector2(34389, 650),
-	
-	
-		Vector2(35019, 650),
-		Vector2(35229, 650),
-		Vector2(35439, 650),
-
-
-		Vector2(36069, 650),
-		Vector2(36279, 650),
-
-		Vector2(36909, 650),
-		
-		Vector2(41495, 1640),
-		Vector2(40610, 1640),
-		Vector2(38868, 1640)
+		Vector2(41495, 1620),
+		Vector2(40610, 1620),
+		Vector2(38868, 1620)
 	
 
 		]
