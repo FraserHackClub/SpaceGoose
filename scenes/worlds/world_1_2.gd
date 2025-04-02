@@ -20,6 +20,7 @@ const JUMP_VELOCITY = -1400
 signal level_ready
 
 func _ready() -> void:
+	
 	var possible_bread_spawn_locations = [
 		Vector2(530, 400),
 		Vector2(1480, 512),

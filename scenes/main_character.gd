@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var SPEED = 400  # 
+var SPEED = 400
 @export var JUMP_VELOCITY = -900.0  # Changed from const to var to @export var because why not
 const DUCKING_MULTIPLIER = 0.75
 
@@ -27,6 +27,9 @@ const LOSE = 2
 @onready var sfx_swoosh: AudioStreamPlayer = $sfx_swoosh
 @onready var sfx_blastoff: AudioStreamPlayer = $Blastoff
 
+@onready var main_theme: AudioStreamPlayer = $main_theme
+@onready var invincible_theme: AudioStreamPlayer = $invincible_theme
+
 #GUN
 @onready var gun: Node2D = $PlayerGun
 
@@ -39,9 +42,13 @@ var inventory: Inventory
 @onready var goose = get_node_or_null(".")
 
 @onready var main = $"/root/Main"
-
 var jumpcount = 0
 var game_state = 0
+
+#GUN
+
+@onready var is_disabled := false
+
 
 @export var flash_colors : Array[Color] = [
 	Color(0.3, 0.0, 0.9, 1),
@@ -95,14 +102,20 @@ func _ready():
 
 	Global.main_character = self  # Store player globally
 
+
 	if gun:
 		Global.player_gun_path = gun.get_path()  # Store the node path instead of a reference
 		print_debug("PlayerGun path stored globally:", Global.player_gun_path)
 	else:
 		printerr("Error: PlayerGun not found!")
 	
+	if Global.current_level_index == 4.0:
+		SPEED = 350
+	
 	# Defer level setup so that the scene is fully ready.
 	call_deferred("_level_ready")
+
+
 
 func _level_ready():
 	inventory = preload("res://Inventory.gd").new()
@@ -126,9 +139,17 @@ func _level_ready():
 	
 	update_inventory_labels()
 	
+	main_theme.play()
+	invincible_theme.play()
+	invincible_theme.stream_paused = true
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
+func disable():
+	is_disabled = true
+
+func enable():
+	is_disabled = false
 
 func _on_goose_frame_changed() -> void:
 	if sprite_2d.animation != "default":
@@ -156,6 +177,9 @@ func _on_area_body_entered(body: Node):
 	if invincible:
 		if body.has_method("start_falling"):
 			body.start_falling("invincible")
+
+
+
 
 func collect_item(item: Object):
 	if item.collected: return
@@ -190,7 +214,7 @@ func collect_item(item: Object):
 	if item.has_method("collect"):
 		item.collect()
 	else:
-		item.queue_free() 
+		item.queue_free()
 
 	update_inventory_labels()
 
@@ -220,6 +244,8 @@ func update_inventory_labels():
 	inventory_labels["score"].text = str(inventory.score)
 
 func _on_hazards_body_entered(body):
+	if is_disabled:
+		return  # ignore death triggers
 	if body == self:
 		game_over(LOSE)
 
@@ -228,14 +254,18 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
+	print(game_state)
+	print(level_changing)
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 	
 	if invincible and state == LOSE:
-			return
+		return
 	
 	inventory.commit_inventory()
 	$"../Camera2D".playing_cutscene = true
+	invincible_theme.stop()
+	main_theme.stop()
 	
 	gun.activated = false
 	game_state = state
@@ -259,6 +289,7 @@ func game_over(state: int):
 			level_changing = true
 		else:
 			printerr("Goose node not found!")
+			await get_tree().create_timer(3.0).timeout
 		
 		time = int(time)
 		
@@ -310,8 +341,24 @@ func change_to_next_level():
 		get_tree().get_root().add_child(game_over_screen)
 		game_over_screen.set_game_over_state(WIN)
 func _physics_process(delta: float) -> void:
+	#print("Right Pressed: ", Input.is_action_pressed("right"))
+	#print("Left Pressed: ", Input.is_action_pressed("left"))
 	if level_changing:
 		return
+	if is_disabled:
+		velocity = Vector2.ZERO
+		return  # skip movement and input
+	
+	
+	
+	
+	if invincible and not main_theme.stream_paused:
+		main_theme.stream_paused = true
+		invincible_theme.stream_paused = false
+	elif (not invincible_theme.stream_paused) and (not invincible):
+		main_theme.stream_paused = false
+		invincible_theme.stream_paused = true
+	
 		
 	if not is_on_floor():
 		var gravity_force = get_gravity()
@@ -329,7 +376,7 @@ func _physics_process(delta: float) -> void:
 	if game_state == 0:
 		_handle_timer(delta)
 		_handle_movement(delta)
-		move_and_slide()	
+		move_and_slide()
 	if hazards_tilemap:
 		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset

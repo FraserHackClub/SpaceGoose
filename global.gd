@@ -5,12 +5,14 @@ signal level_changed(level_index)
 const Camera2d: PackedScene = preload("res://scenes/camera_2d.tscn")
 const MainCharacter: PackedScene = preload("res://scenes/main_character.tscn")
 
-var bullet_counter: Label = null
-var player_gun: Node = null
-var main_character: Node2D = null
+#REFERENCES:
+var bullet_counter: Label = null  # Store reference to BulletCountLabel
+var player_gun: Node = null  # Stores reference to the player's gun
+var main_character: Node2D = null  # Stores reference to the Player
+var camera_2d: Camera2D = null
+var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 var custom_font = load("res://assets/PixeloidMono.ttf")
-var player_gun_path: NodePath = "PlayerGun"
-
+var piston: CharacterBody2D = null  # Stores reference to the Player
 const default_inventory = {
 	"items": {
 		"egg": 3,
@@ -26,24 +28,30 @@ const default_inventory = {
 
 # Array containing paths to the level scenes in order
 var level_paths = [
-	"res://scenes/worlds/world_1-1.tscn",
-	"res://scenes/worlds/world_1-2.tscn",
-	"res://scenes/worlds/world_1-3.tscn",
-	"res://scenes/worlds/world_1_4.tscn"
+	"res://scenes/worlds/world_1-1.tscn", #0
+	"res://scenes/worlds/world_1-2.tscn", #1
+	"res://scenes/worlds/world_1-3.tscn", #2
+	"res://scenes/worlds/world_1_4.tscn", #3
+	"res://scenes/worlds/world_2-1.tscn", #4
+	"res://scenes/worlds/world_2-2.tscn", #5
+	"res://scenes/worlds/world_2-2_5.tscn", #6
+	"res://scenes/worlds/world_2-3.tscn", #7
+	"res://scenes/worlds/world_3-1.tscn", #8
+	"res://scenes/worlds/world_4-1.tscn" #9
 ]
 
 var level_score_reqs = [
-	0, 3000, 10000, 25000
+	0, 3000, 10000, 25000, 40000, 0, 0, 0, 0, 0
 ]
 
 var space_level_indices = [
-	1, 2
+	1, 2, 3, 4, 5, 6
 ]
 
 var current_level_index = -1
 var current_level = null
 
-var helmet_visible_levels = [1,2,3]
+var helmet_visible_levels = [1,2,3,4,5, 6]
 
 # Chunk management
 var terrain_chunk_manager = null
@@ -53,13 +61,17 @@ var fps_canvas_layer = null
 var fps_label = null
 var show_fps = false
 var c_key_pressed = false
-
+@onready var KeyID: float = 0.0
+@onready var Collected_Keys: Array = []
 func _ready():
+	KeyID = 0.0
 	get_tree().root.connect("ready", Callable(self, "_on_scene_ready"))
 
 
 func _process(_delta):
+	#print(KeyID)
 	# Update FPS counter if visible
+	
 	if fps_label and show_fps:
 		fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 	
@@ -70,6 +82,16 @@ func _process(_delta):
 			toggle_fps_display()
 	else:
 		c_key_pressed = false
+		
+	for node in get_tree().get_nodes_in_group("CharacterBody2D"):
+		if node == null or not is_instance_valid(node):
+			continue
+		if node.get_script() == null:
+			continue
+		if node.has_method("get_rid"):
+			var rid = node.get_rid()
+			if rid == RID():
+				print("💥 Null RID on:", node.name, "(", node.get_path(), ")")
 
 func spawn_juice(scene: PackedScene, parent_scene: Node, pos_list: Array):
 	# Create a list of juice types
@@ -217,6 +239,8 @@ func setup_chunk_managers():
 			print("Terrain tilemap not found")
 
 func has_level(level_index):
+	print("current level index >")
+	print(level_index)
 	return level_index >= 0 and level_index < level_paths.size()
 
 func change_level(level_index):
@@ -246,18 +270,26 @@ func change_level(level_index):
 
 func change_to_next_level():
 	var next_level_index = current_level_index + 1
+	KeyID = 0.0
 	print("Changing from level", current_level_index, "to", next_level_index)
 	return change_level(next_level_index)
 
 func restart_game():
 	# Store the current level index
+	KeyID = 0.0
 	var current_index = current_level_index
 	print_debug("Restarting level with index: ", current_index)
 	
 	# First, remove any game over screens that might be present
 	remove_game_over_screens()
-	print("Restarting level with index:", current_level_index)
-	change_level(current_level_index)
+	
+	# If we're in a level, use switch_level to properly reload it
+	if has_level(current_index):
+		change_level(current_index)
+		print("skibidi")
+	else:
+		# Fallback to reloading the current scene if we're not in a tracked level
+		get_tree().reload_current_scene()
 
 func remove_game_over_screens():
 	var root = get_tree().get_root()

@@ -25,7 +25,10 @@ signal duck_hit(source)  # Signal emitted when duck is hit
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var goose = get_node_or_null("../goose")
 
+@onready var goose = Global.main_character
+
 func _ready() -> void:
+	print_debug("Duck script _ready() called. Global.main_character:", goose)
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
 	
 	# Add to duck group for easier detection
@@ -143,6 +146,7 @@ func _is_in_space_level() -> bool:
 	return false
 
 func _on_level_changed(level_index: int) -> void:
+	print_debug("Duck script received level_changed signal. Level index:", level_index)
 	# When the level changes, update our animation based on the level index
 	# Only update if we're not using an override animation
 	if override_animation == "":
@@ -165,40 +169,23 @@ func _check_scene() -> void:
 	if override_animation != "":
 		return
 		
+	print_debug("Checking scene. Global.main_character:", goose)
 	# First check if we can use the Global's current level index
 	if Global.current_level_index >= 0:
 		_update_animation_for_level(Global.current_level_index)
 		return
-		
-	# Fallback to scene detection if Global doesn't have a valid level index
-	# Add null checks
+	
 	if get_tree() == null or get_tree().current_scene == null:
 		return
-		
+	
 	var current_scene = get_tree().current_scene
-	
-	# Try multiple ways to detect the correct scene
+	print_debug("Current scene name:", current_scene.name)
+
 	var is_space_level = false
-	
-	# Method 1: Check scene name directly
-	# Updated to include 1-4 in the space levels
-	if current_scene.name == "1-2" or current_scene.name == "1-3" or current_scene.name == "1-4":
+
+	if current_scene.name in ["1-2", "1-3", "1-4"]:
 		is_space_level = true
-	
-	# Method 2: Check scene filename
-	var scene_path = current_scene.scene_file_path if current_scene else ""
-	if "1-2" in scene_path or "1-3" in scene_path or "1-4" in scene_path:
-		is_space_level = true
-	
-	# Method 3: Check parent node names for clues
-	var parent = get_parent()
-	while parent:
-		if "1-2" in parent.name or "1-3" in parent.name or "1-4" in parent.name:
-			is_space_level = true
-			break
-		parent = parent.get_parent()
-	
-	# Apply the correct animation
+
 	if is_space_level:
 		print("Space level detected through scene detection, playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
