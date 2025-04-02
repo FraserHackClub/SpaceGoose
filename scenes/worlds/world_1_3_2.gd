@@ -10,7 +10,7 @@ const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn"
 const juice_scene: PackedScene = preload("res://scenes/juice.tscn")
 
 var rng = RandomNumberGenerator.new()
-const TIME = 120.0
+const TIME = 500.0
 const JUMP_VELOCITY = -1100
 const LEVEL_LENGTH = 13170
 signal level_ready
