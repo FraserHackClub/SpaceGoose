@@ -10,7 +10,7 @@ const basket_scene: PackedScene = preload("res://scenes/basket.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 var rng = RandomNumberGenerator.new()
-const LEVEL_LENGTH = 41810
+const LEVEL_LENGTH = 10000
 const TIME = 120.0
 const JUMP_VELOCITY = -1400
 
@@ -20,12 +20,12 @@ const JUMP_VELOCITY = -1400
 signal level_ready
 
 func _ready() -> void:
-	var possible_bread_spawn_locations = [
-		Vector2(530, -1000),
-	]
+	#var possible_bread_spawn_locations = [
+	#	Vector2(530, -1000),
+	#]
 	#var weapon_pickup_locations = [Vector2(8670, -851)]
 	rng.randomize()
-	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
+	#var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
 	var duck_spawn_locations = [Vector2(23283,-17204),
 	Vector2(34808,-17204),
 	
@@ -41,7 +41,10 @@ func _ready() -> void:
 	var basket_spawn_locations = [Vector2(17683,11110), Vector2(17883, 11110), Vector2(18155, 11110)]
 	#var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, JUMP_VELOCITY)
-	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
+	
+	
+	
+	#Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)

@@ -50,7 +50,7 @@ func _ready() -> void:
 	
 	Vector2(6360, 647),
 	
-	Vector2(30247, 182),
+	Vector2(30247, -188),
 	
 	Vector2(20606, -36),
 	]

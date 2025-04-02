@@ -47,14 +47,14 @@ func _ready() -> void:
 	
 	
 	]
-	var duck_spawn_locations = [Vector2(23719, 913), 
+	var duck_spawn_locations = [Vector2(23719, 900), 
 	
-	Vector2(28070, 460),
-	Vector2(28533, 460),
+	Vector2(28070, 450),
+	Vector2(28533, 450),
 	
 	Vector2(28271, -115),
 	
-	Vector2(24101, 985), #CHECK AGAIN?! or 29101
+	Vector2(24101, 975), #CHECK AGAIN?! or 29101
 	
 	Vector2(17005, 763),
 	Vector2(18134, 763),

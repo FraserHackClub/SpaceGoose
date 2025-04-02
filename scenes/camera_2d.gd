@@ -25,7 +25,17 @@ var playing_cutscene: bool = false
 var level_camera_settings = {
 	
 	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
+	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	8: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
+	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	10: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	11: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	12: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
 }
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"
@@ -134,7 +144,7 @@ func _process(delta: float) -> void:
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8:
+	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9 or Global.current_level_index == 10 or Global.current_level_index == 11 or Global.current_level_index == 12 or Global.current_level_index == 13 or Global.current_level_index == 14:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2

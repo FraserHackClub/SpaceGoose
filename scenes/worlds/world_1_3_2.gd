@@ -38,27 +38,27 @@ func _ready() -> void:
 		Vector2(12680, 253)
 	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 10)
-	var duck_spawn_locations = [
-		Vector2(1735, 84),
-		Vector2(2686,464),
-		Vector2(3060, 464),
-		Vector2(7110, 817),
-		Vector2(6647, 817),
-		Vector2(8044, 464),
-		Vector2(9760, 224),
-		Vector2(12389, 225)
+	#var duck_spawn_locations = [
+	
+	#]
+	#var weapon_pickup_locations = [Vector2(492, 500)]
+	var egg_spawn_locations = [Vector2(11158, 772),
+	
+	Vector2(14343, 1170),
+	Vector2(18373, 1173),
+	Vector2(21154, 774),
+	
+	
 	]
-	var weapon_pickup_locations = [Vector2(492, 500)]
-	var egg_spawn_locations = [Vector2(2818, 485), Vector2(-676, 409)]
-	var basket_spawn_locations = [Vector2(2631, 494), Vector2(6576, 850), Vector2(7128, 848), Vector2(9109, 495)]
+	var basket_spawn_locations = [Vector2(6576, 850), Vector2(7128, 848)]
 	var juice_spawn_locations = [Vector2(9671, 235)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 550), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene, bread_spawn_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_items(basket_scene, current_scene, basket_spawn_locations)
-	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
-	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
+	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
+	#Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_juice(juice_scene, current_scene, juice_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(13009, 165), "win_zone")
+	Global.spawn_entity(finish_scene, current_scene, Vector2(42037, 482), "win_zone")
 	emit_signal("level_ready")
