@@ -57,13 +57,16 @@ func _ready() -> void:
 	score_label.text = str(inventory.score)
 
 func _process(_delta: float) -> void:
+	$sublevel_indicator.hide()
 	if call_action:
 		print(current_index)
 		call_action = false
 		sub_selector_active = true  # Now enter sublevel selection mode
 	elif sub_selector_active:
 		if current_index in planet_sublevels:  # Make sure the planet has defined sublevels
+			$sublevel_indicator.show()
 			var sublevels = planet_sublevels[current_index]
+			$sublevel_indicator.animation = str(len(sublevels))
 
 			for i in range(1, 10):  # Listen for number keys 1 to 9
 				if Input.is_action_just_pressed("board_" + str(i)):
