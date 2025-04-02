@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var teleport_destination: Vector2
-@export var camera_section_length: float = 16281.0
-@export var camera_section_height: float = 900.0
+@export var camera_section_length: float = 162810.0
+@export var camera_section_height: float = 100000.0
 @export var camera_offset: Vector2
 @export var sublevel_index: float = 0.0
 

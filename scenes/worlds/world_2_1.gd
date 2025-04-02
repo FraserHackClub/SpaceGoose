@@ -8,7 +8,7 @@ const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 const LEVEL_LENGTH = 16000.0
-const TIME = 180.0
+const TIME = 300.0
 const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()
@@ -78,18 +78,14 @@ func _ready() -> void:
 		
 		
 		
-		Vector2(22545, 889),
-		Vector2(22755, 889),
-		Vector2(22965, 889),
-		Vector2(23175, 889),
-		Vector2(23385, 889),
+		Vector2(22545, 885),
+		Vector2(22755, 885),
+		Vector2(22965, 885),
+		Vector2(23175, 885),
+		Vector2(23385, 885),
 		
 		
-		Vector2(30819, 650),
-	
-		Vector2(31239, 650),
-	
-		Vector2(31659, 650),
+
 
 		Vector2(32079, 650),
 
@@ -114,9 +110,9 @@ func _ready() -> void:
 
 		Vector2(36909, 650),
 		
-		Vector2(41495, 1640),
-		Vector2(40610, 1640),
-		Vector2(38868, 1640)
+		#Vector2(41495, 1640),
+		#Vector2(40610, 1640),
+		#Vector2(38868, 1640)
 	
 
 		]

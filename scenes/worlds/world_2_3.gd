@@ -215,10 +215,10 @@ func _ready() -> void:
 		
 		
 		]
-	#var weapon_pickup_locations = [Vector2(27055, -1797)]
+	var weapon_pickup_locations = [Vector2(926, 584)]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	#Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
-	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
+	Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	#Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)

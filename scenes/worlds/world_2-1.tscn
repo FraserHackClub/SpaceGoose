@@ -16405,13 +16405,14 @@ position = Vector2(2286, 1832)
 scale = Vector2(0.997125, 1.2732)
 teleport_destination = Vector2(39969, -207)
 camera_section_length = 10000.0
-camera_section_height = 10000.0
 
 [node name="Teleporter" parent="." instance=ExtResource("12_qaygo")]
-position = Vector2(14187, 614)
+position = Vector2(14275, 638)
 teleport_destination = Vector2(21398, 595)
-camera_section_length = 20000.0
-camera_section_height = 150000.0
+camera_section_length = 30000.0
+camera_section_height = 50000.0
+camera_offset = Vector2(600, -100)
+sublevel_index = 2.4
 
 [node name="Teleporter3" parent="." instance=ExtResource("12_qaygo")]
 position = Vector2(808, -237)

@@ -5,7 +5,7 @@ extends Camera2D
 # --- Exported Settings ---
 @export var smooth_speed: float = 0.9
 @export var x_smooth_speed: float = 5.0
-@export var vertical_deadzone_height: float = 300
+@export var vertical_deadzone_height: float = 150
 @export var custom_camera_offset: Vector2 = Vector2(500, -400)
 @onready var texture_rect = $HUD/TransitionSlider
 @onready var transition_in_progress := false
@@ -14,7 +14,7 @@ const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
 # --- Dynamic bounds (changed IF updated via teleport) ---
-var LEVEL_LENGTH: float = 5079.0
+var LEVEL_LENGTH: float = 50790.0
 var LEVEL_HEIGHT: float = 10000.0
 # --- State ---
 var sublevel_index: float = 0.0
@@ -25,7 +25,8 @@ var playing_cutscene: bool = false
 var level_camera_settings = {
 	
 	1: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
+	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 50000.0, "custom_camera_offset": Vector2(800, -1800) }
 }
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"
