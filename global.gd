@@ -306,6 +306,17 @@ func spawn_camera(parent_scene: Node, level_length: float):
 	parent_scene.add_child(camera)
 
 func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, jump_velocity: float = -900):
+	
+	
+	
+	print_debug("🚀 Attempting to spawn player... Caller: ", get_script())
+	
+	if main_character and is_instance_valid(main_character):
+		print_debug("❌ Player already exists. Not spawning a new one.")
+		return  # Prevent further spawning if a valid player already exists
+	
+	
+	
 	var player = player_scene.instantiate()
 	player.position = pos
 	player.time = time
@@ -313,6 +324,7 @@ func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, j
 	parent_scene.add_child(player)
 	
 	main_character = player
+	print_debug("Player successfully spawned at: ", pos)
 	
 	main.detect_current_level()
 	

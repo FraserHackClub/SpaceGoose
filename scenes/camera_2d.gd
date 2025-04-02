@@ -38,7 +38,8 @@ var level_camera_settings = {
 	12: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
 }
 # --- References ---
-@onready var goose: CharacterBody2D = $"../goose"
+#@onready var goose: CharacterBody2D = $"../goose"
+@onready var goose: CharacterBody2D = get_node_or_null("../goose")
 @onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
 @onready var camera_2d: Camera2D = $"."
 @onready var level: Node2D = $".."
@@ -63,18 +64,23 @@ func _ready():
 	juice_menu.hide()
 	add_child(juice_menu)
 	
-	texture_rect.modulate.a = 0.0  # <-- THIS LINE ensures it starts transparent
+	texture_rect.modulate.a = 0.0  # Ensure it starts transparent
 
 	Global.camera_2d = self
 	Global.bullet_counter = $HUD/BulletCounter/BulletCountLabel
 
 	offset = custom_camera_offset
 
-	# Apply settings for the current level if available
 	if Global.current_level_index in level_camera_settings:
-		apply_level_settings(Global.current_level_index)  # Call new function here
+		apply_level_settings(Global.current_level_index)
 
+	if not is_instance_valid(goose):  # Check if goose exists
+		print("❌ Goose (player) not found. Waiting for player to be spawned.")
+		await get_tree().create_timer(0.1).timeout  # Small delay before checking again
+		goose = get_node_or_null("../goose")  # Try finding the player again
+	
 	if is_instance_valid(goose):
+		print("✅ Goose (player) found. Setting initial camera position.")
 		_set_camera_start_position()
 
 func _set_camera_start_position() -> void:
