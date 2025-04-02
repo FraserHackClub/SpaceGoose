@@ -11,9 +11,10 @@ var space_levels = [1, 2, 3]  # Updated to include levels 1-2, 1-3, and 1-4 (ind
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@onready var goose = $"../goose"
+@onready var goose = Global.main_character
 
 func _ready() -> void:
+	print_debug("Duck script _ready() called. Global.main_character:", goose)
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
 	
 	# Set default animation first
@@ -26,6 +27,7 @@ func _ready() -> void:
 	Global.connect("level_changed", Callable(self, "_on_level_changed"))
 
 func _on_level_changed(level_index: int) -> void:
+	print_debug("Duck script received level_changed signal. Level index:", level_index)
 	# When the level changes, update our animation based on the level index
 	call_deferred("_update_animation_for_level", level_index)
 
@@ -38,6 +40,7 @@ func _update_animation_for_level(level_index: int) -> void:
 		animated_sprite.play("default")
 
 func _check_scene() -> void:
+	print_debug("Checking scene. Global.main_character:", goose)
 	# First check if we can use the Global's current level index
 	if Global.current_level_index >= 0:
 		_update_animation_for_level(Global.current_level_index)
@@ -117,7 +120,7 @@ func start_falling(body: String = "goose") -> void:
 		goose.increase_score(500)
 	else:
 		goose.increase_score(250)
-		
+
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0
