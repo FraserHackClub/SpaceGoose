@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c50nj6eoif7n3"]
+[gd_scene load_steps=17 format=3 uid="uid://c50nj6eoif7n3"]
 
 [ext_resource type="Script" uid="uid://cfiscl724cthr" path="res://scenes/worlds/level_selector.gd" id="1_8owdg"]
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="1_24b0a"]
@@ -14,7 +14,6 @@
 [ext_resource type="AudioStream" uid="uid://ccsi67jivnh3o" path="res://assets/audio/spacegoose-select-level.mp3" id="10_iguuw"]
 [ext_resource type="Texture2D" uid="uid://cbfqbdtrhtof8" path="res://assets/icons/score.png" id="11_05854"]
 [ext_resource type="PackedScene" uid="uid://crjn18reqwst4" path="res://scenes/pointer.tscn" id="11_iguuw"]
-[ext_resource type="Texture2D" uid="uid://u2bpp8bm0qjm" path="res://assets/sprites/helmet.png" id="13_iguuw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ss6ea"]
 texture = ExtResource("1_24b0a")

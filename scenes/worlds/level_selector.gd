@@ -38,7 +38,7 @@ var planet_sublevels = {
 	1: [3, 4, 5],          # Moon -> Level indexes: 3, 4
 	2: [6, 7],    # Mars -> Level indexes: 5, 6, 7, 8
 	3: [8],         # Asteroids -> Level indexes: 9, 10
-	#4: [9, 10, 11, 12] #SPACESHIP
+	4: [9, 10, 11, 12] #SPACESHIP
 }
 
 func _ready() -> void:
@@ -58,6 +58,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if call_action:
+		print(current_index)
 		call_action = false
 		sub_selector_active = true  # Now enter sublevel selection mode
 	elif sub_selector_active:
@@ -66,9 +67,11 @@ func _process(_delta: float) -> void:
 
 			for i in range(1, 10):  # Listen for number keys 1 to 9
 				if Input.is_action_just_pressed("board_" + str(i)):
+					print("key board_" + str(i) + " pressed")
 					var sublevel_index = i - 1  # 1 becomes 0, 2 becomes 1, etc.
 
 					if sublevel_index >= sublevels.size():
+						print(str(sublevel_index) + " doesn't exist!")
 						continue  # Ignore if the number is out of range for this planet
 
 					var global_index = sublevels[sublevel_index]  # Get the actual index from the list
