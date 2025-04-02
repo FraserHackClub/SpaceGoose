@@ -14,7 +14,7 @@ const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
 # --- Dynamic bounds (changed IF updated via teleport) ---
-var LEVEL_LENGTH: float = 5079.0
+var LEVEL_LENGTH: float = 100000
 var LEVEL_HEIGHT: float = 10000.0
 # --- State ---
 var sublevel_index: float = 0.0
@@ -24,8 +24,8 @@ var playing_cutscene: bool = false
 # --- Level-specific Camera Configuration ---
 var level_camera_settings = {
 	
-	1: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
+	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) }
 }
 # --- References ---
 @onready var goose: CharacterBody2D = $"../goose"

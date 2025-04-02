@@ -53,7 +53,7 @@ var level_score_reqs = [
 ]
 
 var space_level_indices = [
-	3, 4, 5, 6, 7, 8, 9
+	3, 4, 5, 6, 7
 ]
 
 var current_level_index = -1

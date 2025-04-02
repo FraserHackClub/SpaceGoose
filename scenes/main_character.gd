@@ -378,7 +378,7 @@ func _physics_process(delta: float) -> void:
 		_handle_movement(delta)
 		move_and_slide()
 	if hazards_tilemap:
-		var offset = Vector2(-75, 90)
+		var offset = Vector2(-165, 90)
 		var adjusted_position = position - offset
 		var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(adjusted_position))
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):

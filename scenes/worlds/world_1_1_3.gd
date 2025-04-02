@@ -24,17 +24,17 @@ func _ready() -> void:
 	rng.randomize()
 	Global.toggle_fps_display()
 	var possible_bread_spawn_locations = [
-		Vector2(768, 528),
-		Vector2(1600, 336),
-		Vector2(1600, 528),
-		Vector2(2496, 528),
-		Vector2(2816, 528),
-		Vector2(2976, 528),
-		Vector2(5024, 208),
-		Vector2(4705, 208),
-		Vector2(4512, 208),
-		Vector2(4448, 272),
-		Vector2(4384, 336)
+		Vector2(768, -800),
+		Vector2(1600, -800),
+		Vector2(1600, -800),
+		Vector2(2496, -800),
+		Vector2(2816, -800),
+		Vector2(2976, -800),
+		Vector2(5024, -800),
+		Vector2(4705, -800),
+		Vector2(4512, -800),
+		Vector2(4448, -800),
+		Vector2(4384, -800)
 	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 5)
 	var egg_spawn_locations = [Vector2(13182, 294), 
