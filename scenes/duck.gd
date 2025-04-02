@@ -107,6 +107,7 @@ func _physics_process(_delta: float) -> void:
 			break
 
 func _on_top_area_entered(body: Node) -> void:
+	print_debug("_on_top_area_entered() called. Body:", body)
 	if body.name == "goose":
 		start_falling()
 
