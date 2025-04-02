@@ -53,7 +53,7 @@ animations = [{
 [node name="Camera2D" type="Camera2D"]
 process_mode = 3
 offset = Vector2(576, 324)
-zoom = Vector2(0.75, 0.75)
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("1_fs0qw")
 
 [node name="HUD" type="CanvasLayer" parent="."]
