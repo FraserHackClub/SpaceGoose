@@ -11,22 +11,48 @@ var space_levels = [1, 2, 3]  # Updated to include levels 1-2, 1-3, and 1-4 (ind
 var override_animation: String = ""  # New property to override the default animation logic
 var is_evil_duck: bool = false  # Flag to identify ducks spawned by Doom Duck
 
+# Health system for evil ducks
+var health: int = 1  # Regular ducks have 1 health
+var max_health: int = 1  # Store the maximum health for reference
+var is_invulnerable: bool = false
+var invulnerability_timer: float = 0.0
+var invulnerability_duration: float = 0.2  # Brief invulnerability after being hit
+var hit_count: int = 0  # Track hits for debugging
+
+signal duck_hit(source)  # Signal emitted when duck is hit
+
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-
-@onready var goose = $"../goose"
+@onready var goose = get_node_or_null("../goose")
 
 func _ready() -> void:
 	$Area2D.connect("body_entered", Callable(self, "_on_top_area_entered"))
 	
+	# Add to duck group for easier detection
+	add_to_group("duck")
+	
+	# IMPORTANT: Check if this is an evil duck FIRST before anything else
+	# This ensures evil ducks are properly identified regardless of how they're created
+	if "evil" in name.to_lower():
+		print("Evil duck detected by name: " + name)
+		is_evil_duck = true
+		health = 5
+		max_health = 5
+	
 	# Check if we should override the animation
 	if override_animation != "":
+		print("Duck using override animation: " + override_animation)
 		animated_sprite.play(override_animation)
 		if override_animation == "evilDuck":
 			is_evil_duck = true
+			# Evil ducks have more health
+			health = 5
+			max_health = 5
+			print("Evil duck created with health: " + str(health))
+			
 			# Ensure evil ducks can collide with the ground
-			collision_layer = 1  # Make sure collision layer is set correctly
-			collision_mask = 1   # Make sure collision mask is set correctly
+			collision_layer = 1
+			collision_mask = 1
 			
 			# Check if we're in a space level and adjust gravity
 			var is_space_level = _is_in_space_level()
@@ -45,12 +71,22 @@ func _ready() -> void:
 		call_deferred("_check_scene")
 		
 		# Connect to Global's level_changed signal
-		Global.connect("level_changed", Callable(self, "_on_level_changed"))
+		if Global.has_signal("level_changed"):
+			Global.connect("level_changed", Callable(self, "_on_level_changed"))
 	
 	# Set collision mask to ignore doom duck
-	# Assuming doom duck is on layer 4 (you may need to adjust this based on your collision layers)
 	if not is_evil_duck:
 		collision_mask &= ~(1 << 3)  # Remove layer 4 from collision mask
+	
+	# Additional check for evil ducks based on appearance
+	if animated_sprite.animation == "evilDuck":
+		is_evil_duck = true
+		health = 5
+		max_health = 5
+		print("Evil duck identified by animation: " + str(animated_sprite.animation))
+	
+	# Final debug output
+	print("Duck initialized: " + name + " | Evil: " + str(is_evil_duck) + " | Health: " + str(health) + " | Animation: " + str(animated_sprite.animation))
 
 # Function to ensure the duck is placed on solid ground
 func _ensure_on_ground() -> void:
@@ -118,10 +154,10 @@ func _update_animation_for_level(level_index: int) -> void:
 		return
 		
 	if level_index in Global.space_level_indices or level_index in space_levels:
-		print_debug("Space level detected (index " + str(level_index) + "), playing spaceDuck animation")
+		print("Space level detected (index " + str(level_index) + "), playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
-		print_debug("Regular level detected (index " + str(level_index) + "), playing default animation")
+		print("Regular level detected (index " + str(level_index) + "), playing default animation")
 		animated_sprite.play("default")
 
 func _check_scene() -> void:
@@ -164,13 +200,22 @@ func _check_scene() -> void:
 	
 	# Apply the correct animation
 	if is_space_level:
-		print_debug("Space level detected through scene detection, playing spaceDuck animation")
+		print("Space level detected through scene detection, playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
-		print_debug("Regular level detected through scene detection, playing default animation")
+		print("Regular level detected through scene detection, playing default animation")
 		animated_sprite.play("default")
 
 func _physics_process(delta: float) -> void:
+	# Handle invulnerability timer
+	if is_invulnerable:
+		invulnerability_timer += delta
+		if invulnerability_timer >= invulnerability_duration:
+			is_invulnerable = false
+			invulnerability_timer = 0.0
+			# Reset flash effect
+			modulate = Color(1, 1, 1, 1)
+	
 	if is_falling:
 		velocity.y = fall_speed
 		move_and_slide()
@@ -181,10 +226,6 @@ func _physics_process(delta: float) -> void:
 	
 	# Apply horizontal movement
 	velocity.x = direction.x * speed
-	
-	# Debug output for evil ducks
-	if is_evil_duck and Engine.get_frames_drawn() % 60 == 0:  # Log once per second
-		print_debug("Evil Duck position: ", global_position, " velocity: ", velocity)
 	
 	move_and_slide()
 
@@ -205,24 +246,99 @@ func _physics_process(delta: float) -> void:
 
 func _on_top_area_entered(body: Node) -> void:
 	if body.name == "goose":
-		start_falling()
+		if is_evil_duck:
+			# Evil ducks take damage from jumps
+			take_damage(1, "jump")
+			
+			# Make the player bounce regardless of whether duck dies
+			if body.has_method("bounce"):
+				body.bounce()
+		else:
+			# Regular ducks die in one hit
+			start_falling()
 
-func start_falling(body: String = "goose") -> void:
-	if body == "bullet":
-		goose.increase_score(100)
-	if body  == "fireball":
-		goose.increase_score(150)
-		modulate = Color.RED
-	if body == "invincible":
-		goose.increase_score(500)
-	else:
-		goose.increase_score(250)
+# This is a special function just for bullets to call
+# It ensures proper damage handling for evil ducks
+func bullet_hit() -> void:
+	hit_count += 1
+	print("BULLET HIT FUNCTION CALLED! Duck: " + name + " | Evil: " + str(is_evil_duck) + " | Hit count: " + str(hit_count) + " | Health: " + str(health))
+	
+	# CRITICAL FIX: Always use take_damage and never call start_falling directly for evil ducks
+	take_damage(1, "bullet")
+
+# Function to handle damage for all ducks
+func take_damage(amount: int, source: String = "") -> void:
+	print("Duck taking damage: " + str(amount) + " from: " + source + 
+				" | Current health: " + str(health) + 
+				" | Is evil: " + str(is_evil_duck))
+	
+	# Emit the duck_hit signal
+	emit_signal("duck_hit", source)
+	
+	# CRITICAL FIX: Check is_evil_duck first and handle separately
+	if is_evil_duck:
+		# Don't take damage during invulnerability frames
+		if is_invulnerable:
+			print("Duck is invulnerable, ignoring damage")
+			return
 		
+		# Special case: fireballs one-shot evil ducks
+		if source == "fireball":
+			print("Fireball hit! Instant death")
+			health = 0
+			start_falling(source)
+			return
+		
+		# Normal damage processing for evil ducks
+		health -= amount
+		print("Evil duck health after damage: " + str(health) + "/" + str(max_health))
+		
+		# Set invulnerability
+		is_invulnerable = true
+		invulnerability_timer = 0.0
+		
+		# Flash effect to indicate hit
+		modulate = Color(1, 0.5, 0.5, 1)
+		
+		# Only fall when health reaches zero
+		if health <= 0:
+			print("Evil duck died from damage")
+			start_falling(source)
+		else:
+			# Play hit animation or feedback
+			animated_sprite.modulate = Color(1, 0.5, 0.5)
+			var tween = create_tween()
+			tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1), 0.2)
+	else:
+		# Regular ducks just die immediately
+		print("Regular duck hit - dying immediately")
+		start_falling(source)
+
+func start_falling(source: String = "goose") -> void:
+	# Duck is already falling
+	if is_falling:
+		return
+	
+	print("Duck starting to fall: " + name + " | Source: " + source)
+	
+	# Award points based on how the duck was defeated
+	if goose and goose.has_method("increase_score"):
+		if source == "bullet":
+			goose.increase_score(100)
+		elif source == "fireball":
+			goose.increase_score(150)
+			modulate = Color.RED
+		elif source == "invincible":
+			goose.increase_score(500)
+		else:
+			goose.increase_score(250)
+	
 	is_falling = true
 	collision_layer = 0
 	collision_mask = 0
+	
 	sfx_duckfall.play()
-
+	
 	var timer = Timer.new()
 	timer.one_shot = true
 	timer.wait_time = fall_delete_delay
@@ -232,7 +348,6 @@ func start_falling(body: String = "goose") -> void:
 
 func _on_fall_timeout() -> void:
 	queue_free()
-
 
 func _on_area_2d_2_body_entered(body: Node2D) -> void:
 	if body.name == "goose":
