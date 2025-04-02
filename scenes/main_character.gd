@@ -485,9 +485,9 @@ func _handle_animation(delta) -> String:
 	
 	return desired_anim
 
-func toggle_helmet() -> void:
+func toggle_helmet(visibility = null) -> void:
 	if helmet:
-		helmet.visible = !helmet.visible
+		helmet.visible = !helmet.visible if visibility not in [true, false] else visibility 
 		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
 		printerr("Helmet node not found")

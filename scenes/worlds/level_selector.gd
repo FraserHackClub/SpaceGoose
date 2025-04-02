@@ -35,10 +35,10 @@ var positions = [
 # Dictionary to map planets to their respective sublevels
 var planet_sublevels = {
 	0: [0, 1, 2],       # Earth -> Level indexes: 0, 1, 2
-	1: [3, 4, 5],          # Moon -> Level indexes: 3, 4
-	2: [6, 7],    # Mars -> Level indexes: 5, 6, 7, 8
-	3: [8],         # Asteroids -> Level indexes: 9, 10
-	4: [9, 10, 11, 12] #SPACESHIP
+	1: [3, 4, 5],          # Moon -> Level indexes: 3, 4, 5
+	2: [6,],    # Mars -> Level indexes: 6
+	3: [7,],         # Asteroids -> Level indexes: 7
+	4: [8, 9, 10, 11, 12] #SPACESHIP
 }
 
 func _ready() -> void:

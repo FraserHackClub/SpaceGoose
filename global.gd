@@ -12,6 +12,7 @@ var main_character: Node2D = null  # Stores reference to the Player
 var camera_2d: Camera2D = null
 var player_gun_path: NodePath = "PlayerGun"  # Default relative path
 var custom_font = load("res://assets/PixeloidMono.ttf")
+@onready var main = get_tree().current_scene
 var piston: CharacterBody2D = null  # Stores reference to the Player
 const default_inventory = {
 	"items": {
@@ -27,33 +28,38 @@ const default_inventory = {
 
 # Array containing paths to the level scenes in order
 var level_paths = [
-	"res://scenes/worlds/world_1-1.tscn",
-	"res://scenes/worlds/world_1-1_2.tscn",
-	"res://scenes/worlds/world_1-1_3.tscn",
-	"res://scenes/worlds/world_1-2.tscn",
-	"res://scenes/worlds/world_1-2_2.tscn",
-	"res://scenes/worlds/world_1-2_3.tscn",
-	"res://scenes/worlds/world_1-3.tscn",
-	"res://scenes/worlds/world_1_4.tscn",
-	"res://scenes/worlds/world_2-1.tscn", #4
-	"res://scenes/worlds/world_2-2.tscn", #5
-	"res://scenes/worlds/world_2-2_5.tscn", #6
-	"res://scenes/worlds/world_2-3.tscn", #7
-	"res://scenes/worlds/world_3-1.tscn" #8
+	"res://scenes/worlds/world_1-1.tscn",  # 0
+	"res://scenes/worlds/world_1-1_2.tscn",  # 1
+	"res://scenes/worlds/world_1-1_3.tscn",  # 2
+	"res://scenes/worlds/world_1-2.tscn",  # 3
+	"res://scenes/worlds/world_1-2_2.tscn",  # 4
+	"res://scenes/worlds/world_1-2_3.tscn",  # 5
+	"res://scenes/worlds/world_1-3.tscn",  # 6
+	"res://scenes/worlds/world_1_4.tscn",  # 7
+	"res://scenes/worlds/world_2-1.tscn", # 8
+	"res://scenes/worlds/world_2-2.tscn", # 9
+	"res://scenes/worlds/world_2-2_5.tscn", # 10
+	"res://scenes/worlds/world_2-3.tscn", # 11
+	"res://scenes/worlds/world_3-1.tscn" # 12
 ]
 
 var level_score_reqs = [
-	0, 0, 0, 3000, 3000, 0, 10000, 25000, 0, 0, 0, 0
+	0, 0, 0,  # 0, 1, 2 
+	3000, 3000, 3000,  # 3, 4, 5
+	10000,  # 6
+	25000,  # 7
+	0, 0, 0, 0,  # 8, 9, 10, 11
+	0,  # 12
 ]
 
 var space_level_indices = [
-	1, 2, 3, 4, 5, 6
+	3, 4, 5, 6, 7, 8, 9
 ]
 
 var current_level_index = -1
 var current_level = null
 
-var helmet_visible_levels = [1,2,3,4,5, 6]
+var helmet_visible_levels = space_level_indices
 
 # Chunk management
 var terrain_chunk_manager = null
@@ -205,25 +211,11 @@ func toggle_fps_display():
 	return show_fps
 
 func _on_scene_ready():
-	detect_current_level()
+	main.detect_current_level()
 	setup_chunk_managers()
 	
 	# Ensure FPS counter exists in the new scene
 	call_deferred("create_fps_counter")
-
-func detect_current_level():
-	var current_scene = get_tree().current_scene
-	if current_scene:
-		var scene_path = current_scene.scene_file_path
-		print("Current scene path: ", scene_path)
-		
-		for i in range(level_paths.size()):
-			if level_paths[i] == scene_path:
-				current_level_index = i
-				print("Detected level index: ", current_level_index)
-				return
-		
-		print("Warning: Current scene is not in the level_paths array")
 
 func setup_chunk_managers():
 	# Clean up existing chunk managers
@@ -279,6 +271,7 @@ func change_to_next_level():
 func restart_game():
 	# Store the current level index
 	KeyID = 0.0
+	Collected_Keys = Array()
 	var current_index = current_level_index
 	print_debug("Restarting level with index: ", current_index)
 	
@@ -288,7 +281,6 @@ func restart_game():
 	# If we're in a level, use switch_level to properly reload it
 	if has_level(current_index):
 		change_level(current_index)
-		print("skibidi")
 	else:
 		# Fallback to reloading the current scene if we're not in a tracked level
 		get_tree().reload_current_scene()
@@ -320,7 +312,7 @@ func spawn_player(player_scene, parent_scene: Node, pos: Vector2, time: float, j
 	
 	main_character = player
 	
-	detect_current_level()
+	main.detect_current_level()
 	
 	call_deferred("update_helmet_visibility")
 

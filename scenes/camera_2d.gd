@@ -129,7 +129,7 @@ func _process(delta: float) -> void:
 
 	# --- Level 0 & 1: Horizontal only ---
 	if Global.current_level_index == 0:
-		custom_camera_offset = Vector2(500, 250)
+		custom_camera_offset = Vector2(750, 250)
 		position.x = lerp(position.x, target_x, x_smooth_speed * delta)
 		return
 
