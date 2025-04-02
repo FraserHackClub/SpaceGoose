@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dw2lpmq0onlev" path="res://assets/background/Moon/skyMoon.png" id="2_yqnc1"]
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="4_hng2b"]
 [ext_resource type="Texture2D" uid="uid://ccuy002201flr" path="res://assets/mooonTiles (2).png" id="4_l8g4a"]
-[ext_resource type="PackedScene" uid="uid://c1wk7ioo74khs" path="res://scenes/DoomDuck.tscn" id="5_73ji0"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="5_73ji0"]
+[ext_resource type="PackedScene" uid="uid://c1wk7ioo74khs" path="res://scenes/DoomDuck.tscn" id="6_5i2q2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73ji0"]
 texture = ExtResource("2_yqnc1")
@@ -2245,10 +2245,10 @@ layer_0/tile_data = PackedInt32Array(2031616, 589824, 10, 2097152, 589824, 11, 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.219501, 0.219501, 0.219501, 1)
-offset_left = -1.0
-offset_top = 680.0
-offset_right = 5559.0
-offset_bottom = 3169.0
+offset_left = 4.0
+offset_top = 696.0
+offset_right = 5564.0
+offset_bottom = 3185.0
 texture = ExtResource("5_73ji0")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
@@ -2267,5 +2267,5 @@ offset_right = 10397.0
 offset_bottom = 3676.0
 texture = ExtResource("5_73ji0")
 
-[node name="DoomDuck" parent="." instance=ExtResource("5_73ji0")]
-position = Vector2(2943, 211)
+[node name="DoomDuck" parent="." instance=ExtResource("6_5i2q2")]
+position = Vector2(2910, 227)

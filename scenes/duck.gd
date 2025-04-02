@@ -23,8 +23,6 @@ signal duck_hit(source)  # Signal emitted when duck is hit
 
 @onready var sfx_duckfall: AudioStreamPlayer = $DuckDie
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var goose = get_node_or_null("../goose")
-
 @onready var goose = Global.main_character
 
 func _ready() -> void:

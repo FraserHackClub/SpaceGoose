@@ -323,23 +323,17 @@ func game_over(state: int):
 
 func change_to_next_level():
 	var current_level_index = Global.current_level_index
-	var next_level_index = current_level_index + 1
+	var next_level_index = (current_level_index + 1) % Global.level_paths.size()  # Cycle to first level if at the end
 	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
-	if Global.has_level(next_level_index):
-		if inventory.score >= Global.level_score_reqs[next_level_index]:
-			inventory.current_level = next_level_index
-			inventory.commit_inventory()
-			await Global.change_level(next_level_index)
-		else:
-			main.select_level()
+	if inventory.score >= Global.level_score_reqs[next_level_index]:
+		inventory.current_level = next_level_index
+		inventory.commit_inventory()
+		Global.change_level(next_level_index)  # Use Global's built-in change_level function
 	else:
-		print_debug("No more levels! Game complete!")
-			# Show a game completion screen or return to main menu
-		var game_over_screen = game_over_screen_scene.instantiate()
-		get_tree().get_root().add_child(game_over_screen)
-		game_over_screen.set_game_over_state(WIN)
+		main.select_level()
+
 func _physics_process(delta: float) -> void:
 	#print("Right Pressed: ", Input.is_action_pressed("right"))
 	#print("Left Pressed: ", Input.is_action_pressed("left"))
@@ -361,7 +355,7 @@ func _physics_process(delta: float) -> void:
 	
 		
 	if not is_on_floor():
-		var gravity_force = get_gravity()
+		var gravity_force = calculate_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
 		if velocity.y > 0:
 			var falling_multiplier = base_fall_multiplier
@@ -506,3 +500,6 @@ func orange_juice() -> bool:
 func grape_juice():
 	invincible_time += 15.0
 	return true
+
+func calculate_gravity() -> Vector2:
+	return ProjectSettings.get_setting("physics/2d/default_gravity") * Vector2.DOWN

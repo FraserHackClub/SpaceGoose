@@ -38,6 +38,7 @@ var level_paths = [
 	"res://scenes/worlds/world_2-3.tscn", #7
 	"res://scenes/worlds/world_3-1.tscn", #8
 	"res://scenes/worlds/world_4-1.tscn" #9
+	
 ]
 
 var level_score_reqs = [

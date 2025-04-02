@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://ckhf6bb5nt16n"]
 
-[ext_resource type="Script" uid="uid://bsu2iduciois8" path="res://scenes/machine.gd" id="1_73k52"]
+[ext_resource type="Script" path="res://scenes/machine.gd" id="1_73k52"]
 [ext_resource type="Texture2D" uid="uid://c66g4h4ejifl1" path="res://assets/sprites/Animated_Machine_New.png" id="1_a5lir"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_73k52"]
