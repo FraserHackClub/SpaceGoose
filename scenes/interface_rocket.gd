@@ -21,12 +21,12 @@ func _on_area_2d_body_entered(body) -> void:
 		Press_E_Prompt_Interface.visible = true
 		player_in_bounds = true
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_area_2d_body_exited(_body: Node2D) -> void:
 	Press_E_Prompt_Interface.visible = false
 	player_in_bounds = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if player_in_bounds == true:
 		if Input.is_action_just_pressed("enter"):
 				print("cool")

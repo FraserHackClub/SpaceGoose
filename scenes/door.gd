@@ -4,8 +4,8 @@ extends CharacterBody2D
 func _ready():
 	$CollisionShape2D.disabled = false
 	$Sprite2D.visible = true
-func _process(delta):
 
+func _process(_delta: float):
 	if self.keyid in Global.Collected_Keys:
 		$CollisionShape2D.disabled = true
 		print("Door on level 3_1 disabled!")

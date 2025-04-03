@@ -221,7 +221,9 @@ position = Vector2(5.00002, -45)
 scale = Vector2(5.60156, 7.25781)
 sprite_frames = SubResource("SpriteFrames_tk74f")
 animation = &"cameramen_default"
-autoplay = "default"
+autoplay = "cameramen_default"
+frame = 2
+frame_progress = 0.609363
 
 [node name="Area2D" type="Area2D" parent="."]
 
