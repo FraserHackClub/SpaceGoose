@@ -60,42 +60,43 @@ func _ready() -> void:
 	
 	]
 	var duck_spawn_locations = [#Vector2(767, 634),
-		Vector2(1000, 644),
-		Vector2(1767, 644),
-		Vector2(8200, 644),
-		Vector2(7900, 644),
-		Vector2(9200, 644),
-		Vector2(10000, 644),
-		#Vector2(11717, 644),
+	Vector2(1000, 634),
+	Vector2(1767, 634),
+	Vector2(8200, 634),
+	Vector2(7900, 634),
+	Vector2(9200, 634),
+	Vector2(10000, 634),
+	#Vector2(11717, 634),
 
-		Vector2(22545, 899),
-		Vector2(22755, 899),
-		Vector2(22965, 899),
-		Vector2(23175, 899),
-		Vector2(23385, 899),
+	Vector2(22545, 879),
+	Vector2(22755, 879),
+	Vector2(22965, 879),
+	Vector2(23175, 879),
+	Vector2(23385, 879),
 
-		Vector2(30819, 660),
-		Vector2(31239, 660),
-		Vector2(31659, 660),
-		Vector2(32079, 660),
-		Vector2(32499, 660),
-		Vector2(33129, 660),
+	#Vector2(30819, 640),
+	Vector2(31239, 640),
+	Vector2(31659, 640),
+	Vector2(32079, 640),
+	Vector2(32499, 640),
+	Vector2(33129, 640),
 
-		Vector2(33759, 660),
-		Vector2(34179, 660),
-		Vector2(34389, 660),
+	Vector2(33759, 640),
+	Vector2(34179, 640),
+	Vector2(34389, 640),
 
-		Vector2(35019, 660),
-		Vector2(35229, 660),
-		Vector2(35439, 660),
+	Vector2(35019, 640),
+	Vector2(35229, 640),
+	Vector2(35439, 640),
 
-		Vector2(36069, 660),
-		Vector2(36279, 660),
-		Vector2(36909, 660),
-		
-		Vector2(41495, 1620),
-		Vector2(40610, 1620),
-		Vector2(38868, 1620)
+	Vector2(36069, 640),
+	Vector2(36279, 640),
+	Vector2(36909, 640),
+
+	Vector2(41495, 1610),
+	Vector2(40610, 1610),
+	Vector2(38868, 1610)
+
 	
 
 		]
