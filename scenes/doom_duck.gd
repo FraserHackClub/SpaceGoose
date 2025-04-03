@@ -12,8 +12,8 @@ signal boss_defeated
 var minimum_health: int = 100
 var current_health: int = max_health
 @export var damage_per_hit: int = 10  # 5 damage when goose jumps on head
-@export var body_bullet_damage: int = 2  # 1 damage per bullet hit to body
-@export var head_bullet_damage: int = 4# 3 damage per bullet hit to head
+@export var body_bullet_damage: int = 1  # 1 damage per bullet hit to body
+@export var head_bullet_damage: int = 100# 3 damage per bullet hit to head
 @export var damage_cooldown: float = 0.5  # Time in seconds before taking damage again
 var can_take_damage: bool = true
 var head_hit_cooldown: bool = false  # Specific cooldown for head hits
@@ -55,6 +55,9 @@ var golden_mode: bool = false
 # Original egg position
 var original_egg_position_x: float = 0
 var original_egg_position_y: float = 0
+
+# Flag to track if gold egg has been spawned
+var gold_egg_spawned: bool = false
 
 func _ready() -> void:
 	# Initialize health and UI
@@ -111,7 +114,6 @@ func _physics_process(delta: float) -> void:
 				_change_state(State.CHASE if !rage_mode else State.RAGE)
 		
 		State.HURT:
-
 			velocity.x = 0
 			
 		State.RAGE:
@@ -305,6 +307,12 @@ func _spawn_duck() -> void:
 	can_spawn = true
 
 func _spawn_golden_egg() -> void:
+	# Only spawn the gold egg once
+	if gold_egg_spawned:
+		return
+		
+	gold_egg_spawned = true
+	
 	# Create egg instance
 	var egg = egg_scene.instantiate()
 	
@@ -313,6 +321,9 @@ func _spawn_golden_egg() -> void:
 	
 	# Position the egg where the boss died
 	egg.global_position = global_position
+	
+	# Print debug message
+	print("Golden egg spawned at position: ", global_position)
 
 func take_bullet_damage(damage_amount: int) -> void:
 	if current_state == State.DEFEATED:
