@@ -67,7 +67,7 @@ func remove_item(item_id: String, count: int = 1) -> void:
 	if items.has(item_id):
 		items[item_id] = max(0, items[item_id] - count)
 	else:
-		print("Item not found in inventory:", item_id)
+		printerr("Item not found in inventory:", item_id)
 
 func get_item_count(item_id: String) -> int:
 	return items.get(item_id, 0)

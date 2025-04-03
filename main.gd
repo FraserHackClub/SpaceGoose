@@ -45,6 +45,23 @@ func remove_levels():
 		child.queue_free()
 	await get_tree().process_frame
 
+func detect_current_level():
+	if not is_level():
+		return
+	
+	var current_scene = level_container.get_child(0).get_tree().current_scene
+	print("current scene path for this goose goose who cares: " + current_scene.scene_file_path)
+	if current_scene:
+		var scene_path = current_scene.scene_file_path
+		print("Current scene path: ", scene_path)
+		
+		for i in range(Global.level_paths.size()):
+			if Global.level_paths[i] == scene_path:
+				Global.current_level_index = i
+				print("Detected level index: ", Global.current_level_index)
+				return
+		
+		print("Warning: Current scene is not in the level_paths array")
 
 func play() -> void:
 	inventory.fetch_inventory()
