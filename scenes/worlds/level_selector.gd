@@ -21,7 +21,7 @@ var positions = [
 	Vector2(288.0, 272.0),
 	Vector2(384.0, 508.0),
 	Vector2(592.0, 376.0),
-	Vector2(802.0, 542.0)
+	Vector2(800, 410)
 ]
 
 @onready var planets = [
@@ -38,7 +38,7 @@ var planet_sublevels = {
 	1: [3, 4, 5, 6],          # Moon -> Level indexes: 3, 4, 5, 6
 	2: [7, 8],    # Mars -> Level indexes: 6
 	3: [9,],         # Asteroids -> Level indexes: 7
-	4: [10, 11, 12, 13, 14] #SPACESHIP
+	4: [10, 11, 12, 13, 14,15] #SPACESHIP
 }
 
 func _ready() -> void:

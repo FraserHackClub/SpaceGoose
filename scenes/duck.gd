@@ -7,7 +7,7 @@ extends CharacterBody2D
 
 var direction: Vector2 = Vector2.LEFT
 var is_falling: bool = false
-var space_levels = [1, 2, 3]  # Updated to include levels 1-2, 1-3, and 1-4 (indices 1, 2, 3)
+var space_levels = [3,4,5,6,7,8]  # Updated to include levels 1-2, 1-3, and 1-4 (indices 1, 2, 3)
 var override_animation: String = ""  # New property to override the default animation logic
 var is_evil_duck: bool = false  # Flag to identify ducks spawned by Doom Duck
 

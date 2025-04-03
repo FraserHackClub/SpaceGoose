@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://b7okqgajdp7i8"]
 
-[ext_resource type="Script" uid="uid://de3r4v3vlmhyy" path="res://scenes/worlds/world_1_3_2.gd" id="1_obd16"]
+[ext_resource type="Script" path="res://scenes/worlds/world_1_3_2.gd" id="1_obd16"]
 [ext_resource type="Texture2D" uid="uid://b7jivwpcs6nfs" path="res://assets/background/Mars/MarsSky.png" id="2_nw0lr"]
 [ext_resource type="Texture2D" uid="uid://cl8jo5547pll0" path="res://assets/Mars .png" id="3_bpiii"]
 [ext_resource type="Texture2D" uid="uid://cmimfw1xbd5d7" path="res://assets/Terrain (16x16).png" id="4_1bcnl"]

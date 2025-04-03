@@ -29,7 +29,7 @@ var level_camera_settings = {
 	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
 	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
 	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
-	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 150000.0, "custom_camera_offset": Vector2(800, -1800) },
+	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 2000000, "custom_camera_offset": Vector2(800, -1800) },
 	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
 	8: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
 	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
