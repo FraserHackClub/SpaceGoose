@@ -44,7 +44,7 @@ var level_paths = [
 	"res://scenes/worlds/world_2-2_5.tscn", # 12
 	"res://scenes/worlds/world_2-3.tscn", # 13
 	"res://scenes/worlds/world_3-1.tscn", # 14
-	"res://scenes/worlds/world_4-1.tscn"
+	"res://scenes/worlds/world_4-1.tscn" #15
 ]
 
 var level_score_reqs = [
@@ -53,7 +53,7 @@ var level_score_reqs = [
 	10000, 10000,  # 7, 8
 	25000,  # 9
 	0, 0, 0, 0,  # 10, 11, 12, 13
-	0, 0 # 14
+	0, 0 # 14, 15
 	
 ]
 

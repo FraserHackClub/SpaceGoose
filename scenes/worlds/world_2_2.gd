@@ -194,7 +194,7 @@ func _ready() -> void:
 
 	
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
-	print_debug("Ducks spawned at positions: ", duck_spawn_locations)
+	#print_debug("Ducks spawned at positions: ", duck_spawn_locations)
 	
 	# Spawn camera after player
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)

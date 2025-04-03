@@ -14,8 +14,8 @@ const VIEWPORT_WIDTH = 1152.0
 const VIEWPORT_HEIGHT = 648.0
 
 # --- Dynamic bounds (changed IF updated via teleport) ---
-var LEVEL_LENGTH: float = 100000
-var LEVEL_HEIGHT: float = 10000.0
+var LEVEL_LENGTH: float = 100000.0
+var LEVEL_HEIGHT: float = 100000.0
 # --- State ---
 var sublevel_index: float = 0.0
 var teleported_this_frame: bool = false
@@ -23,19 +23,22 @@ var playing_cutscene: bool = false
 
 # --- Level-specific Camera Configuration ---
 var level_camera_settings = {
-	
-	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
-	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
-	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 2000000, "custom_camera_offset": Vector2(800, -1800) },
-	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	0: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 700000.0, "custom_camera_offset": Vector2(800, -1800) },
+	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
+	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 1000000.0, "custom_camera_offset": Vector2(800, -1800) },
+	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
 	8: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
-	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	10: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	11: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	12: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	10: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	11: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	12: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	13: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	14: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	15: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
 }
 # --- References ---
 #@onready var goose: CharacterBody2D = $"../goose"
@@ -92,6 +95,10 @@ func _set_camera_start_position() -> void:
 	)
 
 func _process(delta: float) -> void:
+	
+	
+	
+	
 	grapejuice_timericon.modulate = goose.modulate
 	
 	if transition_in_progress:
@@ -150,7 +157,7 @@ func _process(delta: float) -> void:
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9 or Global.current_level_index == 10 or Global.current_level_index == 11 or Global.current_level_index == 12 or Global.current_level_index == 13 or Global.current_level_index == 14:
+	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9 or Global.current_level_index == 10 or Global.current_level_index == 11 or Global.current_level_index == 12 or Global.current_level_index == 13 or Global.current_level_index == 14 or Global.current_level_index == 15:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2
@@ -172,7 +179,17 @@ func _process(delta: float) -> void:
 
 		position.x = lerp(position.x, target_x, x_smooth_speed * delta)
 		position.y = lerp(position.y, target_y, smooth_speed * delta)
-	
+		
+		
+		
+		#print("Camera Position Y: ", position.y)
+		#print("Target Y before clamping: ", target_y)
+		#print("Effective Center Y: ", effective_center_y)
+		#print("Top Edge: ", top_edge)
+		#print("Bottom Edge: ", bottom_edge)
+		#print("LEVEL_HEIGHT: ", LEVEL_HEIGHT)
+		#print("Clamped Target Y: ", clamp(target_y, 0.0, LEVEL_HEIGHT - vph))
+		
 
 func apply_level_settings(level_index: int) -> void:
 	var settings = level_camera_settings.get(level_index, null)

@@ -10,7 +10,7 @@ const basket_scene: PackedScene = preload("res://scenes/basket.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 var rng = RandomNumberGenerator.new()
-const LEVEL_LENGTH = 10000
+const LEVEL_LENGTH = 70000
 const TIME = 500.0
 const JUMP_VELOCITY = -1400
 
@@ -20,6 +20,7 @@ const JUMP_VELOCITY = -1400
 signal level_ready
 
 func _ready() -> void:
+	Global.current_level_index = 6
 	#var possible_bread_spawn_locations = [
 	#	Vector2(530, -1000),
 	#]
@@ -40,7 +41,7 @@ func _ready() -> void:
 	]
 	var basket_spawn_locations = [Vector2(17683,11110), Vector2(17883, 11110), Vector2(18155, 11110)]
 	#var dripstone_spawn_locations = [Vector2(7484, 40), Vector2(7674, 40), Vector2(7784, 40), Vector2(7912, 62), Vector2(8040,60), Vector2(8168,56), Vector2(8296,62), Vector2(7576, 46)]
-	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, JUMP_VELOCITY)
+	Global.spawn_player(player_scene, current_scene, Vector2(385, 25000), TIME, JUMP_VELOCITY)
 	
 	
 	
@@ -53,6 +54,8 @@ func _ready() -> void:
 	#Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
+	
+	#print(Global.LEVEL_LENGTH)
 	await get_tree().create_timer(0.1).timeout
 	toggle_helmet()
 	

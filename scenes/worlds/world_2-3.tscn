@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://nwmebc7v4s45"]
 
-[ext_resource type="Script" path="res://scenes/worlds/world_2_3.gd" id="1_wl4my"]
+[ext_resource type="Script" uid="uid://dfypqlpaxqrwb" path="res://scenes/worlds/world_2_3.gd" id="1_wl4my"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="2_mn44s"]
 [ext_resource type="Texture2D" uid="uid://c43umeeaukxsh" path="res://assets/sprites/SpaceShipHallsTrimmedLarge.png" id="3_ggi5h"]
 [ext_resource type="Texture2D" uid="uid://ciwyrleceng2r" path="res://assets/sprites/SpaceShipInteriorTrimmedLarge.png" id="4_co4j0"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dq7caku2uyvmr" path="res://assets/terrain-deadly.png" id="7_7akbd"]
 [ext_resource type="Texture2D" uid="uid://cahsq0j1lx2tq" path="res://assets/sprites/Laser10x.png" id="8_veu1u"]
 [ext_resource type="Texture2D" uid="uid://bf0bfr63qn230" path="res://assets/signs.png" id="9_od7oq"]
-[ext_resource type="Script" path="res://scenes/worlds/discogroundlight.gd" id="10_f12fy"]
+[ext_resource type="Script" uid="uid://drjxnj5vsdpuq" path="res://scenes/worlds/discogroundlight.gd" id="10_f12fy"]
 [ext_resource type="PackedScene" uid="uid://tkobrqck7au0" path="res://scenes/Interface_Teleporter.tscn" id="11_oi0no"]
 [ext_resource type="PackedScene" uid="uid://ca0lr4g3d4jm" path="res://pletform.tscn" id="12_ajq5w"]
 [ext_resource type="PackedScene" uid="uid://d3xqq6i7xe8ff" path="res://scenes/Teleporter.tscn" id="14_3oyfq"]
