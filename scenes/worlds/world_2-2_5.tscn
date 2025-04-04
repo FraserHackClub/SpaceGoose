@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://c5ury8ijg6er8"]
 
-[ext_resource type="Script" uid="uid://bs3856msnqkrk" path="res://scenes/worlds/world_2_2_5.gd" id="1_ldx7y"]
+[ext_resource type="Script" path="res://scenes/worlds/world_2_2_5.gd" id="1_ldx7y"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="2_ujvd2"]
 [ext_resource type="Texture2D" uid="uid://c43umeeaukxsh" path="res://assets/sprites/SpaceShipHallsTrimmedLarge.png" id="4_tmy30"]
 [ext_resource type="Texture2D" uid="uid://rj3kut3lcuid" path="res://assets/sprites/New Piskel (7).png" id="6_ue0uj"]

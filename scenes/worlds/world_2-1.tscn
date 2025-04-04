@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bfanbsn7oj432"]
+[gd_scene load_steps=29 format=3 uid="uid://bfanbsn7oj432"]
 
 [ext_resource type="Script" path="res://scenes/worlds/world_2_1.gd" id="1_d2mjh"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="2_g3kvt"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://c5k87x02ppv4j" path="res://scenes/Interface_Rocket.tscn" id="15_gpw8l"]
 [ext_resource type="PackedScene" uid="uid://cl4nyxp6jx84f" path="res://scenes/key.tscn" id="15_ul2cm"]
 [ext_resource type="PackedScene" uid="uid://tkobrqck7au0" path="res://scenes/Interface_Teleporter.tscn" id="17_gpw8l"]
+[ext_resource type="PackedScene" uid="uid://bcbpct0hoobls" path="res://scenes/galacticBasket.tscn" id="18_13qx8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0sm1q"]
 texture = ExtResource("6_3yvt0")
@@ -16459,3 +16460,6 @@ teleport_destination = Vector2(2711, 992)
 camera_section_length = 100000.0
 camera_section_height = 100000.0
 camera_offset = Vector2(800, -1800)
+
+[node name="GalacticBasket" parent="." instance=ExtResource("18_13qx8")]
+position = Vector2(2521, 980)

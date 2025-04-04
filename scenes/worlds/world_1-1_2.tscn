@@ -878,7 +878,7 @@ physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_biy2j")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ihtmk"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ubike"]
 texture = ExtResource("5_c2tun")
 0:8/0 = 0
 2:8/0 = 0
@@ -997,7 +997,7 @@ texture = ExtResource("5_c2tun")
 [sub_resource type="TileSet" id="TileSet_6gmqd"]
 physics_layer_0/collision_layer = 4
 physics_layer_0/collision_mask = 4
-sources/0 = SubResource("TileSetAtlasSource_ihtmk")
+sources/0 = SubResource("TileSetAtlasSource_ubike")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rirh2"]
 texture = ExtResource("6_8rpe1")
