@@ -13,10 +13,10 @@ var is_reloading = false  # Prevents shooting & animation override
 var activated = false  # Controls gun visibility and function
 
 func _ready():
-	if Global.bullet_counter:
-		print_debug("BulletCountLabel found at:", Global.bullet_counter.get_path())
-	else:
-		printerr("BulletCountLabel not assigned! Check Main Scene.")
+	#if Global.bullet_counter:
+		#print_debug("BulletCountLabel found at:", Global.bullet_counter.get_path())
+	#else:
+		#printerr("BulletCountLabel not assigned! Check Main Scene.")
 
 	# Initially hide and disable gun processing
 	self.hide()

@@ -8,7 +8,7 @@ const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
 
 const LEVEL_LENGTH = 55000.0
-const TIME = 600.0
+const TIME = 1000
 const JUMP_VELOCITY = -900.0
 
 var rng = RandomNumberGenerator.new()
@@ -19,7 +19,7 @@ signal level_ready
 
 func _ready() -> void:
 	# DEBUGGING - Resetting Global level index for debug purposes
-	Global.current_level_index = 5
+	Global.current_level_index = 11
 	print_debug("Starting level setup for level index: ", Global.current_level_index)
 	
 	rng.randomize()

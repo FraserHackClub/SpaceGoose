@@ -14,13 +14,14 @@ var inventory: Inventory
 var current_index: int = 0
 var clicking_phase: int = 0
 var call_action: bool = false
+var sub_selector_active: bool = false  # New flag to detect if sublevel selection is active
 
 var positions = [
 	Vector2(32.0, 416.0),
 	Vector2(288.0, 272.0),
 	Vector2(384.0, 508.0),
 	Vector2(592.0, 376.0),
-	Vector2(53.0, 63.0),
+	Vector2(802.0, 542.0)
 ]
 
 @onready var planets = [
@@ -28,8 +29,17 @@ var positions = [
 	$Moon,
 	$Mars,
 	$Asteroids,
-	$Spaceship_PLACEHOLDER
+	$Spaceship
 ]
+
+# Dictionary to map planets to their respective sublevels
+var planet_sublevels = {
+	0: [0, 1, 2],       # Earth -> Level indexes: 0, 1, 2
+	1: [3, 4, 5, 6],          # Moon -> Level indexes: 3, 4, 5, 6
+	2: [7, 8],    # Mars -> Level indexes: 6
+	3: [9,],         # Asteroids -> Level indexes: 7
+	4: [10, 11, 12, 13, 14] #SPACESHIP
+}
 
 func _ready() -> void:
 	levelselect_theme.play()
@@ -47,18 +57,47 @@ func _ready() -> void:
 	score_label.text = str(inventory.score)
 
 func _process(_delta: float) -> void:
+	$sublevel_indicator.hide()
 	if call_action:
+		print(current_index)
 		call_action = false
-		if inventory.score >= Global.level_score_reqs[current_index]:
-			$Start_sound.play()
-			await get_tree().create_timer(0.3).timeout
-			main.load_level(current_index)
-			queue_free()
-		else:
-			$Wrong_sound.play()
-			popup_window = popup_scene.instantiate()
-			add_child(popup_window)
-			popup_window.set_score(inventory.score, Global.level_score_reqs[current_index])
+		sub_selector_active = true  # Now enter sublevel selection mode
+	elif sub_selector_active:
+		if current_index in planet_sublevels:  # Make sure the planet has defined sublevels
+			$sublevel_indicator.show()
+			var sublevels = planet_sublevels[current_index]
+			$sublevel_indicator.animation = str(len(sublevels))
+
+			for i in range(1, 10):  # Listen for number keys 1 to 9
+				if Input.is_action_just_pressed("board_" + str(i)):
+					print("key board_" + str(i) + " pressed")
+					var sublevel_index = i - 1  # 1 becomes 0, 2 becomes 1, etc.
+
+					if sublevel_index >= sublevels.size():
+						print(str(sublevel_index) + " doesn't exist!")
+						continue  # Ignore if the number is out of range for this planet
+
+					var global_index = sublevels[sublevel_index]  # Get the actual index from the list
+
+					if global_index >= len(Global.level_score_reqs):
+						continue  # Ignore if it's an invalid level index
+
+					if inventory.score >= Global.level_score_reqs[global_index]:
+						$Start_sound.play()
+						await get_tree().create_timer(0.3).timeout
+						main.load_level(global_index)  # Load the calculated level index
+						queue_free()
+					else:
+						$Wrong_sound.play()
+						popup_window = popup_scene.instantiate()
+						add_child(popup_window)
+						popup_window.set_score(inventory.score, Global.level_score_reqs[global_index])
+					sub_selector_active = false
+					return  # Exit early to prevent further input processing
+
+		if Input.is_action_just_pressed("ui_cancel"):
+			sub_selector_active = false  # Cancel the sublevel selection
+
 	elif get_node_or_null("Popup"):
 		pass
 	else:

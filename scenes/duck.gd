@@ -45,62 +45,42 @@ func _check_scene() -> void:
 	if Global.current_level_index >= 0:
 		_update_animation_for_level(Global.current_level_index)
 		return
-	
+		
+	# Fallback to scene detection if Global doesn't have a valid level index
+	# Add null checks
 	if get_tree() == null or get_tree().current_scene == null:
 		return
-	
+		
 	var current_scene = get_tree().current_scene
-	print_debug("Current scene name:", current_scene.name)
-
+	
+	# Try multiple ways to detect the correct scene
 	var is_space_level = false
-
-	if current_scene.name in ["1-2", "1-3", "1-4"]:
+	
+	# Method 1: Check scene name directly
+	# Updated to include 1-4 in the space levels
+	if current_scene.name == "1-2" or current_scene.name == "1-3" or current_scene.name == "1-4":
 		is_space_level = true
-
+	
+	# Method 2: Check scene filename
+	var scene_path = current_scene.scene_file_path if current_scene else ""
+	if "1-2" in scene_path or "1-3" in scene_path or "1-4" in scene_path:
+		is_space_level = true
+	
+	# Method 3: Check parent node names for clues
+	var parent = get_parent()
+	while parent:
+		if "1-2" in parent.name or "1-3" in parent.name or "1-4" in parent.name:
+			is_space_level = true
+			break
+		parent = parent.get_parent()
+	
+	# Apply the correct animation
 	if is_space_level:
+		print_debug("Space level detected through scene detection, playing spaceDuck animation")
 		animated_sprite.play("spaceDuck")
 	else:
+		print_debug("Regular level detected through scene detection, playing default animation")
 		animated_sprite.play("default")
-
-func start_falling(body: String = "goose") -> void:
-	print_debug("start_falling() called. Body:", body)
-	if goose == null:
-		print_debug("Error: Global.main_character is not set or is null.")
-		return
-
-	if not goose.has_method("increase_score"):
-		print_debug("Error: Goose instance does not have 'increase_score()' method.")
-		return
-
-	if body == "bullet":
-		goose.increase_score(100)
-	elif body == "fireball":
-		goose.increase_score(150)
-		modulate = Color.RED
-	elif body == "invincible":
-		goose.increase_score(500)
-	else:
-		goose.increase_score(250)
-
-	is_falling = true
-	collision_layer = 0
-	collision_mask = 0
-	sfx_duckfall.play()
-
-	var timer = Timer.new()
-	timer.one_shot = true
-	timer.wait_time = fall_delete_delay
-	add_child(timer)
-	timer.connect("timeout", Callable(self, "_on_fall_timeout"))
-	timer.start()
-
-func _on_fall_timeout() -> void:
-	queue_free()
-
-func _on_top_area_entered(body: Node) -> void:
-	print_debug("_on_top_area_entered() called. Body:", body)
-	if body.name == "goose":
-		start_falling()
 
 func _physics_process(_delta: float) -> void:
 	if is_falling:
@@ -125,6 +105,43 @@ func _physics_process(_delta: float) -> void:
 		if other and other.name == "goose":
 			other.call("game_over", 2)
 			break
+
+func _on_top_area_entered(body: Node) -> void:
+	print_debug("_on_top_area_entered() called. Body:", body)
+	if body.name == "goose":
+		start_falling()
+
+func start_falling(body: String = "goose") -> void:
+	goose = Global.main_character  # Fetch the goose reference directly
+
+	if goose == null:
+		print_debug("Error: Goose reference is null. Cannot increase score.")
+		return
+
+	if body == "bullet":
+		goose.increase_score(100)
+	if body  == "fireball":
+		goose.increase_score(150)
+		modulate = Color.RED
+	if body == "invincible":
+		goose.increase_score(500)
+	else:
+		goose.increase_score(250)
+
+	is_falling = true
+	collision_layer = 0
+	collision_mask = 0
+	sfx_duckfall.play()
+
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = fall_delete_delay
+	add_child(timer)
+	timer.connect("timeout", Callable(self, "_on_fall_timeout"))
+	timer.start()
+
+func _on_fall_timeout() -> void:
+	queue_free()
 
 
 func _on_area_2d_2_body_entered(body: Node2D) -> void:

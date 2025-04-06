@@ -8,6 +8,7 @@ const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 const dripstone_scene: PackedScene = preload("res://scenes/dripstone.tscn")
 const basket_scene: PackedScene = preload("res://scenes/basket.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
+const galactic_scene: PackedScene = preload("res://scenes/galacticBasket.tscn")
 
 var rng = RandomNumberGenerator.new()
 const LEVEL_LENGTH = 11500
@@ -20,7 +21,6 @@ const JUMP_VELOCITY = -1400
 signal level_ready
 
 func _ready() -> void:
-	
 	var possible_bread_spawn_locations = [
 		Vector2(530, 400),
 		Vector2(1480, 512),
@@ -54,6 +54,7 @@ func _ready() -> void:
 	Global.spawn_entity(finish_scene, current_scene, Vector2(11150, 460), "win_zone")
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
 	Global.spawn_enemies(dripstone_scene, current_scene, dripstone_spawn_locations)
+	Global.spawn_items(galactic_scene, current_scene, [Vector2(11380, -855)])
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	# Toggle helmet visibility after a short delay to ensure player is fully loaded
 	await get_tree().create_timer(0.1).timeout

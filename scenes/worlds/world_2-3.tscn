@@ -16163,6 +16163,10 @@ layer_0/tile_data = PackedInt32Array(2686974, 131079, 5, 2686975, 196615, 5, 262
 
 [node name="Teleporter" parent="." instance=ExtResource("14_3oyfq")]
 position = Vector2(81061, 4919)
+teleport_destination = Vector2(51370, 4599)
+camera_section_length = 100000.0
+camera_section_height = 100000.0
+camera_offset = Vector2(800, -1800)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
@@ -16377,7 +16381,7 @@ rotation = 3.14159
 scale = Vector2(0.380097, 2.44336)
 
 [node name="StageLight" type="PointLight2D" parent="."]
-position = Vector2(80419.7, 5059.83)
+position = Vector2(80156, 5194)
 scale = Vector2(69.4455, 101.724)
 energy = 3.13
 texture = SubResource("GradientTexture2D_co4j0")

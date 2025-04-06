@@ -23,13 +23,23 @@ var playing_cutscene: bool = false
 
 # --- Level-specific Camera Configuration ---
 var level_camera_settings = {
-	
-	1: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	2: { "LEVEL_LENGTH": 15000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
-	9: { "LEVEL_LENGTH": 90000.0, "LEVEL_HEIGHT": 50000.0, "custom_camera_offset": Vector2(600,0) }
-}	
+	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 150000.0, "custom_camera_offset": Vector2(800, -1800) },
+	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 70000.0, "custom_camera_offset": Vector2(800, -1800) },
+	8: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
+	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	10: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	11: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+	12: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 16000.0, "custom_camera_offset": Vector2(800, -1800) },
+}
+
 # --- References ---
-@onready var goose: CharacterBody2D = $"../goose"
+#@onready var goose: CharacterBody2D = $"../goose"
+@onready var goose: CharacterBody2D = get_node_or_null("../goose")
 @onready var grapejuice_timericon: TextureRect = $"HUD/GrapeJuiceTimer/TimerIcon"
 @onready var camera_2d: Camera2D = $"."
 @onready var level: Node2D = $".."
@@ -54,18 +64,23 @@ func _ready():
 	juice_menu.hide()
 	add_child(juice_menu)
 	
-	texture_rect.modulate.a = 0.0  # <-- THIS LINE ensures it starts transparent
+	texture_rect.modulate.a = 0.0  # Ensure it starts transparent
 
 	Global.camera_2d = self
 	Global.bullet_counter = $HUD/BulletCounter/BulletCountLabel
 
 	offset = custom_camera_offset
 
-	# Apply settings for the current level if available
 	if Global.current_level_index in level_camera_settings:
-		apply_level_settings(Global.current_level_index)  # Call new function here
+		apply_level_settings(Global.current_level_index)
 
+	if not is_instance_valid(goose):  # Check if goose exists
+		print("❌ Goose (player) not found. Waiting for player to be spawned.")
+		await get_tree().create_timer(0.1).timeout  # Small delay before checking again
+		goose = get_node_or_null("../goose")  # Try finding the player again
+	
 	if is_instance_valid(goose):
+		print("✅ Goose (player) found. Setting initial camera position.")
 		_set_camera_start_position()
 
 func _set_camera_start_position() -> void:
@@ -130,12 +145,12 @@ func _process(delta: float) -> void:
 
 	# --- Level 0 & 1: Horizontal only ---
 	if Global.current_level_index == 0:
-		custom_camera_offset = Vector2(500, 250)
+		custom_camera_offset = Vector2(750, 250)
 		position.x = lerp(position.x, target_x, x_smooth_speed * delta)
 		return
 
 	# --- Level 2 (dynamic vertical behavior) ---
-	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9:
+	if Global.current_level_index == 1 or Global.current_level_index == 2 or Global.current_level_index == 3 or Global.current_level_index == 4 or Global.current_level_index == 5 or Global.current_level_index == 6 or Global.current_level_index == 7 or Global.current_level_index == 8 or Global.current_level_index == 9 or Global.current_level_index == 10 or Global.current_level_index == 11 or Global.current_level_index == 12 or Global.current_level_index == 13 or Global.current_level_index == 14 or Global.current_level_index == 15:
 		var effective_center_y = position.y + custom_camera_offset.y
 		var top_edge = effective_center_y - vertical_deadzone_height / 2
 		var bottom_edge = effective_center_y + vertical_deadzone_height / 2
