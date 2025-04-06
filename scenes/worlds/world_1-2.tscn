@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://ccuy002201flr" path="res://assets/mooonTiles (2).png" id="4_l8g4a"]
 [ext_resource type="Texture2D" uid="uid://ydepfxkrews3" path="res://assets/sprites/WhiteRectangle.png.png" id="5_73ji0"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ottf"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_73ji0"]
 texture = ExtResource("2_yqnc1")
 0:0/0 = 0
 1:0/0 = 0
@@ -266,7 +266,7 @@ texture = ExtResource("2_yqnc1")
 15:15/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_m2yee"]
-sources/0 = SubResource("TileSetAtlasSource_0ottf")
+sources/0 = SubResource("TileSetAtlasSource_73ji0")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uvkb5"]
 texture = ExtResource("4_hng2b")
@@ -389,7 +389,7 @@ physics_layer_0/collision_layer = 4
 physics_layer_0/collision_mask = 4
 sources/0 = SubResource("TileSetAtlasSource_uvkb5")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gpkik"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5i2q2"]
 texture = ExtResource("4_l8g4a")
 8:8/0 = 0
 8:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -2217,7 +2217,7 @@ texture = ExtResource("4_l8g4a")
 [sub_resource type="TileSet" id="TileSet_jw1s2"]
 physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
-sources/0 = SubResource("TileSetAtlasSource_gpkik")
+sources/0 = SubResource("TileSetAtlasSource_5i2q2")
 
 [node name="1-2" type="Node2D"]
 script = ExtResource("1_vbgda")
