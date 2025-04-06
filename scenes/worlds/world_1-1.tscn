@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bf0bfr63qn230" path="res://assets/signs.png" id="6_htm47"]
 [ext_resource type="PackedScene" uid="uid://bflp3u1sqwula" path="res://scenes/moving_platform.tscn" id="11_mgg6x"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5dimf"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_biy2j"]
 texture = ExtResource("3_7i24b")
 0:0/0 = 0
 1:0/0 = 0
@@ -755,7 +755,7 @@ texture = ExtResource("3_7i24b")
 [sub_resource type="TileSet" id="TileSet_cm6nd"]
 physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
-sources/0 = SubResource("TileSetAtlasSource_5dimf")
+sources/0 = SubResource("TileSetAtlasSource_biy2j")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ihtmk"]
 texture = ExtResource("4_xcl7l")
