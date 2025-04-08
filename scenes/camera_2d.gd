@@ -23,13 +23,13 @@ var playing_cutscene: bool = false
 
 # --- Level-specific Camera Configuration ---
 var level_camera_settings = {
-	0: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	0: { "LEVEL_LENGTH": 5056.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
 	1: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
 	2: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
-	3: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
+	3: { "LEVEL_LENGTH": 11500.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },
 	4: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 700000.0, "custom_camera_offset": Vector2(800, -1800) },
 	5: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
-	6: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 1000000.0, "custom_camera_offset": Vector2(800, -1800) },
+	6: { "LEVEL_LENGTH": 13170.0, "LEVEL_HEIGHT": 1000000.0, "custom_camera_offset": Vector2(800, -1800) },
 	7: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
 	8: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 100000.0, "custom_camera_offset": Vector2(800, -1800) },
 	9: { "LEVEL_LENGTH": 100000.0, "LEVEL_HEIGHT": 160000.0, "custom_camera_offset": Vector2(800, -1800) },

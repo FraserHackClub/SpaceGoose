@@ -254,8 +254,6 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
-	print(game_state)
-	print(level_changing)
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 	
