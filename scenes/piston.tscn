@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5j36jks16f1k"]
 
-[ext_resource type="Script" uid="uid://buxeo2t4xxgpu" path="res://scenes/piston.gd" id="1_ei3h4"]
+[ext_resource type="Script" path="res://scenes/piston.gd" id="1_ei3h4"]
 [ext_resource type="Texture2D" uid="uid://14plyqlnj7j0" path="res://assets/sprites/FloatingPlatform.png" id="2_8y48j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vnmsg"]

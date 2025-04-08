@@ -26,7 +26,7 @@ addons/**/~*
 ###############
 
 # Backups / Temporary files
-*old**
+*.old**
 *tmp**
 
 # Build directories

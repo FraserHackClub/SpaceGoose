@@ -6,6 +6,8 @@ const egg_scene: PackedScene = preload("res://scenes/egg.tscn")
 const finish_scene: PackedScene = preload("res://scenes/finish.tscn")
 const player_scene: PackedScene = preload("res://scenes/main_character.tscn")
 const weaponpickup_scene: PackedScene = preload("res://scenes/WeaponPickup.tscn")
+const juice_scene: PackedScene = preload("res://scenes/juice.tscn")
+const galactic_scene: PackedScene = preload("res://scenes/galacticBasket.tscn")
 
 const LEVEL_LENGTH = 35000
 const TIME = 210.0
@@ -36,6 +38,9 @@ func _ready() -> void:
 		Vector2(4448, -800),
 		Vector2(4384, -800)
 	]
+	var galactic_spawn_locations = [
+		Vector2(761, 25158)
+	]
 	var bread_spawn_locations = Global.get_random_element(possible_bread_spawn_locations, rng, 5)
 	var egg_spawn_locations = [Vector2(13182, 294), 
 	
@@ -56,19 +61,21 @@ func _ready() -> void:
 	
 	Vector2(24101, 975), #CHECK AGAIN?! or 29101
 	
-	Vector2(17005, 763),
+	Vector2(17702, 226),
 	Vector2(18134, 763),
 	
-	Vector2(17587, 283),
+	#Vector2(17587, 283),
 	
 	]
+	var juice_locations = [Vector2(23854, 933), Vector2(23809, 935)]
 	#var weapon_pickup_locations = [Vector2(1328, 496)]
 	Global.spawn_player(player_scene, current_scene, Vector2(0, 0), TIME, JUMP_VELOCITY)
 	Global.spawn_items(bread_scene, current_scene,  bread_spawn_locations)
+	Global.spawn_juice(juice_scene, current_scene, juice_locations)
 	#Global.spawn_items(weaponpickup_scene, current_scene,  weapon_pickup_locations)
 	Global.spawn_items(egg_scene, current_scene, egg_spawn_locations)
 	Global.spawn_enemies(duck_scene, current_scene, duck_spawn_locations)
-	Global.spawn_entity(finish_scene, current_scene, Vector2(31357, -357), "win_zone")
+	Global.spawn_entity(finish_scene, current_scene, Vector2(31440, -648), "win_zone")
 
 	Global.spawn_camera(current_scene, LEVEL_LENGTH)
 	#Global.update_helmet_visibility()

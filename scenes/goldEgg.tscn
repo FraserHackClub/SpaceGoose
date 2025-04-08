@@ -1,0 +1,101 @@
+[gd_scene load_steps=16 format=3 uid="uid://c83dr3sfav2bk"]
+
+[ext_resource type="Texture2D" uid="uid://b12y77pp8xvlo" path="res://assets/sprites/shinyEgg.png" id="1_d2dnr"]
+[ext_resource type="Script" uid="uid://jpptkr643hll" path="res://scenes/gold_egg.gd" id="1_v3uwq"]
+[ext_resource type="Script" uid="uid://ccttqrw3r5t6t" path="res://scenes/goldegganimation.gd" id="3_msyhu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3uwq"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(0, 0, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msyhu"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(128, 0, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_843nd"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(256, 0, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k88on"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(384, 0, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m66vg"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(0, 192, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kchqy"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(128, 192, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t06d4"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(256, 192, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwbcq"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(384, 192, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgbm7"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(0, 384, 128, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjunl"]
+atlas = ExtResource("1_d2dnr")
+region = Rect2(128, 384, 128, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xqqj6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3uwq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msyhu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_843nd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k88on")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m66vg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kchqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t06d4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwbcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgbm7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pjunl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_48yn6"]
+radius = 37.0
+height = 110.0
+
+[node name="GoldEgg" type="CharacterBody2D" groups=["gegg", "goldegg", "item"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_v3uwq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xqqj6")
+autoplay = "default"
+script = ExtResource("3_msyhu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 13)
+shape = SubResource("CapsuleShape2D_48yn6")

@@ -42,7 +42,6 @@ var inventory: Inventory
 @onready var goose = get_node_or_null(".")
 
 @onready var main = $"/root/Main"
-
 var jumpcount = 0
 var game_state = 0
 
@@ -186,7 +185,9 @@ func collect_item(item: Object):
 	if item.collected: return
 	
 	sfx_collect.play()
-
+	if item.is_in_group("goldegg"):
+		inventory.has_gold_egg = true
+		increase_score(100000)
 	if item.is_in_group("egg"):
 		inventory.add_item("egg", 1)
 		increase_score(100)
@@ -253,8 +254,6 @@ func _on_win_area_body_entered(body):
 		game_over(WIN)
 
 func game_over(state: int):
-	print(game_state)
-	print(level_changing)
 	if game_state != 0 or level_changing:
 		return  # Prevent multiple game_over triggers
 	
@@ -322,23 +321,16 @@ func game_over(state: int):
 
 func change_to_next_level():
 	var current_level_index = Global.current_level_index
-	var next_level_index = current_level_index + 1
+	var next_level_index = (current_level_index + 1) % Global.level_paths.size()  # Cycle to first level if at the end
 	
 	print_debug("Changing from level index", current_level_index, "to", next_level_index)
 	
-	if Global.has_level(next_level_index):
-		if inventory.score >= Global.level_score_reqs[next_level_index]:
-			inventory.current_level = next_level_index
-			inventory.commit_inventory()
-			await Global.change_level(next_level_index)
-		else:
-			main.select_level()
+	if inventory.score >= Global.level_score_reqs[next_level_index]:
+		inventory.current_level = next_level_index
+		inventory.commit_inventory()
+		Global.change_level(next_level_index)  # Use Global's built-in change_level function
 	else:
-		print_debug("No more levels! Game complete!")
-			# Show a game completion screen or return to main menu
-		var game_over_screen = game_over_screen_scene.instantiate()
-		get_tree().get_root().add_child(game_over_screen)
-		game_over_screen.set_game_over_state(WIN)
+		main.select_level()
 
 func _physics_process(delta: float) -> void:
 	#print("Right Pressed: ", Input.is_action_pressed("right"))
@@ -361,7 +353,7 @@ func _physics_process(delta: float) -> void:
 	
 		
 	if not is_on_floor():
-		var gravity_force = get_gravity()
+		var gravity_force = calculate_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
 		if velocity.y > 0:
 			var falling_multiplier = base_fall_multiplier
@@ -378,7 +370,7 @@ func _physics_process(delta: float) -> void:
 		_handle_movement(delta)
 		move_and_slide()
 	if hazards_tilemap:
-		var offset = Vector2(-165, 90)
+		var offset = Vector2(-75, 90)
 		var adjusted_position = position - offset
 		var tile_position = hazards_tilemap.local_to_map(hazards_tilemap.to_local(adjusted_position))
 		if hazards_tilemap.get_cell_tile_data(0, tile_position):
@@ -485,9 +477,9 @@ func _handle_animation(delta) -> String:
 	
 	return desired_anim
 
-func toggle_helmet(visibility = null) -> void:
+func toggle_helmet() -> void:
 	if helmet:
-		helmet.visible = !helmet.visible if visibility not in [true, false] else visibility 
+		helmet.visible = !helmet.visible
 		print_debug("Helmet visibility toggled to: ", helmet.visible)
 	else:
 		printerr("Helmet node not found")
@@ -506,3 +498,6 @@ func orange_juice() -> bool:
 func grape_juice():
 	invincible_time += 15.0
 	return true
+
+func calculate_gravity() -> Vector2:
+	return ProjectSettings.get_setting("physics/2d/default_gravity") * Vector2.DOWN

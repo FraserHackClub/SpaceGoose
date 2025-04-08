@@ -1,0 +1,146 @@
+[gd_scene load_steps=23 format=3 uid="uid://cfa6d1ubkh7p3"]
+
+[ext_resource type="Script" uid="uid://ctld6scyxiwhi" path="res://scenes/goldgoose.gd" id="1_hr8v1"]
+[ext_resource type="Texture2D" uid="uid://msptnm7msulv" path="res://assets/sprites/goldgoose.png" id="1_oxhe3"]
+[ext_resource type="Texture2D" uid="uid://rffpnfq46po0" path="res://assets/sprites/goldgoose - done.png" id="2_eruo5"]
+[ext_resource type="Shader" uid="uid://da01oqprp454u" path="res://scenes/gold_shimmer.gdshader" id="2_r06n3"]
+[ext_resource type="AudioStream" uid="uid://c5qf7l1s1daci" path="res://assets/audio/effects/canada-goose-honk.mp3" id="4_3gtfk"]
+[ext_resource type="AudioStream" uid="uid://nsqtalmo6hn4" path="res://assets/audio/effects/honk-h1.mp3" id="5_r06n3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jgvqp"]
+shader = ExtResource("2_r06n3")
+shader_parameter/sparkle_strength = 0.5
+shader_parameter/sparkle_speed = 1.0
+shader_parameter/white_threshold = 0.95
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgvqp"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(0, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sfwg5"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(256, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8gef"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(512, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hly8g"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(0, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2xe2"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(256, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bn4k"]
+atlas = ExtResource("2_eruo5")
+region = Rect2(512, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxhe3"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(0, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkjrc"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(256, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hr8v1"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(512, 0, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eruo5"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(0, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gtfk"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(256, 384, 256, 384)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r06n3"]
+atlas = ExtResource("1_oxhe3")
+region = Rect2(512, 384, 256, 384)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jgvqp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgvqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sfwg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8gef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hly8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2xe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bn4k")
+}],
+"loop": true,
+"name": &"after",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oxhe3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkjrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hr8v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eruo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gtfk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r06n3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hr8v1"]
+radius = 66.0
+height = 218.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eruo5"]
+radius = 61.0
+height = 186.0
+
+[node name="Goldgoose" type="CharacterBody2D"]
+script = ExtResource("1_hr8v1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_jgvqp")
+sprite_frames = SubResource("SpriteFrames_jgvqp")
+animation = &"after"
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-63, 93)
+shape = SubResource("CapsuleShape2D_hr8v1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-64, 96)
+shape = SubResource("CapsuleShape2D_eruo5")
+
+[node name="AudioStreamPlayer_error" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3gtfk")
+
+[node name="AudioStreamPlayer_win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_r06n3")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_collision_shape_2d_body_entered"]

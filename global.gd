@@ -22,6 +22,7 @@ const default_inventory = {
 		"orange_juice": 0,
 		"grape_juice": 0
 	},
+	"has_gold_egg": false,
 	"score": 0,
 	"current_level": 0
 }
@@ -42,20 +43,22 @@ var level_paths = [
 	"res://scenes/worlds/world_2-2.tscn", # 11
 	"res://scenes/worlds/world_2-2_5.tscn", # 12
 	"res://scenes/worlds/world_2-3.tscn", # 13
-	"res://scenes/worlds/world_3-1.tscn" # 14
+	"res://scenes/worlds/world_3-1.tscn", # 14
+	"res://scenes/worlds/world_4-1.tscn" #15
 ]
 
 var level_score_reqs = [
 	0, 0, 0,  # 0, 1, 2 
 	3000, 3000, 3000, 3000,  # 3, 4, 5, 6
-	10000, 10000,  # 7, 8
+	10000, 15000,  # 7, 8
 	25000,  # 9
-	0, 0, 0, 0,  # 10, 11, 12, 13
-	0,  # 14
+	35000, 40000, 45000, 55000,  # 10, 11, 12, 13
+	70000, 100000 # 14, 15
+	
 ]
 
 var space_level_indices = [
-	3, 4, 5, 6, 7
+	3, 4, 5, 6, 7,8,9
 ]
 
 var current_level_index = -1
