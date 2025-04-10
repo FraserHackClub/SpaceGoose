@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://k85h5866618m"]
+[gd_scene load_steps=69 format=3 uid="uid://k85h5866618m"]
 
 [ext_resource type="Script" uid="uid://cpse362qabw28" path="res://scenes/main_character.gd" id="1_tcf3c"]
 [ext_resource type="Texture2D" uid="uid://dsiq6r8umdpd0" path="res://assets/sprites/goose-crouch-jump.png" id="2_b6xk7"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://cjlbe75itn8qt" path="res://assets/audio/effects/blastoff.ogg" id="12_noefn"]
 [ext_resource type="AudioStream" uid="uid://0ekkosyhqebb" path="res://assets/audio/effects/beeeeeeep.mp3" id="13_is85u"]
 [ext_resource type="PackedScene" uid="uid://dcly4eh4gvtio" path="res://scenes/player_gun.tscn" id="14_pvtuh"]
+[ext_resource type="AudioStream" uid="uid://d3uxtfjeg7m1s" path="res://assets/audio/spacegoose-boss.mp3" id="17_g1p1k"]
 [ext_resource type="AudioStream" uid="uid://b2uwnga3bu5id" path="res://assets/audio/spacegoose-overture-8bit-final.mp3" id="17_o67j2"]
 [ext_resource type="AudioStream" uid="uid://bb41uf5n4bjmv" path="res://assets/audio/spacegoose-invincible.mp3" id="18_lotbi"]
 
@@ -461,6 +462,11 @@ texture = ExtResource("9_4r58p")
 [node name="PlayerGun" parent="." instance=ExtResource("14_pvtuh")]
 position = Vector2(136, -125)
 scale = Vector2(0.655295, 0.655295)
+
+[node name="boss_theme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_g1p1k")
+volume_db = -5.0
+parameters/looping = true
 
 [node name="main_theme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_o67j2")

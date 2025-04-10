@@ -29,6 +29,7 @@ const LOSE = 2
 
 @onready var main_theme: AudioStreamPlayer = $main_theme
 @onready var invincible_theme: AudioStreamPlayer = $invincible_theme
+@onready var boss_theme: AudioStreamPlayer = $boss_theme
 
 #GUN
 @onready var gun: Node2D = $PlayerGun
@@ -142,6 +143,8 @@ func _level_ready():
 	main_theme.play()
 	invincible_theme.play()
 	invincible_theme.stream_paused = true
+	boss_theme.play()
+	boss_theme.stream_paused = true
 	timer_label = $"../Camera2D/HUD/Timer/TimerLabel"
 	grapejuice_timer_label = $"../Camera2D/HUD/GrapeJuiceTimer/TimerLabel"
 
@@ -341,17 +344,8 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return  # skip movement and input
 	
+	_handle_music(delta)
 	
-	
-	
-	if invincible and not main_theme.stream_paused:
-		main_theme.stream_paused = true
-		invincible_theme.stream_paused = false
-	elif (not invincible_theme.stream_paused) and (not invincible):
-		main_theme.stream_paused = false
-		invincible_theme.stream_paused = true
-	
-		
 	if not is_on_floor():
 		var gravity_force = calculate_gravity()
 		var base_fall_multiplier = 900.0 / abs(JUMP_VELOCITY)
@@ -379,6 +373,20 @@ func _physics_process(delta: float) -> void:
 	var desired_anim = _handle_animation(delta)
 	if sprite_2d.animation != desired_anim:
 		sprite_2d.animation = desired_anim
+
+func _handle_music(_delta: float) -> void:
+	if not get_node_or_null("../DoomDuck"):
+		boss_theme.stream_paused = true
+		if invincible and not main_theme.stream_paused:
+			main_theme.stream_paused = true
+			invincible_theme.stream_paused = false
+		elif (not invincible_theme.stream_paused) and (not invincible):
+			main_theme.stream_paused = false
+			invincible_theme.stream_paused = true
+	else:
+		invincible_theme.stream_paused = true
+		main_theme.stream_paused = true
+		boss_theme.stream_paused = false
 
 func _handle_movement(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
